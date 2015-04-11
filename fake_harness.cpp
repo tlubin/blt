@@ -45,22 +45,23 @@ int main() {
   unsigned int fs[TRACE_DEPTH];
   klee_make_symbolic(&fs, sizeof(fs), "fs");
 
-  unsigned int *p;
   unsigned int o = 0;  // stupid hack for recording interleavings
+  unsigned int *p;
   for (p = fs; p < &fs[TRACE_DEPTH]; ++p) {
     o *= 10;
 
-    unsigned char gs;
+    unsigned char gs;  // number of gs to call
     klee_make_symbolic(&gs, sizeof(gs), "gs");
     klee_assume(gs <= ORTHO_DEPTH);
     int i;
     for (i = 0; i < gs; ++i) {
       new_g();
-      o += 4;
-      o *= 10;
+      o = (o + 4) * 10;
     }
 
-    unsigned int x = *p % 2;
+    //unsigned int x = *p % 3;  // this doesn't work as well
+    unsigned int x = *p;
+    klee_assume (x < 3);
     o += x + 1;
     int old_r = old_fs[x]();
     int new_r = new_fs[x]();
