@@ -5,10 +5,9 @@ using namespace std;
 
 struct Func {
     void* ptr1; // func ptr to call in first interleaving (no g)
-                // defined to be NULL if ptr2 is g
     void* ptr2; // func ptr to call in second interleaving (with g)
     int rank;   // "priority" of function in queue
-    int is_g;
+    int is_g;   // marks whether is the orthogonal function
 };
 
 // comparison of functions within priority queue
