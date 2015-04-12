@@ -51,4 +51,6 @@ int main() {
         }
         search();
     }
+
+    return 0;
 }
