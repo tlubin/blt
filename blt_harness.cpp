@@ -41,7 +41,7 @@ int main() {
     while (!fqueue.empty()) {
         Func f = fqueue.top();
         fqueue.pop();
-        ret2 = *f.ptr2();
+        ret2 = *f.ptr2(); //XXX doesn't compile (not a real fxn ptr)
         
         // only compare results when executing non-orthogonal func
         if (!f.is_g) {
