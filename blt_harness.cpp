@@ -23,7 +23,7 @@ public:
 };
 
 // global queue
-priority_queue<Func, vector<Func>, CompareFunc> queue;
+priority_queue<Func, vector<Func>, CompareFunc> fqueue;
 
 // looks at the consequences of running f
 void search() {
@@ -38,16 +38,18 @@ int main() {
     void* ret1 = NULL; //XXX void* for now, unsure about type of return val 
     void* ret2 = NULL;
     
-    while (!queue.empty()) {
-        f = queue.pop();
-        ret2 = &f.ptr2();
+    while (!fqueue.empty()) {
+        Func f = fqueue.top();
+        fqueue.pop();
+        ret2 = *f.ptr2();
         
         // only compare results when executing non-orthogonal func
         if (!f.is_g) {
-            ret1 = &f.ptr1();
+            ret1 = *f.ptr1();
             if (ret1 != ret2)
-                cout << str << &f.ptr1 << end1; // right now, program continues after print
-                                                // could find effects of g on nonorthogonal funcs?
+                // program continues after print
+                // could find effects of g on nonorthogonal funcs?
+                printf("Non-orthogonal: %p\n", f.ptr1); 
         }
         search();
     }
