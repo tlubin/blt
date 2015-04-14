@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <assert.h>
+
 #define MULT '*'
 #define PLUS '+'
 #define SIZE 10
@@ -97,11 +100,11 @@ void mult_pressed() {
   add_char('*');
 }
 
-void eval_pressed() {
+int lt_eval_pressed() {
   if (input.buff[0] == PLUS || input.buff[0] == MULT)
-    printf("Illegal calculation");
+    return -1;
   else if (input.buff[input.cur-1] == PLUS || input.buff[input.cur-1] == MULT)
-    printf("Illegal calculation");
+    return -1;
   
   int i = 0, num = 0;
   for (; i < input.cur; i++) {
@@ -126,27 +129,164 @@ void eval_pressed() {
   while (res.cur > 1)  
     apply_op();
     
-  printf("%s = %d\n", input.buff, res.buff[0]);    
+  return res.buff[0];
   input.cur = 0;
   res.cur = 0;
   ops.cur = 0;
 }
 
+int do_eval(char *buff, unsigned sz) {
+  int mult = -1;
+  int plus = -1;
+  if (sz == 0)
+    return -1;
+
+  for (int i = 0; i < sz; i++) {
+    if (buff[i] == '*')
+      mult = i;
+    else if (buff[i] == '+' && plus == -1)
+      plus = i;
+  }
+
+  if (plus != -1) {
+    int left = do_eval(buff, plus);
+    int right = do_eval(&buff[plus+1], sz - plus - 1);
+
+    if (left == -1 || right == -1)
+      goto error;
+    return left + right;
+  }
+
+  if (mult != -1) {
+    int left = do_eval(buff, mult);
+    int right = do_eval(&buff[mult+1], sz - mult - 1);
+    if (left == -1 || right == -1)
+      goto error;
+    return left * right;
+  }
+
+  unsigned res = 0;
+  for (int i = 0; i < sz; i++)
+    res += (buff[sz-i-1] - '0') << i;
+  input.cur = 0;
+  return res;
+
+error:
+  input.cur = 0;
+  return -1;
+}
+
+int tl_eval_pressed() {
+  return do_eval(input.buff, input.cur);
+}
+
+int ab_eval_pressed() {
+  unsigned sum = 0;  // stores running sum
+  unsigned mul = 1;  // temp store for multiplication
+  unsigned n = 0;  // temp value of operand currently being parsed
+  int need_operand = 1;  // are we in the middle of an operation?
+
+  char* p;
+  for (p = input.buff; p != &input.buff[input.cur]; ++p) {
+    switch (*p) { 
+      case '0':
+        need_operand = 0;
+        n *= 2;
+        break;
+
+      case '1':
+        need_operand = 0;
+        n = n * 2 + 1;
+        break;
+
+      case '+':
+        if (need_operand) goto parsing_error;
+        need_operand = 1;
+        sum += n * mul;
+        mul = 1;
+        n = 0;
+        break;
+
+      case '*':
+        if (need_operand) goto parsing_error;
+        need_operand = 1;
+        mul *= n;
+        n = 0;
+        break;
+
+      default:
+        goto parsing_error;
+    }
+  }
+
+  if (need_operand) goto parsing_error;
+
+  input.cur = 0;
+  return sum + n * mul;
+
+  parsing_error:
+  input.cur = 0;
+  return -1;
+}
+
+// fyi this function is not totally memory safe...
+void do_test(char* expr, unsigned len, char *expected, int (*eval)()) {
+  printf("--------------------------------\n");
+  printf("Testing: %s\n", expr);
+  if (input.buff)
+    free(input.buff);
+  input.buff = malloc(len);
+  memcpy(input.buff, expr, len);
+  input.cur = len;
+  int res = eval();
+  printf("Got: %d", res);
+  printf("Expected: %s\n", expected);
+  assert(res == atoi(expected));
+  free(input.buff);
+  input.buff = NULL;
+  input.cur = 0;
+}
+
+void test(int (*eval)()) {
+  do_test("", 0, "-1", eval);
+  do_test("+11+101", 7, "-1", eval);
+  do_test("11+101+", 7, "-1", eval);
+  do_test("11+*101", 7, "-1", eval);
+  //  do_test("11+1a01", 7, "-1", eval);
+
+  // no ops
+  do_test("0", 1, "0", eval);
+  do_test("1", 1, "1", eval);
+  do_test("01101", 5, "13", eval);
+
+  // basic addition and multiplication
+  do_test("1+0", 3, "1", eval);
+  do_test("0+1", 3, "1", eval);
+  do_test("11*0", 4, "0", eval);
+  do_test("0*11", 4, "0", eval);
+  do_test("11*1", 4, "3", eval);
+  do_test("1*11", 4, "3", eval);
+  do_test("11+101", 6, "8", eval); 
+  do_test("11*101", 6, "15", eval); 
+
+  // more complex expressions
+  do_test("11+111+10", 9, "12", eval);
+  do_test("11*111*10", 9, "42", eval);
+  do_test("11*111+10", 9, "23", eval);
+  do_test("11+111*10", 9, "17", eval);
+  do_test("11+111*10+101", 13, "22", eval);
+  do_test("11*111+10*101", 13, "31", eval);
+}
+
+
+
 int main() {
-  init_pressed();
-  zero_pressed();
-  mult_pressed();
-  one_pressed();
-  plus_pressed();
-  one_pressed();
-  plus_pressed();
-  zero_pressed();
-  mult_pressed();
-  one_pressed();
-  plus_pressed();
-  zero_pressed();
-  mult_pressed();
-  one_pressed();  
-  eval_pressed();
+  printf("----------TESTING TODD-------\n");
+  test(&tl_eval_pressed);
+  printf("----------TESTING LILY-------\n");
+  test(&lt_eval_pressed);
+  printf("----------TESTING AARON-------\n");
+  test(&ab_eval_pressed);
+  
   return 0;
 }
