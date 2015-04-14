@@ -36,13 +36,12 @@ struct res{
 /* Helpers */
 
 void init_pressed() {
-  input.buff = malloc(SIZE);
   res.buff = malloc(SIZE); 
   ops.buff = malloc(SIZE);
-  input.cur = 0; res.cur = 0; ops.cur = 0;
-  input.sz = SIZE; res.sz = SIZE; ops.sz = SIZE;
-  if (!input.buff || !res.buff || !ops.buff)
-    printf("Out of memory");
+  res.cur = 0; ops.cur = 0;
+  res.sz = SIZE; ops.sz = SIZE;
+  if (!res.buff || !ops.buff)
+    printf("Malloc failed\n");
 }
 
 void add_char(char c) {
@@ -70,10 +69,6 @@ void add_res(unsigned n) {
 }
 
 void apply_op() {
-  if (ops.cur-1 < 0) {
-    printf("Bad equation");
-    exit(1);
-  }
   if (ops.buff[ops.cur-1] == MULT)
     res.buff[res.cur-2] = res.buff[res.cur-1] * res.buff[res.cur-2];
   else
@@ -101,38 +96,43 @@ void mult_pressed() {
 }
 
 int lt_eval_pressed() {
-  if (input.buff[0] == PLUS || input.buff[0] == MULT)
-    return -1;
-  else if (input.buff[input.cur-1] == PLUS || input.buff[input.cur-1] == MULT)
-    return -1;
-  
-  int i = 0, num = 0;
+  init_pressed();
+  int i = 0, num = 0, opflag = 0;
+  if (!input.cur || input.buff[0] == PLUS || input.buff[0] == MULT || input.buff[input.cur-1] == PLUS || input.buff[input.cur-1] == MULT)
+    goto error;
   for (; i < input.cur; i++) {
     if (input.buff[i] != PLUS && input.buff[i] != MULT) { 
+      opflag = 0;
       num <<= 1;
       if (input.buff[i] == '1')
         num^=1;
     }
     else {
+      if (opflag) goto error;
       add_res(num);
       num = 0;  
       if (input.buff[i] == PLUS) {
-        while (ops.cur && ops.buff[ops.cur-1] == MULT){
-          apply_op();}
+        while (ops.cur && ops.buff[ops.cur-1] == MULT)
+          apply_op();
         add_op(PLUS);
       }
       else add_op(MULT);
+      opflag = 1;
     }
   }
   add_res(num);
-
-  while (res.cur > 1)  
+  
+  while (res.cur > 1)
     apply_op();
+  if (ops.cur != 0 || res.cur != 1)
+    goto error;
     
   return res.buff[0];
-  input.cur = 0;
-  res.cur = 0;
-  ops.cur = 0;
+  input.cur = 0; res.cur = 0; ops.cur = 0;
+
+error:
+  input.cur = 0; res.cur = 0; ops.cur = 0;
+  return -1;
 }
 
 int do_eval(char *buff, unsigned sz) {
@@ -239,7 +239,7 @@ void do_test(char* expr, unsigned len, char *expected, int (*eval)()) {
   memcpy(input.buff, expr, len);
   input.cur = len;
   int res = eval();
-  printf("Got: %d", res);
+  printf("Got: %d ", res);
   printf("Expected: %s\n", expected);
   assert(res == atoi(expected));
   free(input.buff);
