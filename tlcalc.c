@@ -38,9 +38,12 @@ void mult_pressed() {
   add_num(MULT);
 }
 
-unsigned do_eval(unsigned *buff, unsigned sz) {
+int do_eval(unsigned *buff, unsigned sz) {
   int mult = -1;
   int plus = -1;
+  if (sz == 0)
+    return -1;
+
   for (int i = 0; i < sz; i++) {
     if (buff[i] == MULT) {
       mult = i;
@@ -51,11 +54,19 @@ unsigned do_eval(unsigned *buff, unsigned sz) {
   }
 
   if (plus != -1) {
-    return do_eval(buff, plus) + do_eval(&buff[plus+1], sz - plus - 1);
+    int left = do_eval(buff, plus);
+    int right = do_eval(&buff[plus+1], sz - plus - 1);
+    if (left == -1 || right == -1)
+      return -1;
+    return left + right;
   }
 
   if (mult != -1) {
-    return do_eval(buff, mult)*do_eval(&buff[mult+1], sz - mult - 1);
+    int left = do_eval(buff, mult);
+    int right = do_eval(&buff[mult+1], sz - mult - 1);
+    if (left == -1 || right == -1)
+      return -1;
+    return left * right;
   }
 
   unsigned res = 0;
