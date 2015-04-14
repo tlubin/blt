@@ -1,4 +1,5 @@
 #include <stdio.h>
+  #include <time.h>
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
@@ -280,12 +281,22 @@ void test(int (*eval)()) {
 
 
 int main() {
+  int t1 = clock();
   printf("----------TESTING TODD-------\n");
   test(&tl_eval_pressed);
+  t1 = clock()-t1;
+  
+  int t2 = clock();
   printf("----------TESTING LILY-------\n");
   test(&lt_eval_pressed);
+  t2 = clock()-t2;
+  
+  int t3 = clock();
   printf("----------TESTING AARON-------\n");
   test(&ab_eval_pressed);
-  
+  t3 = clock()-t3;
+  printf("Todd Time: %d\n", t1);
+  printf("Lily Time: %d\n", t2);
+  printf("Aaron Time: %d\n", t3);
   return 0;
 }
