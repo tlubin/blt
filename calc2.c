@@ -122,8 +122,7 @@ int lt_eval_pressed() {
   }
   add_res(num);
   
-  while (res.cur > 1)
-    apply_op();
+  while (res.cur > 1) apply_op();
   if (ops.cur != 0 || res.cur != 1)
     goto error;
     
