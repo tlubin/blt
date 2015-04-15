@@ -92,3 +92,6 @@ int new_calc::eval_pressed() {
   input.cur = 0;
   return -1;
 }
+
+int main() {
+}
