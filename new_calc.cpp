@@ -4,7 +4,7 @@
 #include <cstring>
 #include <cassert>
 
-#define SIZE 10
+#define SIZE 1<<18
 
 struct input {
   char *buff;
@@ -18,16 +18,12 @@ void new_calc::init_pressed() {
   input.buff = (char*) malloc(SIZE); 
   input.cur = 0;
   input.sz = SIZE;
-  if (!input.buff)
-    printf("Malloc failed\n");
 }
 
+// BUG: if buffer is full, does not add character
 static void add_char(char c) {
-  if (input.cur >= input.sz) {
-    input.buff = (char*) realloc(input.buff, input.sz * 2);
-    input.sz *= 2;
-  }
-  input.buff[input.cur++] = c;
+  if (input.cur < input.sz)
+    input.buff[input.cur++] = c;
 }
 
 /* Callbacks */
