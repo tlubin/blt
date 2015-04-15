@@ -4,17 +4,15 @@
 using namespace std;
 
 struct Func {
-    void* ptr1; // func ptr to call in first interleaving (no g)
-    void* ptr2; // func ptr to call in second interleaving (with g)
+    char* old_f; // function name (XXX?) in old code
+    char* new_f; // function name in refactored code
     int rank;   // "priority" of function in queue
-    int is_g;   // marks whether is the orthogonal function
 };
 
 // comparison of functions within priority queue
 class CompareFunc {
 public:
-    bool operator()(Func& f1, Func& f2)
-    {
+    bool operator()(Func& f1, Func& f2) { 
         if (f1.rank < f2.rank)
             return true;
         else 
@@ -41,18 +39,13 @@ int main() {
     while (!fqueue.empty()) {
         Func f = fqueue.top();
         fqueue.pop();
-        ret2 = *f.ptr2(); //XXX doesn't compile (not a real fxn ptr)
-        
-        // only compare results when executing non-orthogonal func
-        if (!f.is_g) {
-            ret1 = *f.ptr1();
-            if (ret1 != ret2)
-                // program continues after print
-                // could find effects of g on nonorthogonal funcs?
-                printf("Non-orthogonal: %p\n", f.ptr1); 
+        ret1 = f.old_f();
+        ret2 = f.new_f(); //XXX doesn't compile (not a real function, store function names?)
+        if (ret1 != ret2)
+            // program continues after print
+            // could find effects of g on nonorthogonal funcs?
+            printf("Not equivalent: %s\n", f.ptr1); 
         }
         search();
     }
-
-    return 0;
 }

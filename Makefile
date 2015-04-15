@@ -1,7 +1,7 @@
 CXX = llvm-g++
 CXXFLAGS = -emit-llvm -c -g -S
-LD = llvm-link
-KLEE_PATH = ~/klee/include
+LD = ~/installations/llvm-2.9/Release+Asserts/bin/llvm-link
+KLEE_PATH = ~/installations/klee/include
 
 klee_harness:
 	bash -c "ulimit -s unlimited"
