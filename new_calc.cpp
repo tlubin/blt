@@ -4,7 +4,7 @@
 #include <cstring>
 #include <cassert>
 
-#define BUFSIZE
+#define SIZE 1<<18
 
 struct input {
   char *buff;
@@ -21,11 +21,8 @@ void new_calc::init_pressed() {
 }
 
 static void add_char(char c) {
-  if (input.cur >= input.sz) {
-    input.buff = (char*) realloc(input.buff, input.sz * 2);
-    input.sz *= 2;
-  }
-  input.buff[input.cur++] = c;
+  if (input.cur < input.sz)
+    input.buff[input.cur++] = c;
 }
 
 /* Callbacks */
