@@ -12,7 +12,7 @@ struct input {
   char *buff;
   unsigned cur;
   unsigned sz;
-} input;
+} old_calc::input;
 
 struct ops{
   unsigned *buff;
@@ -90,10 +90,9 @@ void old_calc::mult_pressed() {
 }
 
 int old_calc::eval_pressed() {
-  init_pressed();
   int i = 0, num = 0, opflag = 0;
-  if (!input.cur || input.buff[0] == PLUS || input.buff[0] == MULT || input.buff[input.cur-1] == PLUS || input.buff[input.cur-1] == MULT)
-    goto error;
+  if (!input.cur || input.buff[0] == PLUS || input.buff[0] == MULT || input.buff[input.cur-1] == PLUS || input.buff[input.cur-1] == MULT) {
+    goto error;}
   for (; i < input.cur; i++) {
     if (input.buff[i] != PLUS && input.buff[i] != MULT) { 
       opflag = 0;
@@ -116,15 +115,25 @@ int old_calc::eval_pressed() {
   }
   add_res(num);
   
-  while (res.cur > 1) apply_op();
-  if (ops.cur != 0 || res.cur != 1)
+  while (res.cur > 1 && ops.cur) apply_op();
+  if (ops.cur != 0 || res.cur != 1){
     goto error;
-    
-  return res.buff[0];
+    }
+  
   input.cur = 0; res.cur = 0; ops.cur = 0;
+  return res.buff[0];
 
 error:
   input.cur = 0; res.cur = 0; ops.cur = 0;
   return -1;
 }
 
+/*
+int main()
+{
+  old_calc::init_pressed();
+  old_calc::one_pressed();
+  old_calc::eval_pressed();
+  old_calc::zero_pressed();
+ printf("%d\n", old_calc::eval_pressed());
+}*/

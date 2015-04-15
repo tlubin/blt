@@ -10,7 +10,7 @@ struct input {
   char *buff;
   unsigned cur;
   unsigned sz;
-} input;
+} new_calc::input;
 
 /* Helpers */
 
