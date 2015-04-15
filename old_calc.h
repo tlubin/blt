@@ -7,14 +7,6 @@
 #define PLUS '+'
 #define SIZE 10
 
-/*
-Changes from calc.c:
-- Store chars instead of unsigneds
-- eval_pressed does multiplication instead of repeated addition
-     - BUG: forgets to clear cur
-
- */
-
 struct input {
   char *buff;
   unsigned cur;
@@ -95,7 +87,7 @@ void mult_pressed() {
   add_char('*');
 }
 
-int lt_eval_pressed() {
+int eval_pressed() {
   init_pressed();
   int i = 0, num = 0, opflag = 0;
   if (!input.cur || input.buff[0] == PLUS || input.buff[0] == MULT || input.buff[input.cur-1] == PLUS || input.buff[input.cur-1] == MULT)
@@ -134,100 +126,6 @@ error:
   return -1;
 }
 
-int do_eval(char *buff, unsigned sz) {
-  int mult = -1;
-  int plus = -1;
-  if (sz == 0)
-    return -1;
-
-  for (int i = 0; i < sz; i++) {
-    if (buff[i] == '*')
-      mult = i;
-    else if (buff[i] == '+' && plus == -1)
-      plus = i;
-  }
-
-  if (plus != -1) {
-    int left = do_eval(buff, plus);
-    int right = do_eval(&buff[plus+1], sz - plus - 1);
-
-    if (left == -1 || right == -1)
-      goto error;
-    return left + right;
-  }
-
-  if (mult != -1) {
-    int left = do_eval(buff, mult);
-    int right = do_eval(&buff[mult+1], sz - mult - 1);
-    if (left == -1 || right == -1)
-      goto error;
-    return left * right;
-  }
-
-  unsigned res = 0;
-  for (int i = 0; i < sz; i++)
-    res += (buff[sz-i-1] - '0') << i;
-  input.cur = 0;
-  return res;
-
-error:
-  input.cur = 0;
-  return -1;
-}
-
-int tl_eval_pressed() {
-  return do_eval(input.buff, input.cur);
-}
-
-int ab_eval_pressed() {
-  unsigned sum = 0;  // stores running sum
-  unsigned mul = 1;  // temp store for multiplication
-  unsigned n = 0;  // temp value of operand currently being parsed
-  int need_operand = 1;  // are we in the middle of an operation?
-
-  char* p;
-  for (p = input.buff; p != &input.buff[input.cur]; ++p) {
-    switch (*p) { 
-      case '0':
-        need_operand = 0;
-        n *= 2;
-        break;
-
-      case '1':
-        need_operand = 0;
-        n = n * 2 + 1;
-        break;
-
-      case '+':
-        if (need_operand) goto parsing_error;
-        need_operand = 1;
-        sum += n * mul;
-        mul = 1;
-        n = 0;
-        break;
-
-      case '*':
-        if (need_operand) goto parsing_error;
-        need_operand = 1;
-        mul *= n;
-        n = 0;
-        break;
-
-      default:
-        goto parsing_error;
-    }
-  }
-
-  if (need_operand) goto parsing_error;
-
-  input.cur = 0;
-  return sum + n * mul;
-
-  parsing_error:
-  input.cur = 0;
-  return -1;
-}
-
 // fyi this function is not totally memory safe...
 void do_test(char* expr, unsigned len, char *expected, int (*eval)()) {
   printf("--------------------------------\n");
@@ -251,7 +149,6 @@ void test(int (*eval)()) {
   do_test("+11+101", 7, "-1", eval);
   do_test("11+101+", 7, "-1", eval);
   do_test("11+*101", 7, "-1", eval);
-  //  do_test("11+1a01", 7, "-1", eval);
 
   // no ops
   do_test("0", 1, "0", eval);
@@ -278,11 +175,7 @@ void test(int (*eval)()) {
 }
 
 int main() {
-  printf("----------TESTING TODD-------\n");
-  test(&tl_eval_pressed);
-  printf("----------TESTING LILY-------\n");
-  test(&lt_eval_pressed);
-  printf("----------TESTING AARON-------\n");
-  test(&ab_eval_pressed);
+  printf("----------TESTING-------\n");
+  test(&eval_pressed);
   return 0;
-}
+
