@@ -12,7 +12,7 @@ struct input {
   char *buff;
   unsigned cur;
   unsigned sz;
-} old_calc::input;
+} input;
 
 struct ops{
   unsigned *buff;
@@ -127,13 +127,3 @@ error:
   input.cur = 0; res.cur = 0; ops.cur = 0;
   return -1;
 }
-
-/*
-int main()
-{
-  old_calc::init_pressed();
-  old_calc::one_pressed();
-  old_calc::eval_pressed();
-  old_calc::zero_pressed();
- printf("%d\n", old_calc::eval_pressed());
-}*/

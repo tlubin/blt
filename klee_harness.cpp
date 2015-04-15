@@ -4,7 +4,7 @@
 #include <cstdio>
 #include <cassert>
 
-#define TRACE_DEPTH 100 
+#define TRACE_DEPTH 10
 
 int main() {
   unsigned int fs[TRACE_DEPTH];
@@ -25,6 +25,7 @@ int main() {
         new_calc::zero_pressed();
         break;
       case 1 :
+        old_calc::one_pressed();
         new_calc::one_pressed();
         break;
       case 2 :
