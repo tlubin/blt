@@ -4,7 +4,7 @@
 #include <cstring>
 #include <cassert>
 
-#define SIZE 10
+#define BUFSIZE
 
 struct input {
   char *buff;
@@ -18,8 +18,6 @@ void init_pressed() {
   input.buff = malloc(SIZE); 
   input.cur = 0;
   input.sz = SIZE;
-  if (!input.buff)
-    printf("Malloc failed\n");
 }
 
 /* Callbacks */
