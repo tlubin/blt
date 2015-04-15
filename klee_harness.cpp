@@ -3,7 +3,6 @@
 #include <cassert>
 
 #define TRACE_DEPTH 2
-#define ORTHO_DEPTH 2
 
 typedef int (*int_func)();
 
@@ -21,15 +20,6 @@ int main() {
   unsigned int *p;
   for (p = fs; p < &fs[TRACE_DEPTH]; ++p) {
     o *= 10;
-
-    unsigned char gs;  // number of gs to call
-    klee_make_symbolic(&gs, sizeof(gs), "gs");
-    klee_assume(gs <= ORTHO_DEPTH);
-    int i;
-    for (i = 0; i < gs; ++i) {
-      new_g();
-      o = (o + 4) * 10;
-    }
 
     //unsigned int x = *p % 3;  // this doesn't work as well
     unsigned int x = *p;
