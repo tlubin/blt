@@ -1,8 +1,8 @@
 #include "old_calc.h" 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <assert.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <cassert>
 
 #define MULT '*'
 #define PLUS '+'
