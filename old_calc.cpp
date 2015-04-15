@@ -28,10 +28,10 @@ struct res{
 
 /* Helpers */
 
-void init_pressed() {
-  input.buff = malloc(SIZE*sizeof(unsigned));
-  res.buff = malloc(SIZE*sizeof(unsigned)); 
-  ops.buff = malloc(SIZE*sizeof(unsigned));
+void old_calc::init_pressed() {
+  input.buff = (char*) malloc(SIZE*sizeof(unsigned));
+  res.buff = (unsigned*) malloc(SIZE*sizeof(unsigned)); 
+  ops.buff = (unsigned*) malloc(SIZE*sizeof(unsigned));
   input.cur = 0; res.cur = 0; ops.cur = 0;
   input.sz = SIZE; res.sz = SIZE; ops.sz = SIZE;
   if (!input.buff || !res.buff || !ops.buff)
@@ -40,29 +40,29 @@ void init_pressed() {
 
 void add_char(char c) {
   if (input.cur >= input.sz) {
-    input.buff = realloc(input.buff, input.sz*sizeof(unsigned)*2);
+    input.buff = (char*) realloc(input.buff, input.sz*sizeof(unsigned)*2);
     input.sz *= 2;
   }
   input.buff[input.cur++] = c;
 }
 
-void add_op(char c) {
+static void add_op(char c) {
   if (ops.cur >= input.sz) {
-    ops.buff = realloc(ops.buff, ops.sz*sizeof(unsigned)*2);
+    ops.buff = (unsigned*) realloc(ops.buff, ops.sz*sizeof(unsigned)*2);
     ops.sz *= 2;
   }
   ops.buff[ops.cur++] = c;
 }
 
-void add_res(unsigned n) {
+static void add_res(unsigned n) {
   if (res.cur >= res.sz) {
-    res.buff = realloc(res.buff, res.sz*sizeof(unsigned)*2);
+    res.buff = (unsigned*) realloc(res.buff, res.sz*sizeof(unsigned)*2);
     res.sz *= 2;
   }
   res.buff[res.cur++] = n;
 }
 
-void apply_op() {
+static void apply_op() {
   if (ops.buff[ops.cur-1] == MULT)
     res.buff[res.cur-2] = res.buff[res.cur-1] * res.buff[res.cur-2];
   else
@@ -73,23 +73,23 @@ void apply_op() {
 
 /* Callbacks */
 
-void zero_pressed() {
+void old_calc::zero_pressed() {
   add_char('0');
 }
 
-void one_pressed() {
+void old_calc::one_pressed() {
   add_char('1');
 }
 
-void plus_pressed() {
+void old_calc::plus_pressed() {
   add_char('+');
 }
 
-void mult_pressed() {
+void old_calc::mult_pressed() {
   add_char('*');
 }
 
-int eval_pressed() {
+int old_calc::eval_pressed() {
   init_pressed();
   int i = 0, num = 0, opflag = 0;
   if (!input.cur || input.buff[0] == PLUS || input.buff[0] == MULT || input.buff[input.cur-1] == PLUS || input.buff[input.cur-1] == MULT)
