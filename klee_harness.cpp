@@ -4,7 +4,7 @@
 #include <cstdio>
 #include <cassert>
 
-#define TRACE_DEPTH 2
+#define TRACE_DEPTH 100 
 
 int main() {
   unsigned int fs[TRACE_DEPTH];
@@ -25,7 +25,6 @@ int main() {
         new_calc::zero_pressed();
         break;
       case 1 :
-        old_calc::one_pressed();
         new_calc::one_pressed();
         break;
       case 2 :
@@ -40,9 +39,8 @@ int main() {
       {
         int old_r = old_calc::eval_pressed();
         int new_r = new_calc::eval_pressed();
-        assert(old_r == new_r);
-        // uncomment to short-circuit
-        // if (old_r != new_r) goto FAILURE;   
+        if (old_r != new_r) goto FAILURE;
+        //assert(old_r == new_r);
         break;
       }
       default :
