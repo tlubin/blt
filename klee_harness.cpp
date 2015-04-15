@@ -4,7 +4,18 @@
 #include <cstdio>
 #include <cassert>
 
-#define TRACE_DEPTH 10 
+#define TRACE_DEPTH 11
+
+void print_array(unsigned *a, unsigned len) {
+  assert(len < (unsigned) -2);
+  char str[len + 2];
+  int i;
+  for (i = 0; i < len; ++i)
+    sprintf(&str[i], "%u", a[i]);
+  str[i++] = '\n';
+  str[i] = 0;
+  printf(str);
+}
 
 int main() {
   unsigned int fs[TRACE_DEPTH];
@@ -49,9 +60,8 @@ int main() {
     }
   }
 
-  for (int i = 0; i < TRACE_DEPTH; i++)
-    printf("%d", output[i]);
-  printf("\n");
+  print_array(output, TRACE_DEPTH);
+  return 0;
 
   FAILURE:
   klee_assert(0);
