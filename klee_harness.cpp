@@ -17,6 +17,7 @@ int main() {
   
   for (p = fs; p < &fs[TRACE_DEPTH]; ++p) {
     o *= 10;
+    klee_assume (*p < 5);
     o += *p;
     switch (*p) {
       case 0 :
@@ -36,12 +37,14 @@ int main() {
         new_calc::mult_pressed();
         break;
       case 4 :
+      {
         int old_r = old_calc::eval_pressed();
         int new_r = new_calc::eval_pressed();
         assert(old_r == new_r);
         // uncomment to short-circuit
         // if (old_r != new_r) goto FAILURE;   
         break;
+      }
       default :
         break;
     }
