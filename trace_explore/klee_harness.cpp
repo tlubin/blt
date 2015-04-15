@@ -22,7 +22,6 @@ int main() {
   unsigned int output[TRACE_DEPTH];
   klee_make_symbolic(&fs, sizeof(fs), "fs");
 
-  unsigned int o = 0;  // stupid hack for recording interleavings
   unsigned int *p;
   old_calc::init_pressed();
   new_calc::init_pressed();
@@ -60,9 +59,9 @@ int main() {
     }
   }
 
-  print_array(output, TRACE_DEPTH);
   return 0;
 
   FAILURE:
+  print_array(output, TRACE_DEPTH);
   klee_assert(0);
 }
