@@ -1,8 +1,8 @@
 #include "new_calc.h" 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <assert.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <cassert>
 
 #define SIZE 10
 
@@ -14,34 +14,41 @@ struct input {
 
 /* Helpers */
 
-void init_pressed() {
-  input.buff = malloc(SIZE); 
+void new_calc::init_pressed() {
+  input.buff = (char*) malloc(SIZE); 
   input.cur = 0;
   input.sz = SIZE;
   if (!input.buff)
     printf("Malloc failed\n");
 }
 
+static void add_char(char c) {
+  if (input.cur >= input.sz) {
+    input.buff = (char*) realloc(input.buff, input.sz * 2);
+    input.sz *= 2;
+  }
+  input.buff[input.cur++] = c;
+}
+
 /* Callbacks */
 
-void zero_pressed() {
+void new_calc::zero_pressed() {
   add_char('0');
 }
 
-void one_pressed() {
+void new_calc::one_pressed() {
   add_char('1');
 }
 
-void plus_pressed() {
+void new_calc::plus_pressed() {
   add_char('+');
 }
 
-void mult_pressed() {
+void new_calc::mult_pressed() {
   add_char('*');
 }
 
-
-int eval_pressed() {
+int new_calc::eval_pressed() {
   unsigned sum = 0;  // stores running sum
   unsigned mul = 1;  // temp store for multiplication
   unsigned n = 0;  // temp value of operand currently being parsed

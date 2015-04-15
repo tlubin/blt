@@ -7,7 +7,7 @@ namespace new_calc {
   void one_pressed();
   void plus_pressed();
   void mult_pressed();
-  void eval_pressed();
+  int eval_pressed();
 }
 
 #endif
