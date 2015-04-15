@@ -20,6 +20,7 @@ void new_calc::init_pressed() {
   input.sz = SIZE;
 }
 
+// BUG: if buffer is full, does not add character
 static void add_char(char c) {
   if (input.cur < input.sz)
     input.buff[input.cur++] = c;
