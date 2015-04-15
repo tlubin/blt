@@ -99,5 +99,4 @@ int new_calc::eval_pressed() {
 int main() {
   klee_make_symbolic(input.buf);
   klee_make_symbolic(input.cur);
-  klee_make_symbolic(input.sz);
 }
