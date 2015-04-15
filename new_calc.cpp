@@ -6,11 +6,11 @@
 
 #define SIZE 1<<8
 
-struct input {
+static struct input {
   char *buff;
   unsigned cur;
   unsigned sz;
-} new_calc::input;
+} input;
 
 /* Helpers */
 

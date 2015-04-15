@@ -8,19 +8,19 @@
 #define PLUS '+'
 #define SIZE 10
 
-struct input {
+static struct input {
   char *buff;
   unsigned cur;
   unsigned sz;
-} old_calc::input;
+} input;
 
-struct ops{
+static struct ops{
   unsigned *buff;
   unsigned cur;
   unsigned sz;
 } ops;
 
-struct res{
+static struct res{
   unsigned *buff;
   unsigned cur;
   unsigned sz;
@@ -38,7 +38,7 @@ void old_calc::init_pressed() {
     printf("Out of memory");
 }
 
-void add_char(char c) {
+static void add_char(char c) {
   if (input.cur >= input.sz) {
     input.buff = (char*) realloc(input.buff, input.sz*sizeof(unsigned)*2);
     input.sz *= 2;
