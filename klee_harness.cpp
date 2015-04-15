@@ -4,21 +4,29 @@
 #include <cstdio>
 #include <cassert>
 
-#define TRACE_DEPTH 10
+#define TRACE_DEPTH 12
+
+void print_array(unsigned *a, unsigned len) {
+  assert(len < (unsigned) -2);
+  char str[len + 2];
+  int i;
+  for (i = 0; i < len; ++i)
+    sprintf(&str[i], "%u", a[i]);
+  str[i++] = '\n';
+  str[i] = 0;
+  printf(str);
+}
 
 int main() {
   unsigned int fs[TRACE_DEPTH];
   klee_make_symbolic(&fs, sizeof(fs), "fs");
 
-  unsigned int o = 0;  // stupid hack for recording interleavings
   unsigned int *p;
   old_calc::init_pressed();
   new_calc::init_pressed();
-  
+ 
   for (p = fs; p < &fs[TRACE_DEPTH]; ++p) {
-    o *= 10;
     klee_assume (*p < 5);
-    o += *p;
     switch (*p) {
       case 0 :
         old_calc::zero_pressed();
@@ -45,14 +53,12 @@ int main() {
         break;
       }
       default :
-        break;
+        assert(0);
     }
   }
 
-  printf("%d\n", o);
   return 0;
 
   FAILURE:
-  printf("%d\n", o);
   klee_assert(0);
 }
