@@ -4,7 +4,7 @@
 #include <cstring>
 #include <cassert>
 
-#define SIZE 1<<18
+#define SIZE 1<<8
 
 struct input {
   char *buff;

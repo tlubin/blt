@@ -1,4 +1,6 @@
 #include <klee/klee.h>
+#include "new_calc.h"
+#include "old_calc.h"
 #include <cstdio>
 #include <cassert>
 
