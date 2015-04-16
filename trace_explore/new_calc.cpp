@@ -92,9 +92,3 @@ int new_calc::eval_pressed() {
   input.cur = 0;
   return -1;
 }
-
-int main() {
-  init_pressed();
-  klee_make_symbolic(&input.buff, SIZE, "buffer");
-  klee_make_symbolic(&input.cur, sizeof(input.cur), "pos");
-}
