@@ -1,6 +1,7 @@
 #include <climits>
 #include <cmath>
 #include <cstdio>
+#include <cassert>
 
 /* Example code taken from http://kukuruku.co/hub/cpp/avl-trees */
 
@@ -64,13 +65,13 @@ node* balance(node* p) { // balancing the p node
 
 /* Operations on Tree */
 
-node* insert(node* p, int k) { // insert k key in a tree with p root
-    if( !p ) return new node(k);
-    if( k<p->key )
-        p->left = insert(p->left,k);
+node* insert(node* root, int k) { // insert k key in a tree with root root
+    if( !root ) return new node(k);
+    if( k<root->key )
+        root->left = insert(root->left,k);
     else
-        p->right = insert(p->right,k);
-    return balance(p);
+        root->right = insert(root->right,k);
+    return balance(root);
 }
 
 node* findmin(node* p) { // find a node with minimal key in a p tree 
@@ -150,3 +151,10 @@ int isBSTUtil(node* node, int min, int max) {
 int isBST(node* node) {
   return(isBSTUtil(node, INT_MIN, INT_MAX)); 
 } 
+
+int main() {
+  node* root = new node(0);
+  insert(root, 1);
+  assert(isBalanced(root));
+  assert(isBST(root));
+}
