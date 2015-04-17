@@ -2,11 +2,6 @@ CXX = $(LLVMGCC)/llvm-g++
 CXXFLAGS = -emit-llvm -c -g
 LD = $(LLVMGCC)/llvm-link 
 
-avltree:
-	bash -c "ulimit -s unlimited"
-	$(CXX) $(CXXFLAGS) -I $(KLEE)/include avltree.cpp
-	klee -emit-all-errors avltree.o
-
 klee_induct:
 	bash -c "ulimit -s unlimited"
 	$(CXX) $(CXXFLAGS) -I $(KLEE)/include klee_induct.cpp
