@@ -1,13 +1,22 @@
-CXX = llvm-g++
-CXXFLAGS = -emit-llvm -c -g -S
-LD = ~/installations/llvm-2.9/Release+Asserts/bin/llvm-link
-KLEE_PATH = ~/installations/klee/include
+CXX = $(LLVMGCC)/llvm-g++
+CXXFLAGS = -emit-llvm -c -g
+LD = $(LLVMGCC)/llvm-link 
+
+avltree:
+	bash -c "ulimit -s unlimited"
+	$(CXX) $(CXXFLAGS) -I $(KLEE)/include avltree.cpp
+	klee -emit-all-errors avltree.o
+
+klee_induct:
+	bash -c "ulimit -s unlimited"
+	$(CXX) $(CXXFLAGS) -I $(KLEE)/include klee_induct.cpp
+	klee -emit-all-errors klee_induct.o 
 
 klee_harness:
 	bash -c "ulimit -s unlimited"
 	$(CXX) $(CXXFLAGS) -o old_calc.bc old_calc.cpp
 	$(CXX) $(CXXFLAGS) -o new_calc.bc new_calc.cpp
-	$(CXX) $(CXXFLAGS) -o klee_harness.bc -I $(KLEE_PATH) klee_harness.cpp
+	$(CXX) $(CXXFLAGS) -o klee_harness.bc -I $(KLEE)/include klee_harness.cpp
 	$(LD) -o combined.bc old_calc.bc new_calc.bc klee_harness.bc
 	klee -emit-all-errors combined.bc
 
