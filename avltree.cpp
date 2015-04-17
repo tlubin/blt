@@ -1,5 +1,6 @@
 #include<cstdio>
 #include<cstdlib>
+#include<cassert>
 #include<climits>
 
 /* code from http://www.geeksforgeeks.org/avl-tree-set-2-deletion/ */
@@ -290,6 +291,9 @@ int main()
  
     printf("\nPre order traversal after deletion of 10 \n");
     preOrder(root);
+
+    assert(isBST(root));
+    assert(isBalanced(root));
  
     return 0;
 }
