@@ -8,6 +8,8 @@ struct node {
     node(int k) { key = k; left = right = 0; height = 1; }
 };
 
+/* Helpers */
+
 unsigned char height(node* p) {
     return p?p->height:0;
 }
@@ -55,6 +57,8 @@ node* balance(node* p) { // balancing the p node
     }
     return p; // balancing is not required
 }
+
+/* Operations on Tree */
 
 node* insert(node* p, int k) { // insert k key in a tree with p root
     if( !p ) return new node(k);
