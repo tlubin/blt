@@ -4,7 +4,7 @@
 #include <cstring>
 #include <cassert>
 
-#define SIZE 9 
+#define SIZE 80
 
 static struct input {
   char *buff;
@@ -93,8 +93,3 @@ int new_calc::eval_pressed() {
   return -1;
 }
 
-int main() {
-  init_pressed();
-  klee_make_symbolic(&input.buff, SIZE, "buffer");
-  klee_make_symbolic(&input.cur, sizeof(input.cur), "pos");
-}

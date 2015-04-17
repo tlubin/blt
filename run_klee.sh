@@ -18,7 +18,7 @@ fi
 export PATH=$PATH:$KLEE/Release+Asserts/bin:$LLVMGCC
 
 klee_include="$KLEE/include"
-llvm-gcc -std=c99 -I $klee_include --emit-llvm -c -g $1
-filename_o=`echo $1 | sed 's/\.c/\.o/'`
+llvm-g++ -I $klee_include --emit-llvm -c -g $1
+filename_o=`echo $1 | sed 's/\.cpp/\.o/'`
 klee -emit-all-errors $filename_o
 

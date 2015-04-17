@@ -2,6 +2,7 @@
 #include<cstdlib>
 #include<cassert>
 #include<climits>
+//#include<klee/klee.h>
 
 /* code from http://www.geeksforgeeks.org/avl-tree-set-2-deletion/ */
 
@@ -269,6 +270,7 @@ int isBSTUtil(node* node, int min, int max) {
 int isBST(node* node) {
   return(isBSTUtil(node, INT_MIN, INT_MAX)); 
 } 
+
 int main()
 {
   struct node *root = NULL;
@@ -283,17 +285,14 @@ int main()
     root = insert(root, -1);
     root = insert(root, 1);
     root = insert(root, 2);
- 
-    printf("Pre order traversal of the constructed AVL tree is \n");
     preOrder(root);
- 
-    root = deleteNode(root, 10);
- 
-    printf("\nPre order traversal after deletion of 10 \n");
-    preOrder(root);
+    printf("\n");
 
-    assert(isBST(root));
-    assert(isBalanced(root));
- 
+    int key = 1;
+    root = insert(root, key);
+    /*klee_make_symbolic(&key, sizeof(key), "key");
+    klee_assert(isBalanced(root));
+    klee_assert(isBST(root));*/
+    preOrder(root);
     return 0;
 }
