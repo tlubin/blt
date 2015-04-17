@@ -98,3 +98,49 @@ node* remove(node* p, int k) { // deleting k key from p tree
     }
     return balance(p);
 }
+
+/* Checker Functions */
+
+// helper for isBalanced
+int get_height(struct node* node) {
+   if(node == NULL)
+       return 0;
+   return 1 + max(height(node->left), height(node->right));
+} 
+
+// Returns true if binary tree with root as root is height-balanced 
+bool isBalanced(node *root) {
+   int lh; /* for height of left subtree */
+   int rh; /* for height of right subtree */ 
+ 
+   if(root == NULL)
+    return 1; 
+ 
+   lh = get_height(root->left);
+   rh = get_height(root->right);
+ 
+   if( abs(lh-rh) <= 1 &&
+       isBalanced(root->left) &&
+       isBalanced(root->right))
+     return 1;
+ 
+   return 0;
+}
+
+// Checks correctness of binary search tree structure
+int isBST(node* node) {
+  return(isBSTUtil(node, INT_MIN, INT_MAX)); 
+} 
+ 
+// Helper function: Returns true if the given tree is a BST and its values are >= min and <= max. 
+int isBSTUtil(node* node, int min, int max) {
+  if (node == NULL) 
+     return 1;
+  if (node->key < min || node->key > max) 
+     return 0; 
+ 
+  return
+    isBSTUtil(node->left, min, node->key-1) &&  // Allow only distinct values
+    isBSTUtil(node->right, node->key+1, max);  // Allow only distinct values
+} 
+
