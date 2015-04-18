@@ -1,11 +1,10 @@
-#include <klee/klee.h>
-#include "new_calc.h" 
+#include "old_calc.h" 
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <cassert>
 
-#define SIZE 9 
+#define SIZE 1000 
 
 static struct input {
   char *buff;
@@ -15,7 +14,7 @@ static struct input {
 
 /* Helpers */
 
-void new_calc::init_pressed() {
+void old_calc::init_pressed() {
   input.buff = (char*) malloc(SIZE); 
   input.cur = 0;
   input.sz = SIZE;
@@ -31,23 +30,23 @@ static void add_char(char c) {
 
 /* Callbacks */
 
-void new_calc::zero_pressed() {
+void old_calc::zero_pressed() {
   add_char('0');
 }
 
-void new_calc::one_pressed() {
+void old_calc::one_pressed() {
   add_char('1');
 }
 
-void new_calc::plus_pressed() {
+void old_calc::plus_pressed() {
   add_char('+');
 }
 
-void new_calc::mult_pressed() {
+void old_calc::mult_pressed() {
   add_char('*');
 }
 
-int new_calc::eval_pressed() {
+int old_calc::eval_pressed() {
   unsigned sum = 0;  // stores running sum
   unsigned mul = 1;  // temp store for multiplication
   unsigned n = 0;  // temp value of operand currently being parsed
@@ -96,7 +95,3 @@ int new_calc::eval_pressed() {
   return -1;
 }
 
-int main() {
-  klee_make_symbolic(input.buf);
-  klee_make_symbolic(input.cur);
-}
