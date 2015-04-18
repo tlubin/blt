@@ -1,9 +1,8 @@
 #include <cstring>
 #include "LilIntBag.hpp"
-#include "IntBag.hpp"
 
 LilIntBag::LilIntBag() :
-  sz(16), cur(0), invalidMarker(0x80000000) {
+  sz(16), cur(0) /*, invalidMarker(0x80000000)*/ {
   a = new int[sz];
 }
 
@@ -20,8 +19,8 @@ void LilIntBag::resize() {
 }
 
 bool LilIntBag::member(int x) {
-  if (x == invalidMarker)
-    return false;
+  /*if (x == invalidMarker)
+    return false;*/
   for (int i = 0; i < cur; ++i)
     if (a[i] == x)
       return true;
@@ -34,10 +33,32 @@ void LilIntBag::insert(int x) {
   a[cur++] = x;
 }
 
+/*
 void LilIntBag::remove(int x) {
   for (int i = 0; i < cur; ++i)
     if (a[i] == x) {
       a[i] = invalidMarker;
       return;
     }
+}
+*/
+
+// This is a more realistic remove...
+void LilIntBag::remove(int x) {
+  for (int i = 0; i < cur; ++i)
+    if (a[i] == x) {
+      a[i] = a[--cur];
+      return;
+    }
+}
+
+unsigned LilIntBag::get_size() {
+  return cur;
+}
+
+unsigned LilIntBag::to_array(int*& dest) {
+  unsigned n = get_size();
+  dest = new int[n];
+  memcpy(dest, a, n * sizeof(int));
+  return n;
 }

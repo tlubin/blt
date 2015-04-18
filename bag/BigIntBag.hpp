@@ -10,6 +10,8 @@ class BigIntBag : public IntBag {
     bool member(int);
     void insert(int);
     void remove(int);
+    unsigned get_size();
+    unsigned to_array(int*&);
 
   private:
     // ...
