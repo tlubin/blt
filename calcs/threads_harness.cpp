@@ -4,12 +4,14 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cassert>
+#include <unistd.h>
+#include <sys/wait.h>
 
-#define SYM_DEPTH 2
-#define CON_DEPTH 5
+#define SYM_DEPTH 1
+#define CON_DEPTH 10
 #define NUM_FUNCS 5 
-#define ITERS 5
-#define NUM_SWARMS (1U<<NUM_FUNCS);
+#define ITERS 1
+#define NUM_SWARMS 3 //(1U<<NUM_FUNCS)
 
 struct funcs {
   int sz;
@@ -63,13 +65,38 @@ void call_function(unsigned int p) {
   klee_assert(0);
 }
 
-int main() {
-  unsigned int output[ITERS*(CON_DEPTH+SYM_DEPTH)];
-  int cur = 0;
-  
+void explore(funcs swarm, int i) {
+  printf("swarm %d*\n", i);
   // symbolic functions
   unsigned int fs[SYM_DEPTH];
+  klee_make_symbolic(&fs, sizeof(fs), "fs");
 
+  old_calc::init_pressed();
+  new_calc::init_pressed();
+   
+  // repeat conc-sym-conc-sym ITERS many times
+  for (int i = 0; i < ITERS; i++) {
+    // concrete execution 
+    for (int j = 0; j < CON_DEPTH; j++) {
+      if (swarm.sz) {
+	unsigned int r = rand() % (swarm.sz);
+	call_function(swarm.fs[r]);
+      }
+    }
+      
+    // symbolic exploration
+    unsigned int *p;
+    for (p = fs; p < &fs[SYM_DEPTH]; ++p) {
+      klee_assume (*p < NUM_FUNCS);
+      call_function(*p);
+    }
+  }
+}
+
+int main() {
+  //  unsigned int output[ITERS*(CON_DEPTH+SYM_DEPTH)];
+  //  int cur = 0;
+  
   // swarm function sets
   int i_max = NUM_SWARMS;
   funcs* sets = new funcs[i_max];
@@ -86,37 +113,11 @@ int main() {
  
   // do exploration
   for (int swarm = 0; swarm < i_max; swarm++) {
-    cur = 0;
-    printf("swarm %d\n", swarm);
-    old_calc::init_pressed();
-    new_calc::init_pressed();
-   
-    // repeat conc-sym-conc-sym ITERS many times
-    for (int i = 0; i < ITERS; i++) {
-      // concrete execution 
-      for (int j = 0; j < CON_DEPTH; j++) {
-        if (sets[swarm].sz) {
-          unsigned int r = rand() % (sets[swarm].sz);
-          output[cur++] = r;
-          call_function(sets[swarm].fs[r]);
-        }
-      }
-      
-      // symbolic exploration
-      unsigned int *p;
-      klee_make_symbolic(&fs, sizeof(fs), "fs");
-      for (p = fs; p < &fs[SYM_DEPTH]; ++p) {
-        klee_assume (*p < NUM_FUNCS);
-        output[cur++] = *p;
-        call_function(*p);
-      }
+    int pid = fork();
+    if (pid == 0) {
+      explore(sets[swarm], swarm);
+      exit(0);
     }
-    // trace explored
-    print_array(output, cur);
-    printf("%d\n", cur);
-    
-    // clean up memory once done with swarm
-    delete[] sets[swarm].fs;
+    waitpid(pid, 0, 0);
   }
-  delete[] sets;
 }
