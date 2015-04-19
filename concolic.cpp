@@ -77,7 +77,6 @@ int main() {
   for (int i = 0; i < i_max; ++i) {
     sets[i].fs = new int[NUM_FUNCS];
     sets[i].sz = 0;
-    // fill in funcs of set and set size
     for (int x = i, j = 0; x; x >>= 1, ++j) {
       if (x & 1) {
         sets[i].fs[sets[i].sz] = j;
@@ -85,10 +84,11 @@ int main() {
       }
     }
   }
-  
+ 
+  // do exploration
   for (int swarm = 0; swarm < i_max; swarm++) {
     cur = 0;
-    // printf("swarm %d\n", swarm);
+    //printf("swarm %d\n", swarm);
     old_calc::init_pressed();
     new_calc::init_pressed();
    
@@ -113,5 +113,9 @@ int main() {
     }
     // trace explored
     print_array(output, cur);
+    
+    // clean up memory once done with swarm
+    delete[] sets[swarm].fs;
   }
+  delete[] sets;
 }
