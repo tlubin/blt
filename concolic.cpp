@@ -5,9 +5,10 @@
 #include <cstdlib>
 #include <cassert>
 
-#define SYM_DEPTH 3 
-#define CON_DEPTH 10 
+#define SYM_DEPTH 2
+#define CON_DEPTH 3 
 #define NUM_FUNCS 5 
+#define ITERS 5 
 #define NUM_SWARMS (1U<<NUM_FUNCS);
 
 struct funcs {
@@ -63,12 +64,18 @@ void call_function(unsigned int p) {
 }
 
 int main() {
-  int i_max = NUM_SWARMS;
-  unsigned int output[CON_DEPTH+SYM_DEPTH];
+  unsigned int output[ITERS*(CON_DEPTH+SYM_DEPTH)];
   int cur = 0;
-  funcs* sets = new funcs[i_max]; // 2^|F| sets in powerset
+  
+  // symbolic functions
+  unsigned int fs[SYM_DEPTH];
+  klee_make_symbolic(&fs, sizeof(fs), "fs");
+  
+  // swarm function sets
+  int i_max = NUM_SWARMS;
+  funcs* sets = new funcs[i_max];
   for (int i = 0; i < i_max; ++i) {
-    sets[i].fs = new int[i_max];
+    sets[i].fs = new int[NUM_FUNCS];
     sets[i].sz = 0;
     // fill in funcs of set and set size
     for (int x = i, j = 0; x; x >>= 1, ++j) {
@@ -78,31 +85,33 @@ int main() {
       }
     }
   }
-  unsigned int fs[SYM_DEPTH];
-  klee_make_symbolic(&fs, sizeof(fs), "fs");
-
+  
   for (int swarm = 0; swarm < i_max; swarm++) {
     cur = 0;
-    //printf("swarm %d\n", swarm);
-    //concrete execution 
+    // printf("swarm %d\n", swarm);
     old_calc::init_pressed();
     new_calc::init_pressed();
-    
-    for (int j = 0; j < CON_DEPTH; j++) {
-      if (sets[swarm].sz) {
-        unsigned int r = rand() % (sets[swarm].sz);
-        output[cur++] = r;
-        call_function(sets[swarm].fs[r]);
+   
+    // repeat conc-sym-conc-sym ITERS many times
+    for (int i = 0; i < ITERS; i++) {
+      // concrete execution 
+      for (int j = 0; j < CON_DEPTH; j++) {
+        if (sets[swarm].sz) {
+          unsigned int r = rand() % (sets[swarm].sz);
+          output[cur++] = r;
+          call_function(sets[swarm].fs[r]);
+        }
+      }
+      
+      // symbolic exploration
+      unsigned int *p;
+      for (p = fs; p < &fs[SYM_DEPTH]; ++p) {
+        klee_assume (*p < NUM_FUNCS);
+        output[cur++] = *p;
+        call_function(*p);
       }
     }
-    
-    // symbolic exploration
-    unsigned int *p;
-    for (p = fs; p < &fs[SYM_DEPTH]; ++p) {
-      klee_assume (*p < NUM_FUNCS);
-      output[cur++] = *p;
-      call_function(*p);
-    }
+    // trace explored
     print_array(output, cur);
   }
 }
