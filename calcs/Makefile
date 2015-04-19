@@ -1,6 +1,6 @@
 CXX = $(LLVMGCC)/llvm-g++
 CXXFLAGS = -emit-llvm -c -g
-LD = $(LLVM)/llvm-link 
+LD = $(LLVM29)/llvm-link
 
 calc_harness:
 	bash -c "ulimit -s unlimited"
