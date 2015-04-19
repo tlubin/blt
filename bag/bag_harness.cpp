@@ -20,6 +20,9 @@ struct funcs {
   int* fs;
 };
 
+unsigned int output[ITERS*(CON_DEPTH+SYM_DEPTH)];
+int cur = 0;
+
 void print_array(unsigned *a, unsigned len) {
   assert(len < (unsigned) -2);
   char str[len + 2];
@@ -31,25 +34,26 @@ void print_array(unsigned *a, unsigned len) {
   printf(str);
 }
 
-void call_function(DynamicIntBag dib, LilIntBag lib, unsigned int p, int* args) {
+void call_function(DynamicIntBag* dib, LilIntBag* lib, unsigned int p, int* args) {
+  output[cur++] = p;
   int arg = args[p];
   switch (p) {
     case 0 : {
-      bool r1 = dib.member(arg);
-      bool r2 = lib.member(arg);
+      bool r1 = dib->member(arg);
+      bool r2 = lib->member(arg);
       if (r1 ^ r2) goto FAILURE;
       break; }
     case 1 : {
-      dib.insert(arg);
-      lib.insert(arg);
+      dib->insert(arg);
+      lib->insert(arg);
       break; }
     case 2 : {
-      dib.remove(arg);
-      lib.remove(arg);
+      dib->remove(arg);
+      lib->remove(arg);
       break; }
     case 3 : {
-      unsigned r1 = dib.get_size();
-      unsigned r2 = lib.get_size();
+      unsigned r1 = dib->get_size();
+      unsigned r2 = lib->get_size();
       if (r1 != r2) goto FAILURE;
       break; }
     default :
@@ -64,14 +68,15 @@ void call_function(DynamicIntBag dib, LilIntBag lib, unsigned int p, int* args) 
 
 void explore(funcs swarm, int i) {
   printf("swarm %d*\n", i);
-  int cargs[NUM_FUNCS];       // concrete argument array
   unsigned int fs[SYM_DEPTH]; // symbolic functions
   int args[NUM_FUNCS];        // symbolic argument array
   klee_make_symbolic(&fs, sizeof(fs), "fs");
   klee_make_symbolic(&args, sizeof(args), "args");
 
-  DynamicIntBag dib;
-  LilIntBag lib;
+  DynamicIntBag* dib = new DynamicIntBag();
+  LilIntBag* lib = new LilIntBag();
+  int cargs[NUM_FUNCS];       // concrete argument array
+
   // repeat conc-sym-conc-sym ITERS many times
   for (int i = 0; i < ITERS; i++) {
     // concrete execution 
@@ -80,7 +85,7 @@ void explore(funcs swarm, int i) {
           unsigned int r = rand() % (swarm.sz);
           for (int k = 0; k < NUM_FUNCS; k++)
             cargs[k] = rand() % INT_MAX;
-          call_function(dib, lib, swarm.fs[r], args);
+          call_function(dib, lib, swarm.fs[r], cargs);
         }
       }
       
@@ -91,12 +96,10 @@ void explore(funcs swarm, int i) {
       call_function(dib, lib, *p, args);
     }
   }
+  //print_array(output, cur);
 }
 
 int main() {
-  //  unsigned int output[ITERS*(CON_DEPTH+SYM_DEPTH)];
-  //  int cur = 0;
-  
   // swarm function sets
   int i_max = NUM_SWARMS;
   funcs* sets = new funcs[i_max];
@@ -120,6 +123,7 @@ int main() {
       exit(0);
     }
     waitpid(pid, 0, 0);
+    cur = 0;
     delete[] sets[swarm].fs;
   }
   // comment out waitpid above and uncomment the following code to fork all swarms at once

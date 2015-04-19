@@ -13,8 +13,11 @@ class BigIntBag : public IntBag {
     unsigned get_size();
     unsigned to_array(int*&);
 
-  private:
-    // ...
+  private: // copied from LilIntBag for now
+    int* a;
+    unsigned cur;
+    unsigned sz;
+    void resize();
 };
 
 #endif
