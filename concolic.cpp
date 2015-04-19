@@ -64,6 +64,8 @@ void call_function(unsigned int p) {
 
 int main() {
   int i_max = NUM_SWARMS;
+  unsigned int output[CON_DEPTH+SYM_DEPTH];
+  int cur = 0;
   funcs* sets = new funcs[i_max]; // 2^|F| sets in powerset
   for (int i = 0; i < i_max; ++i) {
     sets[i].fs = new int[i_max];
@@ -80,6 +82,7 @@ int main() {
   klee_make_symbolic(&fs, sizeof(fs), "fs");
 
   for (int swarm = 0; swarm < i_max; swarm++) {
+    cur = 0;
     //printf("swarm %d\n", swarm);
     //concrete execution 
     old_calc::init_pressed();
@@ -88,6 +91,7 @@ int main() {
     for (int j = 0; j < CON_DEPTH; j++) {
       if (sets[swarm].sz) {
         unsigned int r = rand() % (sets[swarm].sz);
+        output[cur++] = r;
         call_function(sets[swarm].fs[r]);
       }
     }
@@ -96,7 +100,9 @@ int main() {
     unsigned int *p;
     for (p = fs; p < &fs[SYM_DEPTH]; ++p) {
       klee_assume (*p < NUM_FUNCS);
+      output[cur++] = *p;
       call_function(*p);
     }
+    print_array(output, cur);
   }
 }
