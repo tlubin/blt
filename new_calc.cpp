@@ -4,7 +4,7 @@
 #include <cstring>
 #include <cassert>
 
-#define SIZE 4
+#define SIZE 11 
 
 static struct input {
   char *buff;

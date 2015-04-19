@@ -5,8 +5,8 @@
 #include <cstdlib>
 #include <cassert>
 
-#define SYM_DEPTH 1 
-#define CON_DEPTH 5
+#define SYM_DEPTH 3 
+#define CON_DEPTH 10 
 #define NUM_FUNCS 5 
 #define NUM_SWARMS (1U<<NUM_FUNCS);
 
@@ -58,7 +58,7 @@ void call_function(unsigned int p) {
   return;
 
   FAILURE:
-  printf("%d\n", p);
+  printf("Failed on %d\n", p);
   klee_assert(0);
 }
 
@@ -80,7 +80,7 @@ int main() {
   klee_make_symbolic(&fs, sizeof(fs), "fs");
 
   for (int swarm = 0; swarm < i_max; swarm++) {
-    printf("swarm %d\n", swarm);
+    //printf("swarm %d\n", swarm);
     //concrete execution 
     old_calc::init_pressed();
     new_calc::init_pressed();
