@@ -6,7 +6,7 @@
 #include <cassert>
 
 #define SYM_DEPTH 1 
-#define CON_DEPTH 2
+#define CON_DEPTH 5
 #define NUM_FUNCS 5 
 #define NUM_SWARMS (1U<<NUM_FUNCS);
 
@@ -76,9 +76,11 @@ int main() {
       }
     }
   }
+  unsigned int fs[SYM_DEPTH];
+  klee_make_symbolic(&fs, sizeof(fs), "fs");
 
   for (int swarm = 0; swarm < i_max; swarm++) {
-    printf("running swarm %d\n", swarm);
+    printf("swarm %d\n", swarm);
     //concrete execution 
     old_calc::init_pressed();
     new_calc::init_pressed();
@@ -91,8 +93,6 @@ int main() {
     }
     
     // symbolic exploration
-    unsigned int fs[SYM_DEPTH];
-    klee_make_symbolic(&fs, sizeof(fs), "fs");
     unsigned int *p;
     for (p = fs; p < &fs[SYM_DEPTH]; ++p) {
       klee_assume (*p < NUM_FUNCS);
