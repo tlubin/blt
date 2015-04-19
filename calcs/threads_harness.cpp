@@ -8,7 +8,7 @@
 #define SYM_DEPTH 2
 #define CON_DEPTH 5
 #define NUM_FUNCS 5 
-#define ITERS 5
+#define ITERS 1
 #define NUM_SWARMS (1U<<NUM_FUNCS);
 
 struct funcs {
