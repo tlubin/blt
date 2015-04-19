@@ -2,6 +2,7 @@
 *.slo
 *.lo
 *.o
+*.bc
 *.obj
 
 # Precompiled Headers
