@@ -1,2 +1,0 @@
-KLEE: ERROR: /home/tslilyai/blt/calcs/calc_harness.cpp:63: ASSERTION FAIL: 0
-KLEE: ERROR: /home/tslilyai/blt/calcs/calc_harness.cpp:63: ASSERTION FAIL: 0

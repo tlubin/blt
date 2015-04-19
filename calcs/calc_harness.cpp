@@ -6,7 +6,7 @@
 #include <cassert>
 
 #define SYM_DEPTH 2
-#define CON_DEPTH 3 
+#define CON_DEPTH 400 
 #define NUM_FUNCS 5 
 #define ITERS 5 
 #define NUM_SWARMS (1U<<NUM_FUNCS);
@@ -112,7 +112,7 @@ int main() {
       }
     }
     // trace explored
-    print_array(output, cur);
+    //print_array(output, cur);
     
     // clean up memory once done with swarm
     delete[] sets[swarm].fs;

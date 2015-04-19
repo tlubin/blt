@@ -1,7 +1,0 @@
-Error: ASSERTION FAIL: 0
-File: /home/tslilyai/blt/calcs/calc_harness.cpp
-Line: 63
-assembly.ll line: 552
-Stack: 
-	#000000552 in _Z13call_functionj (p=4) at /home/tslilyai/blt/calcs/calc_harness.cpp:63
-	#100000751 in main () at /home/tslilyai/blt/calcs/calc_harness.cpp:102
