@@ -1,6 +1,6 @@
 #include <klee/klee.h>
-#include "new_calc.h"
-#include "old_calc.h"
+#include "LilIntBag.hpp"
+#include "DynamicIntBag.hpp"
 #include <cstdio>
 #include <cstdlib>
 #include <cassert>
@@ -28,34 +28,35 @@ void print_array(unsigned *a, unsigned len) {
 }
 
 
-void call_function(unsigned int p) {
-    switch (p) {
-      case 0 :
-        old_calc::zero_pressed();
-        new_calc::zero_pressed();
-        break;
-      case 1 :
-        old_calc::one_pressed();
-        new_calc::one_pressed();
-        break;
-      case 2 :
-        old_calc::plus_pressed();
-        new_calc::plus_pressed();
-        break;
-      case 3 :
-        old_calc::mult_pressed();
-        new_calc::mult_pressed();
-        break;
-      case 4 :
-      {
-        int old_r = old_calc::eval_pressed();
-        int new_r = new_calc::eval_pressed();
-        if (old_r != new_r) goto FAILURE;
-        break;
-      }
-      default :
-        break;
-    }
+void call_function(unsigned int p, void* args) {
+  // TODO deal with arguments? 
+  switch (p) {
+    case 0 : {
+      bool r1 = DynamicIntBag::member();
+      bool r2 = LilIntBag::member();
+      if (r1 ^ r2) goto FAILURE;
+      break; }
+    case 1 : {
+      DynamicIntBag::insert();
+      LilIntBag::insert();
+      break; }
+    case 2 : {
+      DynamicIntBag::remove();
+      LilIntBag::remove();
+      break; }
+    case 3 : {
+      unsigned r1 = DynamicIntBag::get_size();
+      unsigned r2 = LilIntBag::get_size();
+      if (r1 != r2) goto FAILURE;
+      break; }
+    case 4 : {
+      unsigned r1 = DynamicIntBag::to_array();
+      unsigned r2 = LilIntBag::to_array();
+      if (r1 != r2) goto FAILURE;
+      break; }
+    default :
+      break;
+  }
   return;
 
   FAILURE:
@@ -69,6 +70,9 @@ int main() {
   
   // symbolic functions
   unsigned int fs[SYM_DEPTH];
+  //TODO symbolic arguments
+  void* sym_args;
+  klee_make_symbolic(&sym_args, sizeof(sym_args), "arguments");
   klee_make_symbolic(&fs, sizeof(fs), "fs");
   
   // swarm function sets
@@ -89,8 +93,6 @@ int main() {
   for (int swarm = 0; swarm < i_max; swarm++) {
     cur = 0;
     //printf("swarm %d\n", swarm);
-    old_calc::init_pressed();
-    new_calc::init_pressed();
    
     // repeat conc-sym-conc-sym ITERS many times
     for (int i = 0; i < ITERS; i++) {
@@ -99,7 +101,8 @@ int main() {
         if (sets[swarm].sz) {
           unsigned int r = rand() % (sets[swarm].sz);
           output[cur++] = r;
-          call_function(sets[swarm].fs[r]);
+          // TODO generate arguments
+          call_function(sets[swarm].fs[r], args);
         }
       }
       
@@ -108,7 +111,7 @@ int main() {
       for (p = fs; p < &fs[SYM_DEPTH]; ++p) {
         klee_assume (*p < NUM_FUNCS);
         output[cur++] = *p;
-        call_function(*p);
+        call_function(*p, sym_args);
       }
     }
     // trace explored
@@ -119,3 +122,4 @@ int main() {
   }
   delete[] sets;
 }
+

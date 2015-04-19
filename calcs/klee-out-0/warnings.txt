@@ -1,0 +1,8 @@
+KLEE: WARNING: undefined reference to function: _Unwind_Resume_or_Rethrow
+KLEE: WARNING: undefined reference to function: __gxx_personality_v0
+KLEE: WARNING: undefined reference to function: printf
+KLEE: WARNING: undefined reference to function: rand
+KLEE: WARNING: undefined reference to function: sprintf
+KLEE: WARNING ONCE: calling external: sprintf(35355984, 34646656, (ReadLSB w32 0 fs))
+KLEE: WARNING ONCE: calling external: printf(35355984)
+KLEE: WARNING ONCE: calling external: rand()
