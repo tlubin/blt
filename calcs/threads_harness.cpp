@@ -11,7 +11,7 @@
 #define CON_DEPTH 10
 #define NUM_FUNCS 5 
 #define ITERS 1
-#define NUM_SWARMS 3 //(1U<<NUM_FUNCS)
+#define NUM_SWARMS (1U<<NUM_FUNCS)
 
 struct funcs {
   int sz;
@@ -28,7 +28,6 @@ void print_array(unsigned *a, unsigned len) {
   str[i] = 0;
   printf(str);
 }
-
 
 void call_function(unsigned int p) {
   switch (p) {
@@ -79,8 +78,8 @@ void explore(funcs swarm, int i) {
     // concrete execution 
     for (int j = 0; j < CON_DEPTH; j++) {
       if (swarm.sz) {
-	unsigned int r = rand() % (swarm.sz);
-	call_function(swarm.fs[r]);
+        unsigned int r = rand() % (swarm.sz);
+        call_function(swarm.fs[r]);
       }
     }
       

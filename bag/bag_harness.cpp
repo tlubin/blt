@@ -4,11 +4,15 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cassert>
+#include <climits>
+#include <cerrno>
+#include <unistd.h>
+#include <sys/wait.h>
 
 #define SYM_DEPTH 2
 #define CON_DEPTH 3 
-#define NUM_FUNCS 5 
-#define ITERS 5 
+#define NUM_FUNCS 4
+#define ITERS 1
 #define NUM_SWARMS (1U<<NUM_FUNCS);
 
 struct funcs {
@@ -27,31 +31,25 @@ void print_array(unsigned *a, unsigned len) {
   printf(str);
 }
 
-
-void call_function(unsigned int p, void* args) {
-  // TODO deal with arguments? 
+void call_function(DynamicIntBag dib, LilIntBag lib, unsigned int p, int* args) {
+  int arg = args[p];
   switch (p) {
     case 0 : {
-      bool r1 = DynamicIntBag::member();
-      bool r2 = LilIntBag::member();
+      bool r1 = dib.member(arg);
+      bool r2 = lib.member(arg);
       if (r1 ^ r2) goto FAILURE;
       break; }
     case 1 : {
-      DynamicIntBag::insert();
-      LilIntBag::insert();
+      dib.insert(arg);
+      lib.insert(arg);
       break; }
     case 2 : {
-      DynamicIntBag::remove();
-      LilIntBag::remove();
+      dib.remove(arg);
+      lib.remove(arg);
       break; }
     case 3 : {
-      unsigned r1 = DynamicIntBag::get_size();
-      unsigned r2 = LilIntBag::get_size();
-      if (r1 != r2) goto FAILURE;
-      break; }
-    case 4 : {
-      unsigned r1 = DynamicIntBag::to_array();
-      unsigned r2 = LilIntBag::to_array();
+      unsigned r1 = dib.get_size();
+      unsigned r2 = lib.get_size();
       if (r1 != r2) goto FAILURE;
       break; }
     default :
@@ -64,16 +62,40 @@ void call_function(unsigned int p, void* args) {
   klee_assert(0);
 }
 
-int main() {
-  unsigned int output[ITERS*(CON_DEPTH+SYM_DEPTH)];
-  int cur = 0;
-  
-  // symbolic functions
-  unsigned int fs[SYM_DEPTH];
-  //TODO symbolic arguments
-  void* sym_args;
-  klee_make_symbolic(&sym_args, sizeof(sym_args), "arguments");
+void explore(funcs swarm, int i) {
+  printf("swarm %d*\n", i);
+  int cargs[NUM_FUNCS];       // concrete argument array
+  unsigned int fs[SYM_DEPTH]; // symbolic functions
+  int args[NUM_FUNCS];        // symbolic argument array
   klee_make_symbolic(&fs, sizeof(fs), "fs");
+  klee_make_symbolic(&args, sizeof(args), "args");
+
+  DynamicIntBag dib;
+  LilIntBag lib;
+  // repeat conc-sym-conc-sym ITERS many times
+  for (int i = 0; i < ITERS; i++) {
+    // concrete execution 
+    for (int j = 0; j < CON_DEPTH; j++) {
+        if (swarm.sz) {
+          unsigned int r = rand() % (swarm.sz);
+          for (int k = 0; k < NUM_FUNCS; k++)
+            cargs[k] = rand() % INT_MAX;
+          call_function(dib, lib, swarm.fs[r], args);
+        }
+      }
+      
+    // symbolic exploration
+    unsigned int *p;
+    for (p = fs; p < &fs[SYM_DEPTH]; ++p) {
+      klee_assume (*p < NUM_FUNCS);
+      call_function(dib, lib, *p, args);
+    }
+  }
+}
+
+int main() {
+  //  unsigned int output[ITERS*(CON_DEPTH+SYM_DEPTH)];
+  //  int cur = 0;
   
   // swarm function sets
   int i_max = NUM_SWARMS;
@@ -90,36 +112,22 @@ int main() {
   }
  
   // do exploration
+  pid_t pid;
   for (int swarm = 0; swarm < i_max; swarm++) {
-    cur = 0;
-    //printf("swarm %d\n", swarm);
-   
-    // repeat conc-sym-conc-sym ITERS many times
-    for (int i = 0; i < ITERS; i++) {
-      // concrete execution 
-      for (int j = 0; j < CON_DEPTH; j++) {
-        if (sets[swarm].sz) {
-          unsigned int r = rand() % (sets[swarm].sz);
-          output[cur++] = r;
-          // TODO generate arguments
-          call_function(sets[swarm].fs[r], args);
-        }
-      }
-      
-      // symbolic exploration
-      unsigned int *p;
-      for (p = fs; p < &fs[SYM_DEPTH]; ++p) {
-        klee_assume (*p < NUM_FUNCS);
-        output[cur++] = *p;
-        call_function(*p, sym_args);
-      }
+    pid = fork();
+    if (pid == 0) {
+      explore(sets[swarm], swarm);
+      exit(0);
     }
-    // trace explored
-    print_array(output, cur);
-    
-    // clean up memory once done with swarm
+    waitpid(pid, 0, 0);
     delete[] sets[swarm].fs;
   }
+  // comment out waitpid above and uncomment the following code to fork all swarms at once
+  /*while (pid = waitpid(-1, NULL, 0)) {
+    if (errno == ECHILD)
+      break;
+  }*/
+  
+  // clean up memory once done with swarm
   delete[] sets;
 }
-
