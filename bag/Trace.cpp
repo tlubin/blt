@@ -34,10 +34,11 @@ conc_node* Trace::trace1() {
   conc_node *hd = create_conc_node(0, hd_funcs, con_depth);
 
   funcs sym_funcs;
-  sym_funcs.sz = 2;
-  sym_funcs.fs = new int[2];
+  sym_funcs.sz = 3;
+  sym_funcs.fs = new int[3];
   sym_funcs.fs[0] = 0;
   sym_funcs.fs[1] = 2;
+  sym_funcs.fs[2] = 3;
   conc_node *sym = create_conc_node(1, sym_funcs, sym_depth);
 
   funcs hd2_funcs;
@@ -48,10 +49,11 @@ conc_node* Trace::trace1() {
   conc_node *hd2 = create_conc_node(0, hd2_funcs, con_depth);
 
   funcs sym2_funcs;
-  sym2_funcs.sz = 2;
-  sym2_funcs.fs = new int[2];
+  sym2_funcs.sz = 3;
+  sym2_funcs.fs = new int[3];
   sym2_funcs.fs[0] = 0;
   sym2_funcs.fs[1] = 2;
+  sym2_funcs.fs[1] = 3;
   conc_node *sym2 = create_conc_node(1, sym2_funcs, sym_depth);
 
   hd->next = sym;

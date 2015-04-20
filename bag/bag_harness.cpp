@@ -10,7 +10,7 @@
 #include <sys/wait.h>
 
 #define NUM_FUNCS 4
-#define SYM_DEPTH 2
+#define SYM_DEPTH 3
 #define CON_DEPTH 1000
 
 /* Globals and Helper Function for Prints */
