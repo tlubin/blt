@@ -1,6 +1,7 @@
 #include "DynamicIntBag.hpp"
 #include "LilIntBag.hpp"
 #include "BigIntBag.hpp"
+#include <cstdio> 
 
 DynamicIntBag::DynamicIntBag() :
   threshold(256), switched(false) {
@@ -47,5 +48,6 @@ void DynamicIntBag::switch_bag() {
   bag = new BigIntBag();
   for (int i = 0; i < n; ++i)
     bag->insert(tmp[i]);
+  printf("switched bag size: %u\n", bag->get_size());
   delete [] tmp;
 }

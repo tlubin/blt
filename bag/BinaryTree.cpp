@@ -122,7 +122,7 @@ void BinaryTree::drop(int key) {
 }
 
 unsigned BinaryTree::get_size() {
-  get_size(root);
+  return get_size(root);
 }
 
 unsigned BinaryTree::get_size(Node* root) {
@@ -144,19 +144,19 @@ void BinaryTree::deleteTree(Node* root) {
 /*
 int main() {
     BinaryTree bt;
-    bt.add(1);
-    bt.add(3);
-    bt.add(-15);
+    for (int i = 0; i < 300; i++)
+      bt.add(i);
     assert(bt.search(1));
     assert(bt.search(3));
-    assert(bt.search(-15));
-    assert(bt.get_size() == 3);
+    assert(bt.search(15));
+    assert(bt.search(299));
+    assert(bt.get_size() == 300);
     bt.drop(1);
     bt.drop(3);
-    assert(bt.get_size() == 1);
+    assert(bt.get_size() == 298);
     assert(!bt.search(1));
     assert(!bt.search(3));
-    assert(bt.search(-15));
+    assert(bt.search(15));
     printf("Tests passed! There's no way there's any bugs...\n");
     return 0;
 }
