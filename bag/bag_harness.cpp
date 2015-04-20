@@ -5,8 +5,6 @@
 #include <cstdlib>
 #include <cassert>
 #include <climits>
-#include <unistd.h>
-#include <sys/wait.h>
 
 #define SYM_DEPTH 2
 #define CON_DEPTH 100 
@@ -90,7 +88,6 @@ void call_function(DynamicIntBag* dib, LilIntBag* lib, unsigned int p, int* args
   printf("Failed on %d\n", p);
   klee_assert(0);
 }
-
 
 void sym_explore(conc_node *node, DynamicIntBag* dib, LilIntBag* lib) {
   unsigned sym_idxs[node->length];
