@@ -7,8 +7,8 @@
 #include <climits>
 
 #define NUM_FUNCS 4
-#define SYM_DEPTH 2 
-#define CON_DEPTH 250 // XXX fails with greater than 300?
+#define SYM_DEPTH 8 
+#define CON_DEPTH 256 // XXX fails with greater than 256?
 
 struct funcs {
   int sz;   // number of functions in swarm
