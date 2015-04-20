@@ -18,6 +18,32 @@ struct funcs {
   int* fs;
 };
 
+struct conc_node {
+  // symbolic or concrete?
+  unsigned isSym;
+
+  // subset of functions to run
+  struct funcs funcs;
+
+  // number of functions to call
+  unsigned length;
+
+  // next node
+  conc_node *next;
+};
+
+struct conc_node* create_conc_node(unsigned isSym, struct funcs funcs,
+				   unsigned length) {
+  assert(funcs.sz > 0);
+  conc_node *node = new conc_node;
+  node->isSym = isSym;
+  node->funcs = funcs;
+  node->length = length;
+  node->next = NULL;
+  return node;
+}
+
+
 void print_array(unsigned *a, unsigned len) {
   assert(len < (unsigned) -2);
   char str[len + 2];
@@ -61,36 +87,57 @@ void call_function(unsigned int p) {
   return;
 
   FAILURE:
-  printf("Failed on %d\n", p);
   klee_assert(0);
 }
 
-void explore(funcs swarm, int i) {
-  printf("swarm %d*\n", i);
-  // symbolic functions
-  unsigned int fs[SYM_DEPTH];
-  klee_make_symbolic(&fs, sizeof(fs), "fs");
+void sym_explore(conc_node *node) {
+  unsigned sym_idxs[node->length];
+  klee_make_symbolic(&sym_idxs, sizeof(sym_idxs), "sym_fs");
 
+  for (unsigned *p = sym_idxs; p < &sym_idxs[node->length]; ++p) {
+    klee_assume(*p < node->funcs.sz);
+    call_function(node->funcs.fs[*p]);
+  }
+}
+
+void explore(conc_node *trace) {
+  // TODO: this should be specified in the trace...
   old_calc::init_pressed();
   new_calc::init_pressed();
-   
-  // repeat conc-sym-conc-sym ITERS many times
-  for (int i = 0; i < ITERS; i++) {
-    // concrete execution 
-    for (int j = 0; j < CON_DEPTH; j++) {
-      if (swarm.sz) {
-	unsigned int r = rand() % (swarm.sz);
-	call_function(swarm.fs[r]);
+
+  conc_node *cur = trace;
+  while (cur) {
+    if (cur->isSym) {
+      // symbolic exploration
+      sym_explore(cur);
+    } else {
+      // concrete execution 
+      for (int j = 0; j < cur->length; j++) {
+	  unsigned int r = rand() % (cur->funcs.sz);
+	  call_function(cur->funcs.fs[r]);
       }
     }
-      
-    // symbolic exploration
-    unsigned int *p;
-    for (p = fs; p < &fs[SYM_DEPTH]; ++p) {
-      klee_assume (*p < NUM_FUNCS);
-      call_function(*p);
-    }
+    cur = cur->next;
   }
+}
+
+conc_node* defaultTrace() {
+  struct funcs hd_funcs;
+  hd_funcs.sz = 2;
+  hd_funcs.fs = new int[2];
+  hd_funcs.fs[0] = 0;
+  hd_funcs.fs[1] = 1;  
+  conc_node *hd = create_conc_node(0, hd_funcs, 10);
+
+  struct funcs sym_funcs;
+  sym_funcs.sz = 2;
+  sym_funcs.fs = new int[2];
+  sym_funcs.fs[0] = 4;
+  sym_funcs.fs[1] = 3;
+  conc_node *sym = create_conc_node(1, sym_funcs, 2);
+
+  hd->next = sym;
+  return hd;
 }
 
 int main() {
@@ -98,7 +145,7 @@ int main() {
   //  int cur = 0;
   
   // swarm function sets
-  int i_max = NUM_SWARMS;
+  /*  int i_max = NUM_SWARMS;
   funcs* sets = new funcs[i_max];
   for (int i = 0; i < i_max; ++i) {
     sets[i].fs = new int[NUM_FUNCS];
@@ -109,15 +156,18 @@ int main() {
         sets[i].sz++;
       }
     }
-  }
+    }*/
+
+  conc_node *single_trace = defaultTrace();
+  explore(single_trace);
  
   // do exploration
-  for (int swarm = 0; swarm < i_max; swarm++) {
+  /*  for (int swarm = 0; swarm < i_max; swarm++) {
     int pid = fork();
     if (pid == 0) {
       explore(sets[swarm], swarm);
       exit(0);
     }
     waitpid(pid, 0, 0);
-  }
+    }*/
 }
