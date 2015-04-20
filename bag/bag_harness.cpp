@@ -8,7 +8,7 @@
 
 #define NUM_FUNCS 4
 #define SYM_DEPTH 2 
-#define CON_DEPTH 100
+#define CON_DEPTH 250 // XXX fails with greater than 300?
 
 struct funcs {
   int sz;   // number of functions in swarm
@@ -33,7 +33,7 @@ conc_node* create_conc_node(unsigned isSym, struct funcs funcs, unsigned length)
 }
 
 /* Globals and Helper Function for Prints */
-unsigned int output[CON_DEPTH+SYM_DEPTH];
+unsigned int output[2*(CON_DEPTH+SYM_DEPTH)];
 int outsz = 0;
 
 void print_array(unsigned *a, unsigned len) {
@@ -94,9 +94,12 @@ void sym_explore(conc_node *node, DynamicIntBag* dib, LilIntBag* lib) {
   unsigned sym_idxs[node->length];
   int args[NUM_FUNCS];
   klee_make_symbolic(&sym_idxs, sizeof(sym_idxs), "sym_fs");
-  klee_make_symbolic(&args, sizeof(args), "args");
+  //klee_make_symbolic(&args, sizeof(args), "args");
 
   for (unsigned *p = sym_idxs; p < &sym_idxs[node->length]; ++p) {
+    // XXX randomly generates arguments for all functions every time?
+    for (int k = 0; k < NUM_FUNCS; k++)
+      args[k] = rand() % INT_MAX;
     klee_assume(*p < node->funcs.sz);
     call_function(dib, lib, node->funcs.fs[*p], args);
   }
@@ -112,7 +115,6 @@ void explore(conc_node *trace) {
     if (cur->isSym) {
       // symbolic exploration
       sym_explore(cur, dib, lib);
-      
     } else {
       // concrete execution 
       for (int j = 0; j < cur->length; j++) {
@@ -131,14 +133,12 @@ void explore(conc_node *trace) {
 }
 
 // XXX how to test more than one "swarm" after sym_funcs terminate?
+// run into same KLEE explosion problem?
 conc_node* defaultTrace() {
   funcs hd_funcs;
-  hd_funcs.sz = 4;
-  hd_funcs.fs = new int[4];
-  hd_funcs.fs[0] = 0;
-  hd_funcs.fs[1] = 1;  
-  hd_funcs.fs[2] = 2;
-  hd_funcs.fs[3] = 3;  
+  hd_funcs.sz = 1;
+  hd_funcs.fs = new int[1];
+  hd_funcs.fs[0] = 1;
   conc_node *hd = create_conc_node(0, hd_funcs, CON_DEPTH);
 
   funcs sym_funcs;
@@ -149,7 +149,26 @@ conc_node* defaultTrace() {
   sym_funcs.fs[2] = 3;
   conc_node *sym = create_conc_node(1, sym_funcs, SYM_DEPTH);
 
+  funcs hd2_funcs;
+  hd2_funcs.sz = 3;
+  hd2_funcs.fs = new int[3];
+  hd2_funcs.fs[0] = 0;
+  hd2_funcs.fs[1] = 2;
+  hd2_funcs.fs[2] = 3;  
+  conc_node *hd2 = create_conc_node(0, hd2_funcs, CON_DEPTH);
+
+  funcs sym2_funcs;
+  sym2_funcs.sz = 3;
+  sym2_funcs.fs = new int[3];
+  sym2_funcs.fs[0] = 0;
+  sym2_funcs.fs[1] = 2;
+  sym2_funcs.fs[2] = 3;
+  conc_node *sym2 = create_conc_node(1, sym2_funcs, SYM_DEPTH);
+
+
   hd->next = sym;
+  sym->next = hd2;
+  hd2->next = sym2;
   return hd;
 }
 
