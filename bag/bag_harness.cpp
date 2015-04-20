@@ -138,8 +138,8 @@ conc_node* defaultTrace() {
   struct funcs sym_funcs;
   sym_funcs.sz = 2;
   sym_funcs.fs = new int[2];
-  sym_funcs.fs[0] = 4;
-  sym_funcs.fs[1] = 3;
+  sym_funcs.fs[0] = 3;
+  sym_funcs.fs[1] = 2;
   conc_node *sym = create_conc_node(1, sym_funcs, 2);
 
   hd->next = sym;
