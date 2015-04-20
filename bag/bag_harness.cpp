@@ -5,12 +5,11 @@
 #include <cstdlib>
 #include <cassert>
 #include <climits>
-#include <cerrno>
 #include <unistd.h>
 #include <sys/wait.h>
 
 #define SYM_DEPTH 2
-#define CON_DEPTH 3 
+#define CON_DEPTH 100 
 #define NUM_FUNCS 4
 #define ITERS 1
 #define NUM_SWARMS (1U<<NUM_FUNCS);
@@ -19,6 +18,32 @@ struct funcs {
   int sz;
   int* fs;
 };
+
+struct conc_node {
+  // symbolic or concrete?
+  unsigned isSym;
+
+  // subset of functions to run
+  struct funcs funcs;
+
+  // number of functions to call
+  unsigned length;
+
+  // next node
+  conc_node *next;
+};
+
+struct conc_node* create_conc_node(unsigned isSym, struct funcs funcs,
+				   unsigned length) {
+  assert(funcs.sz > 0);
+  conc_node *node = new conc_node;
+  node->isSym = isSym;
+  node->funcs = funcs;
+  node->length = length;
+  node->next = NULL;
+  return node;
+}
+
 
 unsigned int output[ITERS*(CON_DEPTH+SYM_DEPTH)];
 int cur = 0;
@@ -66,72 +91,62 @@ void call_function(DynamicIntBag* dib, LilIntBag* lib, unsigned int p, int* args
   klee_assert(0);
 }
 
-void explore(funcs swarm, int i) {
-  printf("swarm %d*\n", i);
-  unsigned int fs[SYM_DEPTH]; // symbolic functions
-  int args[NUM_FUNCS];        // symbolic argument array
-  klee_make_symbolic(&fs, sizeof(fs), "fs");
+
+void sym_explore(conc_node *node, DynamicIntBag* dib, LilIntBag* lib) {
+  unsigned sym_idxs[node->length];
+  int args[NUM_FUNCS];
+  klee_make_symbolic(&sym_idxs, sizeof(sym_idxs), "sym_fs");
   klee_make_symbolic(&args, sizeof(args), "args");
 
+  for (unsigned *p = sym_idxs; p < &sym_idxs[node->length]; ++p) {
+    klee_assume(*p < node->funcs.sz);
+    call_function(dib, lib, node->funcs.fs[*p], args);
+  }
+}
+
+void explore(conc_node *trace) {
+  conc_node *cur = trace;
   DynamicIntBag* dib = new DynamicIntBag();
   LilIntBag* lib = new LilIntBag();
-  int cargs[NUM_FUNCS];       // concrete argument array
+  int cargs[NUM_FUNCS]; // concrete argument array
 
-  // repeat conc-sym-conc-sym ITERS many times
-  for (int i = 0; i < ITERS; i++) {
-    // concrete execution 
-    for (int j = 0; j < CON_DEPTH; j++) {
-        if (swarm.sz) {
-          unsigned int r = rand() % (swarm.sz);
-          for (int k = 0; k < NUM_FUNCS; k++)
-            cargs[k] = rand() % INT_MAX;
-          call_function(dib, lib, swarm.fs[r], cargs);
-        }
+  while (cur) {
+    if (cur->isSym) {
+      // symbolic exploration
+      sym_explore(cur, dib, lib);
+    } else {
+      // concrete execution 
+      for (int j = 0; j < cur->length; j++) {
+        unsigned int r = rand() % (cur->funcs.sz);
+        for (int k = 0; k < NUM_FUNCS; k++)
+          cargs[k] = rand() % INT_MAX;
+        call_function(dib, lib, cur->funcs.fs[r], cargs);
       }
-      
-    // symbolic exploration
-    unsigned int *p;
-    for (p = fs; p < &fs[SYM_DEPTH]; ++p) {
-      klee_assume (*p < NUM_FUNCS);
-      call_function(dib, lib, *p, args);
     }
+    cur = cur->next;
   }
-  //print_array(output, cur);
+}
+
+conc_node* defaultTrace() {
+  struct funcs hd_funcs;
+  hd_funcs.sz = 2;
+  hd_funcs.fs = new int[2];
+  hd_funcs.fs[0] = 0;
+  hd_funcs.fs[1] = 1;  
+  conc_node *hd = create_conc_node(0, hd_funcs, 10);
+
+  struct funcs sym_funcs;
+  sym_funcs.sz = 2;
+  sym_funcs.fs = new int[2];
+  sym_funcs.fs[0] = 4;
+  sym_funcs.fs[1] = 3;
+  conc_node *sym = create_conc_node(1, sym_funcs, 2);
+
+  hd->next = sym;
+  return hd;
 }
 
 int main() {
-  // swarm function sets
-  int i_max = NUM_SWARMS;
-  funcs* sets = new funcs[i_max];
-  for (int i = 0; i < i_max; ++i) {
-    sets[i].fs = new int[NUM_FUNCS];
-    sets[i].sz = 0;
-    for (int x = i, j = 0; x; x >>= 1, ++j) {
-      if (x & 1) {
-        sets[i].fs[sets[i].sz] = j;
-        sets[i].sz++;
-      }
-    }
-  }
- 
-  // do exploration
-  pid_t pid;
-  for (int swarm = 0; swarm < i_max; swarm++) {
-    pid = fork();
-    if (pid == 0) {
-      explore(sets[swarm], swarm);
-      exit(0);
-    }
-    waitpid(pid, 0, 0);
-    cur = 0;
-    delete[] sets[swarm].fs;
-  }
-  // comment out waitpid above and uncomment the following code to fork all swarms at once
-  /*while (pid = waitpid(-1, NULL, 0)) {
-    if (errno == ECHILD)
-      break;
-  }*/
-  
-  // clean up memory once done with swarm
-  delete[] sets;
+  conc_node *single_trace = defaultTrace();
+  explore(single_trace);
 }
