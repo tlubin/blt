@@ -21,7 +21,7 @@ bool DynamicIntBag::member(int x) {
 }
 
 void DynamicIntBag::insert(int x) {
-  if (get_size() > threshold && !switched) {
+  if (get_size() >= threshold && !switched) {
     switched = true;
     switch_bag();
   }
