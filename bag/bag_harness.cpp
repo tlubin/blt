@@ -10,12 +10,32 @@
 #include <sys/wait.h>
 
 #define NUM_FUNCS 4
-#define SYM_DEPTH 2 
-#define CON_DEPTH 5
+#define SYM_DEPTH 2
+#define CON_DEPTH 1000
 
 /* Globals and Helper Function for Prints */
 unsigned int output[2*(CON_DEPTH+SYM_DEPTH)];
 int outsz = 0;
+
+static struct inserted {
+  int *buff;
+  unsigned cur;
+  unsigned sz;
+} inserted;
+
+void init() {
+  inserted.buff = (int*) malloc(100*sizeof(int)); 
+  inserted.cur = 0;
+  inserted.sz = 100;
+}
+
+static void insert(int x) {
+  if (inserted.cur >= inserted.sz) {
+    inserted.buff = (int*) realloc(inserted.buff, inserted.sz*sizeof(unsigned)*2);
+    inserted.sz *= 2;
+  }
+  inserted.buff[inserted.cur++] = x;
+}
 
 void print_array(unsigned *a, unsigned len) {
   assert(len < (unsigned) -2);
@@ -38,10 +58,15 @@ void call_function(DynamicIntBag* dib, LilIntBag* lib, unsigned int p, int* args
       if (r1 ^ r2) goto FAILURE;
       break; }
     case 1 : {
+      if ((rand() % 2) && inserted.cur)
+        arg = inserted.buff[rand() % inserted.cur];
       dib->insert(arg);
       lib->insert(arg);
+      insert(arg);
       break; }
     case 2 : {
+      if ((rand() % 2) && inserted.cur)
+        arg = inserted.buff[rand() % inserted.cur];
       dib->remove(arg);
       lib->remove(arg);
       break; }
@@ -68,8 +93,7 @@ void sym_explore(conc_node *node, DynamicIntBag* dib, LilIntBag* lib) {
   //klee_make_symbolic(&args, sizeof(args), "args");
 
   for (unsigned *p = sym_idxs; p < &sym_idxs[node->length]; ++p) {
-    // XXX randomly generates arguments for all functions every time?
-    // keep list of inserted itesm, probability 1/2 pick something in array
+    // XXX randomly generates arguments, no symbolic arguments
     for (int k = 0; k < NUM_FUNCS; k++)
       args[k] = rand() % INT_MAX;
     klee_assume(*p < node->funcs.sz);
@@ -78,6 +102,7 @@ void sym_explore(conc_node *node, DynamicIntBag* dib, LilIntBag* lib) {
 }
 
 void explore(conc_node *trace) {
+  init();
   conc_node *cur = trace;
   DynamicIntBag* dib = new DynamicIntBag();
   LilIntBag* lib = new LilIntBag();
