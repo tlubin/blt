@@ -8,7 +8,7 @@
 
 #define NUM_FUNCS 4
 #define SYM_DEPTH 2 
-#define CON_DEPTH 10 
+#define CON_DEPTH 100
 
 struct funcs {
   int sz;   // number of functions in swarm
@@ -90,7 +90,6 @@ void clean_mem(conc_node* trace) {
   }
 }
 
-
 void sym_explore(conc_node *node, DynamicIntBag* dib, LilIntBag* lib) {
   unsigned sym_idxs[node->length];
   int args[NUM_FUNCS];
@@ -131,6 +130,7 @@ void explore(conc_node *trace) {
   delete lib;
 }
 
+// XXX how to test more than one "swarm" after sym_funcs terminate?
 conc_node* defaultTrace() {
   funcs hd_funcs;
   hd_funcs.sz = 4;
@@ -156,4 +156,5 @@ conc_node* defaultTrace() {
 int main() {
   conc_node *single_trace = defaultTrace();
   explore(single_trace);
+  print_array(output, outsz);
 }
