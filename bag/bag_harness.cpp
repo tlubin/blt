@@ -13,8 +13,8 @@
 #define NUM_SWARMS (1U<<NUM_FUNCS);
 
 struct funcs {
-  int sz;
-  int* fs;
+  int sz;   // number of functions in swarm
+  int* fs;  // switch numbers of functions in swarm
 };
 
 struct conc_node {
