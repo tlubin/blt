@@ -44,7 +44,7 @@ struct conc_node* create_conc_node(unsigned isSym, struct funcs funcs,
 
 
 unsigned int output[ITERS*(CON_DEPTH+SYM_DEPTH)];
-int cur = 0;
+int outsz = 0;
 
 void print_array(unsigned *a, unsigned len) {
   assert(len < (unsigned) -2);
@@ -58,7 +58,7 @@ void print_array(unsigned *a, unsigned len) {
 }
 
 void call_function(DynamicIntBag* dib, LilIntBag* lib, unsigned int p, int* args) {
-  output[cur++] = p;
+  output[outsz++] = p;
   int arg = args[p];
   switch (p) {
     case 0 : {
@@ -121,6 +121,7 @@ void explore(conc_node *trace) {
       }
     }
     cur = cur->next;
+    print_array(output, outsz);
   }
 }
 
