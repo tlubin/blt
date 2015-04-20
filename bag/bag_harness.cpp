@@ -6,11 +6,9 @@
 #include <cassert>
 #include <climits>
 
-#define SYM_DEPTH 2
-#define CON_DEPTH 100 
 #define NUM_FUNCS 4
-#define ITERS 1
-#define NUM_SWARMS (1U<<NUM_FUNCS);
+#define SYM_DEPTH 2 
+#define CON_DEPTH 10 
 
 struct funcs {
   int sz;   // number of functions in swarm
@@ -18,21 +16,13 @@ struct funcs {
 };
 
 struct conc_node {
-  // symbolic or concrete?
-  unsigned isSym;
-
-  // subset of functions to run
-  struct funcs funcs;
-
-  // number of functions to call
-  unsigned length;
-
-  // next node
-  conc_node *next;
+  unsigned isSym;     // symbolic or concrete?
+  struct funcs funcs; // subset of functions to run
+  unsigned length;    // number of functions to call
+  conc_node *next;    // next node
 };
 
-struct conc_node* create_conc_node(unsigned isSym, struct funcs funcs,
-				   unsigned length) {
+conc_node* create_conc_node(unsigned isSym, struct funcs funcs, unsigned length) {
   assert(funcs.sz > 0);
   conc_node *node = new conc_node;
   node->isSym = isSym;
@@ -42,8 +32,8 @@ struct conc_node* create_conc_node(unsigned isSym, struct funcs funcs,
   return node;
 }
 
-
-unsigned int output[ITERS*(CON_DEPTH+SYM_DEPTH)];
+/* Globals and Helper Function for Prints */
+unsigned int output[CON_DEPTH+SYM_DEPTH];
 int outsz = 0;
 
 void print_array(unsigned *a, unsigned len) {
@@ -85,9 +75,21 @@ void call_function(DynamicIntBag* dib, LilIntBag* lib, unsigned int p, int* args
   return;
 
   FAILURE:
-  printf("Failed on %d\n", p);
+  printf("Failed: ");
+  print_array(output, outsz);
   klee_assert(0);
 }
+
+void clean_mem(conc_node* trace) {
+  conc_node *prev_cur;
+  while (trace) {
+    prev_cur = trace;
+    trace = trace-> next;
+    delete[] prev_cur->funcs.fs;
+    delete prev_cur;
+  }
+}
+
 
 void sym_explore(conc_node *node, DynamicIntBag* dib, LilIntBag* lib) {
   unsigned sym_idxs[node->length];
@@ -111,34 +113,41 @@ void explore(conc_node *trace) {
     if (cur->isSym) {
       // symbolic exploration
       sym_explore(cur, dib, lib);
+      
     } else {
       // concrete execution 
       for (int j = 0; j < cur->length; j++) {
         unsigned int r = rand() % (cur->funcs.sz);
+        // XXX randomly generates arguments for all functions every time?
         for (int k = 0; k < NUM_FUNCS; k++)
           cargs[k] = rand() % INT_MAX;
         call_function(dib, lib, cur->funcs.fs[r], cargs);
       }
     }
     cur = cur->next;
-    print_array(output, outsz);
   }
+  clean_mem(trace);
+  delete dib;
+  delete lib;
 }
 
 conc_node* defaultTrace() {
-  struct funcs hd_funcs;
-  hd_funcs.sz = 2;
-  hd_funcs.fs = new int[2];
+  funcs hd_funcs;
+  hd_funcs.sz = 4;
+  hd_funcs.fs = new int[4];
   hd_funcs.fs[0] = 0;
   hd_funcs.fs[1] = 1;  
-  conc_node *hd = create_conc_node(0, hd_funcs, 10);
+  hd_funcs.fs[2] = 2;
+  hd_funcs.fs[3] = 3;  
+  conc_node *hd = create_conc_node(0, hd_funcs, CON_DEPTH);
 
-  struct funcs sym_funcs;
-  sym_funcs.sz = 2;
-  sym_funcs.fs = new int[2];
-  sym_funcs.fs[0] = 3;
+  funcs sym_funcs;
+  sym_funcs.sz = 3;
+  sym_funcs.fs = new int[3];
+  sym_funcs.fs[0] = 0;
   sym_funcs.fs[1] = 2;
-  conc_node *sym = create_conc_node(1, sym_funcs, 2);
+  sym_funcs.fs[2] = 3;
+  conc_node *sym = create_conc_node(1, sym_funcs, SYM_DEPTH);
 
   hd->next = sym;
   return hd;
