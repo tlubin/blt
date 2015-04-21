@@ -10,6 +10,7 @@
 #include <sys/wait.h>
 
 #define NUM_FUNCS 4
+#define NUM_TRACES 1
 #define SYM_DEPTH 3
 #define CON_DEPTH 1000
 
@@ -128,13 +129,13 @@ void explore(conc_node *trace) {
 }
 
 int main() {
-  Trace trace(CON_DEPTH, SYM_DEPTH);
-  conc_node** traces = new conc_node*[2];
-  traces[0] = trace.trace1();
-  traces[1] = trace.trace2();
+  Trace trace(CON_DEPTH, SYM_DEPTH, NUM_FUNCS);
+  conc_node** traces = new conc_node*[NUM_TRACES];
+  traces[0] = trace.random(CON_DEPTH, SYM_DEPTH);
+//  traces[1] = trace.trace2();
 
   pid_t pid;
-  for (int i = 0; i < 2; ++i) {
+  for (int i = 0; i < NUM_TRACES; ++i) {
     pid = fork();
     if (pid == 0) {
       explore(traces[i]);
@@ -144,7 +145,7 @@ int main() {
     waitpid(pid, 0, 0);
   }
 
-  for (int i = 0; i < 2; ++i)
+  for (int i = 0; i < NUM_TRACES; ++i)
     trace.clean_mem(traces[i]);
   delete[] traces;
 }

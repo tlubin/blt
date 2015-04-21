@@ -1,9 +1,26 @@
 #include "Trace.hpp"
 #include <cstdio>
+#include <cstdlib>
 #include <cassert>
 
-Trace::Trace(int c, int s) : 
-  con_depth(c), sym_depth(s) { 
+Trace::Trace(unsigned c, unsigned s, unsigned nf) : 
+  con_depth(c), sym_depth(s), num_funcs(nf) { 
+  i_max = 1U << num_funcs;
+  sets = new funcs[i_max];
+  for (int i = 0; i < i_max; ++i) {
+    sets[i].fs = new int[num_funcs];
+    sets[i].sz = 0;
+    for (int x = i, j = 0; x; x >>= 1, ++j) {
+      if (x & 1) {
+        sets[i].fs[sets[i].sz] = j;
+        sets[i].sz++;
+      }
+    }
+  }
+}
+
+Trace::~Trace() {
+  delete[] sets;
 }
 
 void Trace::clean_mem(conc_node* trace) {
@@ -76,6 +93,17 @@ conc_node* Trace::trace2() {
   sym_funcs.fs[1] = 2;
   sym_funcs.fs[2] = 3;
   conc_node *sym = create_conc_node(1, sym_funcs, sym_depth);
+
+  hd->next = sym;
+  return hd;
+}
+
+conc_node* Trace::random(unsigned con_depth, unsigned sym_depth) {
+  unsigned r = rand() % i_max;
+  conc_node *hd = create_conc_node(0, sets[r], con_depth);
+
+  unsigned r2 = rand() % i_max;
+  conc_node *sym = create_conc_node(1, sets[r2], sym_depth);
 
   hd->next = sym;
   return hd;

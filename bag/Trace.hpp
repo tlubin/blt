@@ -15,16 +15,20 @@ struct conc_node {
 
 class Trace {
   public:
-    Trace(int, int);
-    ~Trace() {};
+    Trace(unsigned,unsigned,unsigned);
+    ~Trace();
     conc_node* trace1();
     conc_node* trace2();
-    void clean_mem(conc_node* trace);
+    conc_node* random(unsigned, unsigned); // random conc-sym trace, uses random swarm for concrete
+    void clean_mem(conc_node*);
   
   private:
-    conc_node* create_conc_node(unsigned isSym, struct funcs funcs, unsigned length);
-    int con_depth;
-    int sym_depth;
+    conc_node* create_conc_node(unsigned, struct funcs, unsigned);
+    unsigned con_depth;
+    unsigned sym_depth;
+    unsigned num_funcs;
+    funcs* sets;
+    unsigned i_max;
 };
 
 #endif
