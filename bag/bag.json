@@ -3,12 +3,19 @@
     "file2" : ["DynamicIntBag.hpp", "DynamicIntBag.cpp"],
     "funcs": [
 	{"name" : "member",
-	 "args" : ["int"]},
+	 "args" : ["int"],
+	 "return" : "bool",
+	 "arg_gen" : "member_arg"},
 	{"name" : "insert",
-	 "args" : ["int"]},
+	 "args" : ["int"],
+	 "return" : "void",
+	 "arg_gen" : "insert_arg"},
 	{"name" : "remove",
-	 "args" : ["int"]},
+	 "args" : ["int"],
+	 "return" : "void",
+	 "arg_gen" : "remove_arg"},
 	{"name" : "get_size",
-	 "args" : []}
+	 "args" : [],
+	 "return" : "unsigned"}
     ]
 }
