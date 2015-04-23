@@ -8,8 +8,9 @@ bag_harness:
 	$(CXX) $(CXXFLAGS) -o DynamicIntBag.bc DynamicIntBag.cpp
 	$(CXX) $(CXXFLAGS) -o LilIntBag.bc LilIntBag.cpp
 	$(CXX) $(CXXFLAGS) -o Trace.bc Trace.cpp
+	$(CXX) $(CXXFLAGS) -o args.bc args.cpp
 	$(CXX) $(CXXFLAGS) -o bag_harness.bc -I $(KLEE)/include bag_harness.cpp
-	$(LD) -o combined.bc DynamicIntBag.bc LilIntBag.bc bag_harness.bc BinaryTree.bc Trace.bc
+	$(LD) -o combined.bc DynamicIntBag.bc LilIntBag.bc BinaryTree.bc Trace.bc args.bc bag_harness.bc
 	klee -emit-all-errors combined.bc
 
 .PHONY: bag_harness 

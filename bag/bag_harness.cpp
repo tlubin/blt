@@ -1,41 +1,39 @@
 #include <klee/klee.h>
-#include "LilIntBag.hpp"
-#include "DynamicIntBag.hpp"
 #include "Trace.hpp"
 #include <cstdio>
 #include <cstdlib>
 #include <cassert>
-#include <climits>
 #include <unistd.h>
 #include <sys/wait.h>
 
+// these should be injected in
+#include "LilIntBag.hpp"
+#include "DynamicIntBag.hpp"
+#include "args.hpp"
+
+// defined in json file
 #define NUM_FUNCS 4
+// defined in traces file
 #define NUM_TRACES 1
-#define SYM_DEPTH 3
-#define CON_DEPTH 1000
 
-/* Globals and Helper Function for Prints */
-unsigned int output[2*(CON_DEPTH+SYM_DEPTH)];
-int outsz = 0;
-
-static struct inserted {
-  int *buff;
+static struct output {
+  unsigned *buff;
   unsigned cur;
   unsigned sz;
-} inserted;
+} output;
 
-void init() {
-  inserted.buff = (int*) malloc(100*sizeof(int)); 
-  inserted.cur = 0;
-  inserted.sz = 100;
+void init_output() {
+  output.buff = (unsigned*) malloc(100*sizeof(int)); 
+  output.cur = 0;
+  output.sz = 100;
 }
 
-static void insert(int x) {
-  if (inserted.cur >= inserted.sz) {
-    inserted.buff = (int*) realloc(inserted.buff, inserted.sz*sizeof(unsigned)*2);
-    inserted.sz *= 2;
+static void output_add(int x) {
+  if (output.cur >= output.sz) {
+    output.buff = (unsigned*) realloc(output.buff, output.sz*sizeof(unsigned)*2);
+    output.sz *= 2;
   }
-  inserted.buff[inserted.cur++] = x;
+  output.buff[output.cur++] = x;
 }
 
 void print_array(unsigned *a, unsigned len) {
@@ -49,32 +47,66 @@ void print_array(unsigned *a, unsigned len) {
   printf(str);
 }
 
-void call_function(DynamicIntBag* dib, LilIntBag* lib, unsigned int p, int* args) {
-  output[outsz++] = p;
-  int arg = args[p];
+void failure() {
+  printf("Failed: ");
+  print_array(output.buff, output.cur);
+  klee_assert(0);
+}
+
+void f0(DynamicIntBag* dib, LilIntBag* lib, int is_sym) { 
+  int arg; // specific to this function being called (multiple)
+  if (is_sym)
+    klee_make_symbolic(&arg, sizeof(arg), "arg"); // could be mult
+  else {
+    arg = ((int*)args::member_arg())[0];
+  }
+  if (dib->member(arg) != lib->member(arg))
+    failure();
+}
+
+void f1(DynamicIntBag* dib, LilIntBag* lib, int is_sym) { 
+  int arg; // specific to this function being called (multiple)
+  if (is_sym)
+    klee_make_symbolic(&arg, sizeof(arg), "arg"); // could be mult
+  else {
+    arg = ((int*) args::insert_arg())[0];
+  }
+  // just call if void return 
+  dib->insert(arg);
+  lib->insert(arg);
+}
+ 
+void f2(DynamicIntBag* dib, LilIntBag* lib, int is_sym) { 
+  int arg; // specific to this function being called (multiple)
+  if (is_sym)
+    klee_make_symbolic(&arg, sizeof(arg), "arg"); // could be mult
+  else {
+    arg = ((int*) args::remove_arg())[0];
+  }
+  dib->remove(arg);
+  lib->remove(arg);
+}
+
+// no arguments, no required rand arg gen
+void f3(DynamicIntBag* dib, LilIntBag* lib, int is_sym) { 
+  if (dib->get_size() != lib->get_size())
+    failure();
+}  
+
+void call_func(DynamicIntBag* dib, LilIntBag* lib, unsigned int p, int is_sym) {
+  output_add(p);
   switch (p) {
     case 0 : {
-      bool r1 = dib->member(arg);
-      bool r2 = lib->member(arg);
-      if (r1 ^ r2) goto FAILURE;
+      f0(dib, lib, is_sym);
       break; }
     case 1 : {
-      if ((rand() % 2) && inserted.cur)
-        arg = inserted.buff[rand() % inserted.cur];
-      dib->insert(arg);
-      lib->insert(arg);
-      insert(arg);
+      f1(dib, lib, is_sym);
       break; }
     case 2 : {
-      if ((rand() % 2) && inserted.cur)
-        arg = inserted.buff[rand() % inserted.cur];
-      dib->remove(arg);
-      lib->remove(arg);
+      f2(dib, lib, is_sym);
       break; }
     case 3 : {
-      unsigned r1 = dib->get_size();
-      unsigned r2 = lib->get_size();
-      if (r1 != r2) goto FAILURE;
+      f3(dib, lib, is_sym);
       break; }
     default :
       break;
@@ -82,46 +114,35 @@ void call_function(DynamicIntBag* dib, LilIntBag* lib, unsigned int p, int* args
   return;
 
   FAILURE:
-  printf("Failed: %u, %u\n", dib->get_size(), lib->get_size()); 
-  print_array(output, outsz);
+  printf("Failed: ");
+  print_array(output.buff, output.cur);
   klee_assert(0);
 }
 
 void sym_explore(conc_node *node, DynamicIntBag* dib, LilIntBag* lib) {
   unsigned sym_idxs[node->length];
-  int args[NUM_FUNCS];
   klee_make_symbolic(&sym_idxs, sizeof(sym_idxs), "sym_fs");
-  //klee_make_symbolic(&args, sizeof(args), "args");
 
   for (unsigned *p = sym_idxs; p < &sym_idxs[node->length]; ++p) {
-    // XXX randomly generates arguments, no symbolic arguments
-    for (int k = 0; k < NUM_FUNCS; k++)
-      args[k] = rand() % INT_MAX;
     klee_assume(*p < node->funcs.sz);
-    call_function(dib, lib, node->funcs.fs[*p], args);
+    call_func(dib, lib, node->funcs.fs[*p], 1);
   }
 }
 
 void explore(conc_node *trace) {
-  init();
   conc_node *cur = trace;
   DynamicIntBag* dib = new DynamicIntBag();
   LilIntBag* lib = new LilIntBag();
-  int cargs[NUM_FUNCS]; // concrete argument array
 
   while (cur) {
     if (cur->isSym) {
       // symbolic exploration
       sym_explore(cur, dib, lib);
     } else {
-      
       // concrete execution 
       for (int j = 0; j < cur->length; j++) {
         unsigned int r = rand() % (cur->funcs.sz);
-        // XXX randomly generates arguments for all functions every time?
-        for (int k = 0; k < NUM_FUNCS; k++)
-          cargs[k] = rand() % INT_MAX;
-        call_function(dib, lib, cur->funcs.fs[r], cargs);
+        call_func(dib, lib, cur->funcs.fs[r], 0);
       }
     }
     cur = cur->next;
@@ -129,17 +150,17 @@ void explore(conc_node *trace) {
 }
 
 int main() {
-  Trace trace(CON_DEPTH, SYM_DEPTH, NUM_FUNCS);
+  init_output();
+  Trace trace(1, 1, NUM_FUNCS);
   conc_node** traces = new conc_node*[NUM_TRACES];
-  traces[0] = trace.random(CON_DEPTH, SYM_DEPTH);
-//  traces[1] = trace.trace2();
+  traces[0] = trace.trace1();
 
   pid_t pid;
   for (int i = 0; i < NUM_TRACES; ++i) {
     pid = fork();
     if (pid == 0) {
       explore(traces[i]);
-      print_array(output, outsz);
+      print_array(output.buff, output.cur);
       exit(0);
     }
     waitpid(pid, 0, 0);
