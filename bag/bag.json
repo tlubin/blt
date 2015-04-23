@@ -1,0 +1,14 @@
+{
+    "file1" : ["LilIntBag.hpp", "LilIntBag.cpp"],
+    "file2" : ["DynamicIntBag.hpp", "DynamicIntBag.cpp"],
+    "funcs": [
+	{"name" : "member",
+	 "args" : ["int"]},
+	{"name" : "insert",
+	 "args" : ["int"]},
+	{"name" : "remove",
+	 "args" : ["int"]},
+	{"name" : "get_size",
+	 "args" : []}
+    ]
+}
