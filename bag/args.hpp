@@ -2,9 +2,9 @@
 #define _ARG_HPP
 
 namespace args {
-  void* member_arg();
-  void* insert_arg();
-  void* remove_arg();
+  void* member_arg(unsigned);
+  void* insert_arg(unsigned);
+  void* remove_arg(unsigned);
 }
 
 #endif

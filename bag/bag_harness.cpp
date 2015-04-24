@@ -58,7 +58,7 @@ void f0(DynamicIntBag* dib, LilIntBag* lib, int is_sym) {
   if (is_sym)
     klee_make_symbolic(&arg, sizeof(arg), "arg"); // could be mult
   else {
-    arg = ((int*)args::member_arg())[0];
+    arg = *((int*)args::member_arg(0));
   }
   if (dib->member(arg) != lib->member(arg))
     failure();
@@ -68,10 +68,8 @@ void f1(DynamicIntBag* dib, LilIntBag* lib, int is_sym) {
   int arg; // specific to this function being called (multiple)
   if (is_sym)
     klee_make_symbolic(&arg, sizeof(arg), "arg"); // could be mult
-  else {
-    arg = ((int*) args::insert_arg())[0];
-  }
-  // just call if void return 
+  else
+    arg = *((int*)args::insert_arg(0));
   dib->insert(arg);
   lib->insert(arg);
 }
@@ -80,9 +78,8 @@ void f2(DynamicIntBag* dib, LilIntBag* lib, int is_sym) {
   int arg; // specific to this function being called (multiple)
   if (is_sym)
     klee_make_symbolic(&arg, sizeof(arg), "arg"); // could be mult
-  else {
-    arg = ((int*) args::remove_arg())[0];
-  }
+  else
+    arg = *((int*)args::remove_arg(0));
   dib->remove(arg);
   lib->remove(arg);
 }

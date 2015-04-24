@@ -51,92 +51,54 @@ void failure() {
   klee_assert(0);
 }
 
-// INSTANTIATE TEMPLATE
-void f(#NEW_IMPL#* new_impl, #OLD_IMPL#* old_impl, int is_sym) { 
+##FUNCTION_TEMP##
+void f#FUNC_NUM#(#NEW_IMPL#* new_impl, #OLD_IMPL#* old_impl, int is_sym) { 
   #DEFINE_ARGS#
-  /*
-    int arg1;
-    char arg2; 
-    ...
-  */
-  
-  if (is_sym)
-    #MAKE_ARGS_SYMBOLIC#
-    /*
-      klee_make_symbolic(&arg1, sizeof(arg1), "arg1");
-      klee_make_symbolic(&arg2, sizeof(arg2), "arg2");
-    */
-  else {
-    #MAKE_ARGS_CONCRETE#
-    /*
-      arg1 = ((int*)args::member_arg())[0];
-      arg2 = ((int*)args::member_arg())[1];
-     */
-  }
+  #MAKE_ARGS_SYMBOLIC#
+  #MAKE_ARGS_CONCRETE#
   #CHECK_EQUALITY#
-  /* void return
-     new_impl->FUNC(arg1, arg2, ...);
-     old_impl->FUNC(arg1, arg2, ...);     
-   */
-
-  /* non-void return
-     if (new_impl->FUNC(arg1, arg2, ...) != old_impl->FUNC(arg1,...))
-         failure();
-   */
 }
 
+##END_FUNCTION_TEMP##
 
-void call_func(DynamicIntBag* dib, LilIntBag* lib, unsigned int p, int is_sym) {
+void call_func(#NEW_IMPL#* new_impl, #OLD_IMPL#* old_impl, unsigned int p, int is_sym) {
   output_add(p);
-  // TODO! TEMPLATE THIS AS WELL
   switch (p) {
-    case 0 : {
-      f0(dib, lib, is_sym);
+    ##CASE_TEMP##
+    case #FUNC_NUM# : {
+      f#FUNC_NUM#(new_impl, old_impl, is_sym);
       break; }
-    case 1 : {
-      f1(dib, lib, is_sym);
-      break; }
-    case 2 : {
-      f2(dib, lib, is_sym);
-      break; }
-    case 3 : {
-      f3(dib, lib, is_sym);
-      break; }
+    ##END_CASE_TEMP##
     default :
       break;
   }
   return;
-
-  FAILURE:
-  printf("Failed: ");
-  print_array(output.buff, output.cur);
-  klee_assert(0);
 }
 
-void sym_explore(conc_node *node, DynamicIntBag* dib, LilIntBag* lib) {
+void sym_explore(conc_node *node, #NEW_IMPL#* new_impl, #OLD_IMPL#* old_impl) {
   unsigned sym_idxs[node->length];
   klee_make_symbolic(&sym_idxs, sizeof(sym_idxs), "sym_fs");
 
   for (unsigned *p = sym_idxs; p < &sym_idxs[node->length]; ++p) {
     klee_assume(*p < node->funcs.sz);
-    call_func(dib, lib, node->funcs.fs[*p], 1);
+    call_func(new_impl, old_impl, node->funcs.fs[*p], 1);
   }
 }
 
 void explore(conc_node *trace) {
   conc_node *cur = trace;
-  DynamicIntBag* dib = new DynamicIntBag();
-  LilIntBag* lib = new LilIntBag();
+  #NEW_IMPL#* new_impl = new #NEW_IMPL#();
+  #OLD_IMPL#* old_impl = new #OLD_IMPL#();
 
   while (cur) {
     if (cur->isSym) {
       // symbolic exploration
-      sym_explore(cur, dib, lib);
+      sym_explore(cur, new_impl, old_impl);
     } else {
       // concrete execution 
       for (int j = 0; j < cur->length; j++) {
         unsigned int r = rand() % (cur->funcs.sz);
-        call_func(dib, lib, cur->funcs.fs[r], 0);
+        call_func(new_impl, old_impl, cur->funcs.fs[r], 0);
       }
     }
     cur = cur->next;
