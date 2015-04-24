@@ -15,5 +15,7 @@ a tool to discover differences in the execution of two versions of your code by 
     - Bags: Run "make bag_harness" to execute a concrete-symbolic trace on two versions of a bag data structure
     - Calcs: Run "make calc_harness" to execute a concrete-symbolic trace on two versions of a simple calculator
 
+
 Created by Aaron Bembenek, Lily Tsai, Todd Lubin
+
 CS260r, 2015
