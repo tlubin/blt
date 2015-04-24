@@ -1,4 +1,5 @@
-BLT is a tool to discover differences in the execution of two versions of your code by executing traces symbolically and concretely.
+#BLT:
+a tool to discover differences in the execution of two versions of your code by executing traces symbolically and concretely.
 
 Input:
 - Source and header file of old implementation of code
