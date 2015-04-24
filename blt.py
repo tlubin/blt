@@ -1,6 +1,13 @@
 import json
+import sys
 
-with open('bag/bag.json') as json_file:
+if (not sys.argv[1]):
+    print "please pass in JSON file"
+    exit(1)
+
+jfile = sys.argv[1]
+
+with open(jfile) as json_file:
     data = json.load(json_file)
 
 glob_replacements = []
@@ -16,14 +23,14 @@ def add_func_replacements(f,x):
     check_equality = ""
     for i,arg in enumerate(f["args"]):
         define_args += "{0} arg{1};\n".format(arg,i)
-        make_args_symbolic += "     klee_make_symbolic(&arg{0}, sizeof(arg{0}),\"arg{0}\");\n".format(i)
-        make_args_concrete += "     arg{0} = *({1}*)args::{2}({0});\n".format(i,arg,f["arg_gen"])
+        make_args_symbolic += "klee_make_symbolic(&arg{0}, sizeof(arg{0}),\"arg{0}\");\n".format(i)
+        make_args_concrete += "arg{0} = *({1}*)args::{2}({0});\n".format(i,arg,f["arg_gen"])
         args += "arg{0}, ".format(i)
     args = args[:-2]
     func_call = "{0}({1})".format(f["name"], args)
     if f["return"] == "void":
         check_equality += "new_impl->{0};\n".format(func_call)
-        check_equality += "     old_impl->{0};\n".format(func_call)
+        check_equality += "old_impl->{0};\n".format(func_call)
     else:
         check_equality += "if (new_impl->{0} != old_impl->{0}) failure();".format(func_call)
 
@@ -51,7 +58,7 @@ try:
 except KeyError, k:
     print "JSON file should have key " + str(k)
 
-with open('harness.cpp') as harness_file:
+with open('harness_temp.cpp') as harness_file:
     harness_data = harness_file.read()
 
 for rep in glob_replacements:
@@ -90,7 +97,7 @@ for i,f in enumerate(data["funcs"]):
     switch += c_temp
 
 # WRITE TO FILE
-with open('harness_tmp.cpp', 'w') as harness_tmp:
+with open('harness.cpp', 'w') as harness_tmp:
     harness_tmp.write(front_temp)
     harness_tmp.write(call_func)
     harness_tmp.write(mid_temp)

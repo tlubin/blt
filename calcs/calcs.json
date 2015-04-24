@@ -1,0 +1,24 @@
+{
+    "file1" : ["old_calc.h", "old_calc.cpp"],
+    "file2" : ["new_calc.h", "new_calc.cpp"],
+    "funcs": [
+	{"name" : "init_pressed",
+	 "args" : [],
+	 "return" : "void"},
+	{"name" : "zero_pressed",
+	 "args" : [],
+	 "return" : "void"},
+	{"name" : "one_pressed",
+	 "args" : [],
+	 "return" : "void"},
+	{"name" : "plus_pressed",
+	 "args" : [],
+	 "return" : "void"},
+	{"name" : "mult_pressed",
+	 "args" : [],
+	 "return" : "void"},
+	{"name" : "eval_pressed",
+	 "args" : [],
+	 "return" : "void"}
+    ]
+}
