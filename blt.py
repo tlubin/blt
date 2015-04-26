@@ -1,8 +1,9 @@
 import json
 import sys
-from mako.template import Template 
+from mako.template import Template
 
 ### Just for testing purposes...
+'''
 traces = \
 [
     [
@@ -11,6 +12,17 @@ traces = \
     ],
     [
         { 'symbolic_trace' : 'false', 'symbolic_args' : 'false', 'len' : 20, 'funcs' : ['insert', 'get_size'] }
+    ]
+]
+'''
+### traces testing calcs
+traces = \
+[
+    [
+        { 'symbolic_trace' : 'false', 'symbolic_args' : 'false', 'len' : 1, 'funcs' : ['init_pressed'] },
+        { 'symbolic_trace' : 'false', 'symbolic_args' : 'false', 'len' : 200, 'funcs' : ['zero_pressed', 'one_pressed', 'plus_pressed', 'mult_pressed'] },
+        { 'symbolic_trace' : 'true', 'symbolic_args' : 'true', 'len' : 2, 'funcs' : ['zero_pressed', 'one_pressed', 'plus_pressed', 'mult_pressed'] },
+        { 'symbolic_trace' : 'false', 'symbolic_args' : 'false', 'len' : 1, 'funcs' : ['eval_pressed'] }
     ]
 ]
 ###

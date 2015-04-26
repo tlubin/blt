@@ -19,14 +19,12 @@ bag_harness:
 
 calcs_harness:
 	bash -c "ulimit -s unlimited"
-	python blt.py calcs/calcs.json
-	mv harness.cpp calcs/;
+	python blt.py calcs/calcs.json > calcs/test.cpp
 	cd calcs/ ;\
 	$(CXX) $(CXXFLAGS) -o  old_calc.bc  old_calc.cpp ;\
 	$(CXX) $(CXXFLAGS) -o  new_calc.bc  new_calc.cpp ;\
-	$(CXX) $(CXXFLAGS) -o  Trace.bc Trace.cpp ;\
-	$(CXX) $(CXXFLAGS) -o harness.bc -I $(KLEE)/include harness.cpp ;\
-	$(LD) -o  combined.bc  old_calc.bc  new_calc.bc  Trace.bc harness.bc ;\
-	klee -emit-all-errors  combined.bc
+	$(CXX) $(CXXFLAGS) -o test.bc -I $(KLEE)/include test.cpp ;\
+	$(LD) -o  combined.bc  old_calc.bc  new_calc.bc  test.bc ;\
+	klee -emit-all-errors  combined.bc $(TRACE_NO)
 
 .PHONY: calcs_harness 

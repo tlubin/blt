@@ -1,6 +1,8 @@
 {
-    "file1" : ["old_calc.h", "old_calc.cpp"],
-    "file2" : ["new_calc.h", "new_calc.cpp"],
+    "class1" : "old_calc",
+    "class2" : "new_calc",
+    "header_files" : ["old_calc.h", "new_calc.h"],
+    "source_files" : ["old_calc.cpp", "new_calc.cpp"],
     "funcs": [
 	{"name" : "init_pressed",
 	 "alias" : "init",
@@ -21,8 +23,5 @@
 	{"name" : "eval_pressed",
 	 "args" : [],
 	 "return" : "void"}
-    ],
-    "traces": [
-	"Conc1{init}+Sym10{zero,one,plus,mult}+Conc1{eval}"
     ]
 }
