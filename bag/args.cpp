@@ -2,17 +2,13 @@
 #include <cstdlib>
 #include <climits>
 
-static struct inserted {
+struct buffer {
   int *buff;
   unsigned cur;
   unsigned sz;
-} inserted;
+};
 
-static void init() {
-  inserted.buff = (int*) malloc(100*sizeof(int)); 
-  inserted.cur = 0;
-  inserted.sz = 100;
-}
+static buffer inserted = { (int*)malloc(100*sizeof(int)), 0, 100 };
 
 static void insert(int x) {
   if (inserted.cur >= inserted.sz) {

@@ -10,7 +10,11 @@ void call_${f['name']}(${class1}* v1, ${class2}* v2, bool is_sym) {
     % endfor
   } else {
     % for typ in f['args']:
+    % if f['arg_gen'] != "":
+    arg${loop.index} = *(${typ}*)args::${f['arg_gen']}(${loop.index});
+    % else: 
     arg${loop.index} = *(${typ}*)(get_arg(${typ})); // *(${typ}*)args::${f['arg_gen']}(${loop.index});
+    %endif
     % endfor
   }
   % endif

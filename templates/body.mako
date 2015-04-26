@@ -101,7 +101,8 @@ void* get_arg(std::string const& arg_type) {
       return (void*) ret; 
     }
     default:
-      break;
+      printf("Error: Argument generator required\n");
+      exit(1);
   }
 }
 
