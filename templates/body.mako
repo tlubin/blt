@@ -1,7 +1,6 @@
 % for header in headers:
 #include "${header}"
 % endfor
-#include "args.hpp"
 #include <klee/klee.h>
 #include <cassert>
 #include <cstdlib>

@@ -1,8 +1,8 @@
 {
     "class1" : "LilIntBag",
     "class2" : "DynamicIntBag",
-    "header_files" : ["LilIntBag.hpp", "DynamicIntBag.hpp"],
-    "source_files" : ["LilIntBag.cpp", "DynamicIntBag.cpp"],
+    "header_files" : ["LilIntBag.hpp", "DynamicIntBag.hpp", "args.hpp"],
+    "source_files" : ["LilIntBag.cpp", "DynamicIntBag.cpp", "args.cpp", "BinaryTree.cpp"],
     "funcs": [
 	{"name" : "member",
 	 "args" : ["int"],
