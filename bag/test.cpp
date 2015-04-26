@@ -10,7 +10,7 @@
 
 // HELPERS ////////////////////////////////////////////////////////////////////
 
-#define NTRACES 1
+#define NTRACES 2
 
 void failure() {
   assert(0);
@@ -160,61 +160,51 @@ void trace0() {
   LilIntBag* v1 = new LilIntBag();
   DynamicIntBag* v2 = new DynamicIntBag();
 
-  for (int i = 0; i < 1; ++i) {
+  for (int i = 0; i < 20; ++i) {
     unsigned n0;
     n0 = rand() % 1;
     switch (n0) {
       case 0:
-        call_init_pressed(v1, v2, false);
-        break;
-    }
-  }
-
-  for (int i = 0; i < 200; ++i) {
-    unsigned n1;
-    n1 = rand() % 4;
-    switch (n1) {
-      case 0:
-        call_zero_pressed(v1, v2, false);
-        break;
-      case 1:
-        call_one_pressed(v1, v2, false);
-        break;
-      case 2:
-        call_plus_pressed(v1, v2, false);
-        break;
-      case 3:
-        call_mult_pressed(v1, v2, false);
+        call_insert(v1, v2, false);
         break;
     }
   }
 
   for (int i = 0; i < 2; ++i) {
-    unsigned n2;
-    klee_make_symbolic(&n2, sizeof(n2), "n2");
-    klee_assume(n2 < 4);
-    switch (n2) {
+    unsigned n1;
+    klee_make_symbolic(&n1, sizeof(n1), "n1");
+    klee_assume(n1 < 4);
+    switch (n1) {
       case 0:
-        call_zero_pressed(v1, v2, true);
+        call_member(v1, v2, true);
         break;
       case 1:
-        call_one_pressed(v1, v2, true);
+        call_get_size(v1, v2, true);
         break;
       case 2:
-        call_plus_pressed(v1, v2, true);
+        call_insert(v1, v2, true);
         break;
       case 3:
-        call_mult_pressed(v1, v2, true);
+        call_remove(v1, v2, true);
         break;
     }
   }
 
-  for (int i = 0; i < 1; ++i) {
-    unsigned n3;
-    n3 = rand() % 1;
-    switch (n3) {
+}
+
+void trace1() {
+  LilIntBag* v1 = new LilIntBag();
+  DynamicIntBag* v2 = new DynamicIntBag();
+
+  for (int i = 0; i < 20; ++i) {
+    unsigned n0;
+    n0 = rand() % 2;
+    switch (n0) {
       case 0:
-        call_eval_pressed(v1, v2, false);
+        call_insert(v1, v2, false);
+        break;
+      case 1:
+        call_get_size(v1, v2, false);
         break;
     }
   }
@@ -233,6 +223,7 @@ int main(int argc, const char* argv[]) {
 
   switch(n) {
     case 0: trace0(); break;
+    case 1: trace1(); break;
   }
 }
 

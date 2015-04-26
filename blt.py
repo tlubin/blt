@@ -3,7 +3,6 @@ import sys
 from mako.template import Template
 
 ### Just for testing purposes...
-'''
 traces = \
 [
     [
@@ -25,6 +24,7 @@ traces = \
         { 'symbolic_trace' : 'false', 'symbolic_args' : 'false', 'len' : 1, 'funcs' : ['eval_pressed'] }
     ]
 ]
+'''
 ###
 
 if __name__ == '__main__':
