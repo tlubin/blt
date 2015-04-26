@@ -15,7 +15,6 @@ func_replacements = {}
 
 def add_func_replacements(f,x):
     replacement = []
-    # DEFINE_ARGS and MAKE_ARGS_SYMBOLIC
     define_args = ""
     make_args_symbolic = ""
     make_args_concrete = ""
@@ -29,14 +28,14 @@ def add_func_replacements(f,x):
     args = args[:-2]
     func_call = "{0}({1})".format(f["name"], args)
     if f["return"] == "void":
-        check_equality += "new_impl->{0};\n".format(func_call)
-        check_equality += "old_impl->{0};\n".format(func_call)
+        check_equality += "new_impl->{0};\n  ".format(func_call)
+        check_equality += "old_impl->{0};".format(func_call)
     else:
         check_equality += "if (new_impl->{0} != old_impl->{0}) failure();".format(func_call)
 
     if len(f["args"]):
-        make_args_symbolic = "if (is_sym) {\n" + make_args_symbolic + "  }"
-        make_args_concrete = "else {\n" + make_args_concrete + "  }"
+        make_args_symbolic = "if (is_sym) {\n    " + make_args_symbolic + "  }"
+        make_args_concrete = "else {\n    " + make_args_concrete + "  }"
 
     replacement.append(("#FUNC_NUM#", str(x)))
     replacement.append(("#DEFINE_ARGS#", define_args))
