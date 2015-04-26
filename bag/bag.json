@@ -1,6 +1,8 @@
 {
-    "file1" : ["LilIntBag.hpp", "LilIntBag.cpp"],
-    "file2" : ["DynamicIntBag.hpp", "DynamicIntBag.cpp"],
+    "class1" : "LilIntBag",
+    "class2" : "DynamicIntBag",
+    "header_files" : ["LilIntBag.hpp", "DynamicIntBag.hpp"],
+    "source_files" : ["LilIntBag.cpp", "DynamicIntBag.cpp"],
     "funcs": [
 	{"name" : "member",
 	 "args" : ["int"],

@@ -4,7 +4,7 @@
 #include <cstdio> 
 
 DynamicIntBag::DynamicIntBag() :
-  threshold(256), switched(false) {
+  threshold(16), switched(false) {
   bag = new LilIntBag();
 }
 
