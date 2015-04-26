@@ -14,6 +14,7 @@ void failure() {
   assert(0);
 }
 
+
 // FUNCTION WRAPPERS /////////////////////////////////////////////////////////
 
 ${funcs_str}

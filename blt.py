@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
     function_tmpl = Template(filename='templates/functions.mako')
     funcs_str = function_tmpl.render(funcs=data['funcs'], class1=data['class1'],
-            class2=data['class2'])
+        class2=data['class2'])
 
     traces_tmpl = Template(filename='templates/traces.mako')
     traces_str = traces_tmpl.render(traces=traces, class1=data['class1'],
