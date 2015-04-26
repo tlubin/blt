@@ -2,7 +2,7 @@
 a tool to discover differences in the execution of two versions of your code by executing traces symbolically and concretely.
 
 #How to Use:
-- Dependencies: KLEE (and related dependencies), python 2.7
+- Dependencies: KLEE (and related dependencies), python 2.7, Mako
 - Define environment variables $KLEE, $LLVM29, and $LLVMGCC to point to the source for your installation of KLEE, llvm-2.9, and llvm-gcc
 - Required files:
   - Source and header file of old implementation of code
