@@ -76,11 +76,12 @@ if __name__ == '__main__':
             class2=data['class2'])
 
     body_tmpl = Template(filename=(os.path.join(blt, 'templates', 'body.mako')))
-    body_str = body_tmpl.render(headers=data['header_files'],
+    body_str = body_tmpl.render(
+            headers=[os.path.abspath(os.path.join(jfile_dir, h)) for h in data['header_files']],
             funcs_str=funcs_str, traces_str=traces_str,
             ntraces=(len(data['traces'])))
 
-    tmpdir = os.path.join(blt, 'tmp')
+    tmpdir = os.path.join(jfile_dir, 'blt_tmp')
     if os.path.exists(tmpdir):
         subprocess.call('rm -rf {0}'.format(tmpdir).split())
     os.mkdir(tmpdir)
@@ -88,22 +89,28 @@ if __name__ == '__main__':
     harness.write(body_str)
     harness.close()
  
-    # Compile the source files to LLVM IR
+    # Compile the source files to LLVM bytecode 
+    llvmgcc_bin = os.path.join(llvmgcc,'llvm-g++')
     bc_files = []
-    for i,src in enumerate(data['source_files'] +
-            [os.path.join(tmpdir, 'harness.cpp')]):
+    for i,src in enumerate(data['source_files']):
         out = os.path.join(tmpdir, 'out{0}.bc'.format(i))
-        llvmgcc_bin = os.path.join(llvmgcc,'llvm-g++')
-        cmd = '{0} -c -g -emit-llvm -I {1} -o {2} {3}'.format(
-                llvmgcc_bin ,klee_include, out, os.path.join(jfile_dir,src))
+        cmd = '{0} -c -g -emit-llvm -o {1} {2}'.format(
+                llvmgcc_bin, out, os.path.abspath(os.path.join(jfile_dir, src)))
         if subprocess.call(cmd.split()) != 0:
             exit(1)
         bc_files.append(out)
 
+    # Compile harness and link bytecode files to it
+    harness_out = os.path.join(tmpdir, 'out{0}.bc'.format(len(data['source_files'])))
+    cmd = '{0} -c -g -emit-llvm -I {1} -o {2} {3}'.format(
+            llvmgcc_bin, klee_include, harness_out, os.path.join(tmpdir, 'harness.cpp'))
+    if subprocess.call(cmd.split()) != 0:
+        exit(1)
+    bc_files.append(harness_out)
     harness_bc = os.path.join(tmpdir, 'harness.bc')
     llvmlink_bin = os.path.join(llvm29, 'llvm-link')
     cmd = '{0} -o {1} {2}'.format(
-        llvmlink_bin,harness_bc,' '.join(bc_files))
+        llvmlink_bin, harness_bc,' '.join(bc_files))
     if subprocess.call(cmd.split()) != 0:
         exit(1)
 
