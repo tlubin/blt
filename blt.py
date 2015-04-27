@@ -66,11 +66,12 @@ if __name__ == '__main__':
             class2=data['class2'])
 
     body_tmpl = Template(filename=(os.path.join(blt, 'templates', 'body.mako')))
-    body_str = body_tmpl.render(headers=data['header_files'],
+    body_str = body_tmpl.render(
+            headers=[os.path.join(jfile_dir, h) for h in data['header_files']],
             funcs_str=funcs_str, traces_str=traces_str,
             ntraces=(len(data['traces'])))
 
-    tmpdir = os.path.join(blt, 'tmp')
+    tmpdir = os.path.join(jfile_dir, 'blt_tmp')
     if os.path.exists(tmpdir):
         subprocess.call('rm -rf {0}'.format(tmpdir).split())
     os.mkdir(tmpdir)
@@ -78,16 +79,23 @@ if __name__ == '__main__':
     harness.write(body_str)
     harness.close()
  
-    # Compile the source files to LLVM IR
+    # Compile the source files to LLVM bytecode 
     bc_files = []
-    for i,src in enumerate(data['source_files'] +
-            [os.path.join(tmpdir, 'harness.cpp')]):
+    for i,src in enumerate(data['source_files']):
         out = os.path.join(tmpdir, 'out{0}.bc'.format(i))
-        cmd = 'llvm-g++ -c -g -emit-llvm -I {0} -o {1} {2}'.format(
-                klee_include, out, os.path.join(jfile_dir,src))
+        cmd = 'llvm-g++ -c -g -emit-llvm -o {0} {1}'.format(
+                out, os.path.join(jfile_dir,src))
         if subprocess.call(cmd.split()) != 0:
             exit(1)
         bc_files.append(out)
+
+    # Compile harness and link bytecode files to it
+    out = os.path.join(tmpdir, 'out{0}.bc'.format(len(data['source_files'])))
+    cmd = 'llvm-g++ -c -g -emit-llvm -I {0} -o {1} {2}'.format(
+            klee_include, out, os.path.join(tmpdir, 'harness.cpp'))
+    if subprocess.call(cmd.split()) != 0:
+        exit(1)
+    bc_files.append(out)
 
     harness_bc = os.path.join(tmpdir, 'harness.bc')
     cmd = 'llvm-link -o {0} '.format(harness_bc) + ' '.join(bc_files)
