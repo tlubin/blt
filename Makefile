@@ -5,7 +5,7 @@ LD = $(LLVM29)/llvm-link
 TRACE_NO=0
 bag_harness:
 	bash -c "ulimit -s unlimited"
-	python blt.py bag/bag.json > bag/test.cpp
+	python blt.py bag/bag.json 1> bag/test.cpp
 	cd bag ;\
 	$(CXX) $(CXXFLAGS) -o BinaryTree.bc BinaryTree.cpp ;\
 	$(CXX) $(CXXFLAGS) -o DynamicIntBag.bc DynamicIntBag.cpp ;\
@@ -19,7 +19,7 @@ bag_harness:
 
 calcs_harness:
 	bash -c "ulimit -s unlimited"
-	python blt.py calcs/calcs.json > calcs/test.cpp
+	python blt.py calcs/calcs.json 1> calcs/test.cpp
 	cd calcs/ ;\
 	$(CXX) $(CXXFLAGS) -o  old_calc.bc  old_calc.cpp ;\
 	$(CXX) $(CXXFLAGS) -o  new_calc.bc  new_calc.cpp ;\
