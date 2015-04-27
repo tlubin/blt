@@ -26,10 +26,10 @@
     "traces":
     [
         [
-            { 'symbolic_trace' : 'false', 'symbolic_args' : 'false', 'len' : 1, 'funcs' : ['init_pressed'] },
-            { 'symbolic_trace' : 'false', 'symbolic_args' : 'false', 'len' : 200, 'funcs' : ['zero_pressed', 'one_pressed', 'plus_pressed', 'mult_pressed'] },
-            { 'symbolic_trace' : 'true', 'symbolic_args' : 'true', 'len' : 2, 'funcs' : ['zero_pressed', 'one_pressed', 'plus_pressed', 'mult_pressed'] },
-            { 'symbolic_trace' : 'false', 'symbolic_args' : 'false', 'len' : 1, 'funcs' : ['eval_pressed'] }
+            { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 1, "funcs" : ["init_pressed"] },
+            { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 200, "funcs" : ["zero_pressed", "one_pressed", "plus_pressed", "mult_pressed"] },
+            { "symbolic_trace" : "true", "symbolic_args" : "true", "len" : 2, "funcs" : ["zero_pressed", "one_pressed", "plus_pressed", "mult_pressed"] },
+            { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 1, "funcs" : ["eval_pressed"] }
         ]
     ]
 }
