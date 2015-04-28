@@ -4,33 +4,6 @@ import subprocess
 import sys
 from mako.template import Template
 
-### Just for testing purposes...
-
-traces = \
-[
-    [
-        { 'symbolic_trace' : 'false', 'symbolic_args' : 'false', 'len' : 20, 'funcs' : ['insert'] },
-        { 'symbolic_trace' : 'true', 'symbolic_args' : 'true', 'len' : 2, 'funcs' : ['member', 'get_size', 'insert', 'remove'] }
-    ],
-    [
-        { 'symbolic_trace' : 'false', 'symbolic_args' : 'false', 'len' : 20, 'funcs' : ['insert', 'get_size'] }
-    ]
-]
-
-### traces testing calcs
-'''
-traces = \
-[
-    [
-        { 'symbolic_trace' : 'false', 'symbolic_args' : 'false', 'len' : 1, 'funcs' : ['init_pressed'] },
-        { 'symbolic_trace' : 'false', 'symbolic_args' : 'false', 'len' : 200, 'funcs' : ['zero_pressed', 'one_pressed', 'plus_pressed', 'mult_pressed'] },
-        { 'symbolic_trace' : 'true', 'symbolic_args' : 'true', 'len' : 2, 'funcs' : ['zero_pressed', 'one_pressed', 'plus_pressed', 'mult_pressed'] },
-        { 'symbolic_trace' : 'false', 'symbolic_args' : 'false', 'len' : 1, 'funcs' : ['eval_pressed'] }
-    ]
-]
-'''
-###
-
 if __name__ == '__main__':
     # Check environment and argument
     if 'BLT' not in os.environ:
@@ -67,8 +40,6 @@ if __name__ == '__main__':
     funcs_str = function_tmpl.render(funcs=data['funcs'], class1=data['class1'],
             class2=data['class2'])
 
-    # TODO: just a placeholder
-    data['traces'] = traces
 
     traces_tmpl = Template(
             filename=(os.path.join(blt, 'templates', 'traces.mako')))
@@ -88,8 +59,8 @@ if __name__ == '__main__':
     harness = open(os.path.join(tmpdir, 'harness.cpp'), 'w')
     harness.write(body_str)
     harness.close()
- 
-    # Compile the source files to LLVM bytecode 
+
+    # Compile the source files to LLVM bytecode
     llvmgcc_bin = os.path.join(llvmgcc,'llvm-g++')
     bc_files = []
     for i,src in enumerate(data['source_files']):
@@ -121,3 +92,18 @@ if __name__ == '__main__':
         cmd = 'klee -emit-all-errors -output-dir={0} {1} {2}'.format(
                 klee_output_dir, harness_bc, i)
         subprocess.call(cmd.split())
+
+        trace = []
+        #XXX created failure.out for testing purposes...
+        failed = open(os.path.abspath(os.path.join(jfile_dir, 'failure.out')), 'r')
+        failed_lines = failed.readlines()
+        for line in failed_lines:
+            line = line.split(',')
+            trace.append((int(line[0]), line[1:]))
+        output_tmpl = Template(filename=(os.path.join(blt, 'templates', 'output.mako')))
+        output_str = output_tmpl.render(
+                headers=[os.path.abspath(os.path.join(jfile_dir, h)) for h in data['header_files']],
+                funcs=data['funcs'], class1=data['class1'], class2=data['class2'], trace=trace)
+        output = open(os.path.join(tmpdir, 'trace{0}_out.cpp'.format(i)), 'w')
+        output.write(output_str)
+        output.close()

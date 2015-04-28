@@ -4,20 +4,30 @@
     "header_files" : ["LilIntBag.hpp", "DynamicIntBag.hpp", "args.hpp"],
     "source_files" : ["LilIntBag.cpp", "DynamicIntBag.cpp", "args.cpp", "BinaryTree.cpp"],
     "funcs": [
-	{"name" : "member",
-	 "args" : ["int"],
-	 "return" : "bool",
-	 "arg_gen" : "member_arg"},
-	{"name" : "insert",
-	 "args" : ["int"],
-	 "return" : "void",
-	 "arg_gen" : "insert_arg"},
-	{"name" : "remove",
-	 "args" : ["int"],
-	 "return" : "void",
-	 "arg_gen" : "remove_arg"},
-	{"name" : "get_size",
-	 "args" : [],
-	 "return" : "unsigned"}
-    ]
+        {"name" : "member",
+         "args" : ["int"],
+         "return" : "bool",
+         "arg_gen" : "member_arg"},
+        {"name" : "insert",
+         "args" : ["int"],
+         "return" : "void",
+         "arg_gen" : "insert_arg"},
+        {"name" : "remove",
+         "args" : ["int"],
+         "return" : "void",
+         "arg_gen" : "remove_arg"},
+        {"name" : "get_size",
+         "args" : [],
+         "return" : "unsigned"}
+  ],
+  "traces": 
+  [
+      [
+          { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 20, "funcs" : ["insert"] },
+          { "symbolic_trace" : "true", "symbolic_args" : "true", "len" : 2, "funcs" : ["member", "get_size", "insert", "remove"] }
+      ],
+      [
+          { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 20, "funcs" : ["insert", "get_size"] }
+      ]
+  ]
 }

@@ -4,24 +4,32 @@
     "header_files" : ["old_calc.h", "new_calc.h"],
     "source_files" : ["old_calc.cpp", "new_calc.cpp"],
     "funcs": [
-	{"name" : "init_pressed",
-	 "alias" : "init",
-	 "args" : [],
-	 "return" : "void"},
-	{"name" : "zero_pressed",
-	 "args" : [],
-	 "return" : "void"},
-	{"name" : "one_pressed",
-	 "args" : [],
-	 "return" : "void"},
-	{"name" : "plus_pressed",
-	 "args" : [],
-	 "return" : "void"},
-	{"name" : "mult_pressed",
-	 "args" : [],
-	 "return" : "void"},
-	{"name" : "eval_pressed",
-	 "args" : [],
-	 "return" : "void"}
+        {"name" : "init_pressed",
+         "args" : [],
+         "return" : "void"},
+        {"name" : "zero_pressed",
+         "args" : [],
+         "return" : "void"},
+        {"name" : "one_pressed",
+         "args" : [],
+         "return" : "void"},
+        {"name" : "plus_pressed",
+         "args" : [],
+         "return" : "void"},
+        {"name" : "mult_pressed",
+         "args" : [],
+         "return" : "void"},
+        {"name" : "eval_pressed",
+         "args" : [],
+         "return" : "void"}
+    ],
+    "traces":
+    [
+        [
+            { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 1, "funcs" : ["init_pressed"] },
+            { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 200, "funcs" : ["zero_pressed", "one_pressed", "plus_pressed", "mult_pressed"] },
+            { "symbolic_trace" : "true", "symbolic_args" : "true", "len" : 2, "funcs" : ["zero_pressed", "one_pressed", "plus_pressed", "mult_pressed"] },
+            { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 1, "funcs" : ["eval_pressed"] }
+        ]
     ]
 }
