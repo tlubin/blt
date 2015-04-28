@@ -93,11 +93,17 @@ if __name__ == '__main__':
                 klee_output_dir, harness_bc, i)
         subprocess.call(cmd.split())
 
-        output_tmpl = Template(filename=(os.path.join(blt, 'templates', 'body.mako')))
+        trace = []
+        #XXX created failure.out for testing purposes...
+        failed = open(os.path.abspath(os.path.join(jfile_dir, 'failure.out')), 'r')
+        failed_lines = failed.readlines()
+        for line in failed_lines:
+            line = line.split(',')
+            trace.append((int(line[0]), line[1:]))
+        output_tmpl = Template(filename=(os.path.join(blt, 'templates', 'output.mako')))
         output_str = output_tmpl.render(
-                headers=[os.path.join(jfile_dir, h) for h in data['header_files']],
-                funcs_str=funcs_str, traces_str=traces_str,
-                ntraces=(len(data['traces'])))
+                headers=[os.path.abspath(os.path.join(jfile_dir, h)) for h in data['header_files']],
+                funcs=data['funcs'], class1=data['class1'], class2=data['class2'], trace=trace)
         output = open(os.path.join(tmpdir, 'trace{0}_out.cpp'.format(i)), 'w')
         output.write(output_str)
         output.close()
