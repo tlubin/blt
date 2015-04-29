@@ -40,7 +40,7 @@ void* get_arg(std::string const& arg_type) {
   switch (hashit(arg_type)) {
     case eint: {
       int ints[4];
-        ints[0] = INT_MIN + rand() /(RAND_MAX/(INT_MAX-INT_MIN));
+        ints[0] = INT_MIN + rand() % INT_MAX;
         ints[1] = INT_MAX;
         ints[2] = INT_MIN;
         ints[3] = 0;
@@ -50,7 +50,7 @@ void* get_arg(std::string const& arg_type) {
     }
     case euint: {
       unsigned uints[3];
-        uints[0] = rand() / (RAND_MAX/UINT_MAX + 1);
+        uints[0] = rand() % UINT_MAX;
         uints[1] = UINT_MAX;
         uints[2] = 0;
       unsigned* ret = new unsigned[1];
@@ -59,7 +59,7 @@ void* get_arg(std::string const& arg_type) {
     }
     case ellong: {
       long long llongs[4];
-        llongs[0] = LLONG_MIN + rand() /(RAND_MAX/(LLONG_MAX-LLONG_MIN));
+        llongs[0] = LLONG_MIN + rand() % LLONG_MAX;
         llongs[1] = LLONG_MAX;
         llongs[2] = LLONG_MIN;
         llongs[3] = 0;
@@ -69,7 +69,7 @@ void* get_arg(std::string const& arg_type) {
     }
     case efloat: {
       float floats[3];
-        floats[0] = FLT_MIN + rand() /(RAND_MAX/(FLT_MAX-FLT_MIN));
+        floats[0] = FLT_MIN + rand() % FLT_MAX
         floats[1] = FLT_MAX;
         floats[2] = FLT_MIN; floats[3] = 0;
       float* ret = new float[1];
@@ -78,7 +78,7 @@ void* get_arg(std::string const& arg_type) {
     }
     case echar: {
       char chars[4];
-        chars[0] = CHAR_MIN + rand() /(RAND_MAX/(CHAR_MAX-CHAR_MIN));
+        chars[0] = CHAR_MIN + rand() % CHAR_MAX;
         chars[1] = ' ';
         chars[2] = CHAR_MAX;
         chars[3] = CHAR_MIN;

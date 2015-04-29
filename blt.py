@@ -93,17 +93,23 @@ if __name__ == '__main__':
                 klee_output_dir, harness_bc, i)
         subprocess.call(cmd.split())
 
-        trace = []
-        #XXX created failure.out for testing purposes...
-        failed = open(os.path.abspath(os.path.join(jfile_dir, 'failure.out')), 'r')
-        failed_lines = failed.readlines()
-        for line in failed_lines:
+    replay = 0
+    trace = []
+    output_tmpl = Template(filename=(os.path.join(blt, 'templates', 'output.mako')))
+    #XXX created failure.out for testing purposes...
+    failed = open(os.path.abspath(os.path.join(jfile_dir, 'failure.out')), 'r')
+    lines = failed.read().splitlines()
+    for line in lines:
+        if line == "###":
+            output_str = output_tmpl.render(
+                    headers=[os.path.abspath(os.path.join(jfile_dir, h)) for h in data['header_files']],
+                    funcs=data['funcs'], class1=data['class1'], class2=data['class2'], trace=trace)
+            output = open(os.path.join(tmpdir, 'replay{0}.cpp'.format(replay)), 'w')
+            output.write(output_str)
+            output.close()
+            trace = []
+            replay += 1
+        else:
             line = line.split(',')
             trace.append((int(line[0]), line[1:]))
-        output_tmpl = Template(filename=(os.path.join(blt, 'templates', 'output.mako')))
-        output_str = output_tmpl.render(
-                headers=[os.path.abspath(os.path.join(jfile_dir, h)) for h in data['header_files']],
-                funcs=data['funcs'], class1=data['class1'], class2=data['class2'], trace=trace)
-        output = open(os.path.join(tmpdir, 'trace{0}_out.cpp'.format(i)), 'w')
-        output.write(output_str)
-        output.close()
+
