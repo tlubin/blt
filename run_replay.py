@@ -29,5 +29,7 @@ if __name__ == '__main__':
     if subprocess.call(cmd.split()) != 0:
       exit(1)
 
+    print "Completed replay: {0}".format(rfile)
+
 
 
