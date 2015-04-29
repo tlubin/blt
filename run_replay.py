@@ -4,22 +4,6 @@ import os
 import subprocess
 
 if __name__ == '__main__':
-    # Check environment and argument
-    if 'BLT' not in os.environ:
-        sys.stderr.write('Need to set BLT environment variable to directory of BLT\n')
-        exit(1)
-    blt = os.environ['BLT']
-
-    if 'LLVMGCC' not in os.environ:
-        sys.stderr.write('Need to set LLVMGCC environment variable to directory of llvm-g++ binary\n')
-        exit(1)
-    llvmgcc = os.environ['LLVMGCC']
-
-    if 'LLVM29' not in os.environ:
-        sys.stderr.write('Need to set LLVM29 environment variable to directory of llvm-link binary for llvm 2.9\n')
-        exit(1)
-    llvm29 = os.environ['LLVM29']
-
     if (len(sys.argv) < 2):
         sys.stderr.write('Please pass in replay file\n')
         exit(1)
