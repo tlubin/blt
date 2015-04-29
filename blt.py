@@ -96,11 +96,10 @@ if __name__ == '__main__':
     replay = 0
     trace = []
     output_tmpl = Template(filename=(os.path.join(blt, 'templates', 'output.mako')))
-    #XXX created failure.out for testing purposes...
-    failed = open(os.path.abspath(os.path.join(jfile_dir, 'failure.out')), 'r')
+    failed = open(os.path.abspath(os.path.join(tmpdir, 'failure.out')), 'r')
     lines = failed.read().splitlines()
     for line in lines:
-        if line == "###":
+        if line == "#####":
             output_str = output_tmpl.render(
                     headers=[os.path.abspath(os.path.join(jfile_dir, h)) for h in data['header_files']],
                     funcs=data['funcs'], class1=data['class1'], class2=data['class2'], trace=trace)
