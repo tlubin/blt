@@ -1,5 +1,6 @@
 % for t in traces:
 void trace${loop.index}() {
+  std::stringstream* ss = new std::stringstream();
   ${class1}* v1 = new ${class1}();
   ${class2}* v2 = new ${class2}();
 
@@ -15,7 +16,7 @@ void trace${loop.index}() {
     switch (n${loop.index}) {
     % for f in node['funcs']:
       case ${loop.index}:
-        call_${f}(v1, v2, ${node['symbolic_args']});
+        call_${f}(v1, v2, ${node['symbolic_args']}, ss);
         break;
     % endfor
     }

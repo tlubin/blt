@@ -7,6 +7,8 @@
 #include <climits>
 #include <cfloat>
 #include <string>
+#include <sstream>
+#include <fstream>
 
 // HELPERS ////////////////////////////////////////////////////////////////////
 
