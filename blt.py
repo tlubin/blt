@@ -3,28 +3,35 @@ import os
 import subprocess
 import sys
 from mako.template import Template
+from random import randint
 
-if __name__ == '__main__':
-    # Check environment and argument
+# Check environment variables
+def check_env():
+    env = {}
     if 'BLT' not in os.environ:
         sys.stderr.write('Need to set BLT environment variable to directory of BLT\n')
         exit(1)
-    blt = os.environ['BLT']
+    env['blt'] = os.environ['BLT']
 
     if 'LLVMGCC' not in os.environ:
         sys.stderr.write('Need to set LLVMGCC environment variable to directory of llvm-g++ binary\n')
         exit(1)
-    llvmgcc = os.environ['LLVMGCC']
+    env['llvmgcc'] = os.environ['LLVMGCC']
 
     if 'LLVM29' not in os.environ:
         sys.stderr.write('Need to set LLVM29 environment variable to directory of llvm-link binary for llvm 2.9\n')
         exit(1)
-    llvm29 = os.environ['LLVM29']
+    env['llvm29'] = os.environ['LLVM29']
 
     if 'KLEE' not in os.environ:
         sys.stderr.write('Need to set KLEE environment variable to directory of KLEE\n')
         exit(1)
-    klee_include = os.path.join(os.environ['KLEE'], 'include')
+    env['klee_include'] = os.path.join(os.environ['KLEE'], 'include')
+    return env
+    
+
+def main():
+    env = check_env()
 
     if (len(sys.argv) < 2):
         sys.stderr.write('Please pass in JSON file\n')
@@ -34,19 +41,28 @@ if __name__ == '__main__':
     with open(jfile) as json_file:
         data = json.load(json_file)
 
+    # Add a "calls" field for the actual concrete function calls
+    for trace in data['traces']:
+        for node in trace:
+            if node['symbolic_trace'] == 'false':
+                calls = []
+                nfuncs = len(node['funcs'])
+                for i in range(node['len']):
+                    calls.append(node['funcs'][randint(0,nfuncs-1)])
+                node['calls'] = calls
+
     # Create harness from JSON data
     function_tmpl = Template(
-            filename=(os.path.join(blt, 'templates', 'functions.mako')))
+            filename=(os.path.join(env['blt'], 'templates', 'functions.mako')))
     funcs_str = function_tmpl.render(funcs=data['funcs'], class1=data['class1'],
             class2=data['class2'])
 
-
     traces_tmpl = Template(
-            filename=(os.path.join(blt, 'templates', 'traces.mako')))
+            filename=(os.path.join(env['blt'], 'templates', 'traces.mako')))
     traces_str = traces_tmpl.render(traces=data['traces'], class1=data['class1'],
             class2=data['class2'])
 
-    body_tmpl = Template(filename=(os.path.join(blt, 'templates', 'body.mako')))
+    body_tmpl = Template(filename=(os.path.join(env['blt'], 'templates', 'body.mako')))
     body_str = body_tmpl.render(
             headers=[os.path.abspath(os.path.join(jfile_dir, h)) for h in data['header_files']],
             funcs_str=funcs_str, traces_str=traces_str,
@@ -61,7 +77,7 @@ if __name__ == '__main__':
     harness.close()
 
     # Compile the source files to LLVM bytecode
-    llvmgcc_bin = os.path.join(llvmgcc,'llvm-g++')
+    llvmgcc_bin = os.path.join(env['llvmgcc'],'llvm-g++')
     bc_files = []
     for i,src in enumerate(data['source_files']):
         out = os.path.join(tmpdir, 'out{0}.bc'.format(i))
@@ -74,12 +90,12 @@ if __name__ == '__main__':
     # Compile harness and link bytecode files to it
     harness_out = os.path.join(tmpdir, 'out{0}.bc'.format(len(data['source_files'])))
     cmd = '{0} -c -g -emit-llvm -I {1} -o {2} {3}'.format(
-            llvmgcc_bin, klee_include, harness_out, os.path.join(tmpdir, 'harness.cpp'))
+            llvmgcc_bin, env['klee_include'], harness_out, os.path.join(tmpdir, 'harness.cpp'))
     if subprocess.call(cmd.split()) != 0:
         exit(1)
     bc_files.append(harness_out)
     harness_bc = os.path.join(tmpdir, 'harness.bc')
-    llvmlink_bin = os.path.join(llvm29, 'llvm-link')
+    llvmlink_bin = os.path.join(env['llvm29'], 'llvm-link')
     cmd = '{0} -o {1} {2}'.format(
         llvmlink_bin, harness_bc,' '.join(bc_files))
     if subprocess.call(cmd.split()) != 0:
@@ -95,7 +111,7 @@ if __name__ == '__main__':
 
     replay = 0
     trace = []
-    output_tmpl = Template(filename=(os.path.join(blt, 'templates', 'output.mako')))
+    output_tmpl = Template(filename=(os.path.join(env['blt'], 'templates', 'output.mako')))
     failed = open(os.path.abspath(os.path.join(tmpdir, 'failure.out')), 'r')
     lines = failed.read().splitlines()
     for line in lines:
@@ -111,4 +127,7 @@ if __name__ == '__main__':
         else:
             line = line.split(',')
             trace.append((int(line[0]), line[1:]))
+
+if __name__ == '__main__':
+    main()
 

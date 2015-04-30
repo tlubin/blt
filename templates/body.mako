@@ -71,7 +71,9 @@ void* get_arg(std::string const& arg_type) {
     }
     case efloat: {
       float floats[3];
-        floats[0] = FLT_MIN + rand() % FLT_MAX
+      // TODO: need to think about these functions...
+      // changed to * instead of % to suppress error
+        floats[0] = FLT_MIN + rand() * FLT_MAX;
         floats[1] = FLT_MAX;
         floats[2] = FLT_MIN; floats[3] = 0;
       float* ret = new float[1];
