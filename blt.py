@@ -4,6 +4,7 @@ import subprocess
 import sys
 from mako.template import Template
 from random import randint
+import re
 
 env = {}
 args = {}
@@ -71,6 +72,41 @@ def write_harness():
     harness.write(body_str)
     harness.close()
 
+# Search KLEE output directory to find failing test cases. Returns a list in
+# which each element (i.e. each failing test case) is a list of dictionaries,
+# each of which has the keys 'name', 'size' and 'data' and represents the
+# concrete value assigned by KLEE to a particular symbolic value.
+def klee_get_failures(klee_output_dir):
+    # Identify failed test runs by files with .err extension.
+    out_files = os.listdir(klee_output_dir)
+    err_file = re.compile('^(test.*)\..*\.err$')
+    failed_klee_runs = []
+    for outf in out_files:
+        m = err_file.match(outf)
+        if not m:
+            continue
+        # Parse each corresponding ktest file.
+        ktest_file = os.path.join(klee_output_dir, m.group(1) + ".ktest")
+        cmd = "ktest-tool --write-ints %s | tail -n+4 | awk '{print $4}'"
+        try:
+            lines = subprocess.check_output(cmd % ktest_file,
+                    shell=True).split()
+        except CalledProcessError:
+            print "Failure parsing KLEE output."
+            exit(1)
+        assert len(lines) % 3 == 0
+        failed_run = []
+        i = 0
+        while i < len(lines):
+           val = {}
+           val['name'] = lines[i][1:-1]
+           val['size'] = lines[i+1]
+           val['data'] = lines[i+2]
+           i += 3
+           failed_run.append(val)
+        failed_klee_runs.append(failed_run)
+    return failed_klee_runs
+
 def compile_and_run_klee():
     # Compile the source files to LLVM bytecode
     llvmgcc_bin = os.path.join(env['llvmgcc'],'llvm-g++')
@@ -104,7 +140,7 @@ def compile_and_run_klee():
         cmd = 'klee -emit-all-errors -output-dir={0} {1} {2}'.format(
                 klee_output_dir, harness_bc, i)
         subprocess.call(cmd.split())
-#        failures = klee_get_failures()
+        failures = klee_get_failures(klee_output_dir)
 #        replay(failures)
 
 def main():
