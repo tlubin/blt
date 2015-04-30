@@ -5,9 +5,15 @@ import sys
 from mako.template import Template
 from random import randint
 
+env = {}
+args = {}
+data = {}
+jfile_dir = ''
+tmpdir = ''
+
 # Check environment variables
 def check_env():
-    env = {}
+    global env
     if 'BLT' not in os.environ:
         sys.stderr.write('Need to set BLT environment variable to directory of BLT\n')
         exit(1)
@@ -28,30 +34,19 @@ def check_env():
         exit(1)
     env['klee_include'] = os.path.join(os.environ['KLEE'], 'include')
     return env
-    
 
-def main():
-    env = check_env()
-
+# Eventually we may have more commandline flags to pass in...
+# Use argparse or optparse
+def get_args():
+    global args
     if (len(sys.argv) < 2):
-        sys.stderr.write('Please pass in JSON file\n')
+        sys.stderr.write('Usage: python blt.py foo.json\n')
         exit(1)
-    jfile = sys.argv[1]
-    jfile_dir = os.path.dirname(jfile)
-    with open(jfile) as json_file:
-        data = json.load(json_file)
+    args['jfile'] = sys.argv[1]
 
-    # Add a "calls" field for the actual concrete function calls
-    for trace in data['traces']:
-        for node in trace:
-            if node['symbolic_trace'] == 'false':
-                calls = []
-                nfuncs = len(node['funcs'])
-                for i in range(node['len']):
-                    calls.append(node['funcs'][randint(0,nfuncs-1)])
-                node['calls'] = calls
-
-    # Create harness from JSON data
+# Create harness from JSON data
+def write_harness():
+    global tmpdir
     function_tmpl = Template(
             filename=(os.path.join(env['blt'], 'templates', 'functions.mako')))
     funcs_str = function_tmpl.render(funcs=data['funcs'], class1=data['class1'],
@@ -76,6 +71,7 @@ def main():
     harness.write(body_str)
     harness.close()
 
+def compile_and_run_klee():
     # Compile the source files to LLVM bytecode
     llvmgcc_bin = os.path.join(env['llvmgcc'],'llvm-g++')
     bc_files = []
@@ -108,6 +104,30 @@ def main():
         cmd = 'klee -emit-all-errors -output-dir={0} {1} {2}'.format(
                 klee_output_dir, harness_bc, i)
         subprocess.call(cmd.split())
+#        failures = klee_get_failures()
+#        replay(failures)
+
+def main():
+    global data, jfile_dir
+    check_env()
+    get_args()
+
+    jfile_dir = os.path.dirname(args['jfile'])
+    with open(args['jfile']) as json_file:
+        data = json.load(json_file)
+
+    # Add a "calls" field for the actual concrete function calls
+    for trace in data['traces']:
+        for node in trace:
+            if node['symbolic_trace'] == 'false':
+                calls = []
+                nfuncs = len(node['funcs'])
+                for i in range(node['len']):
+                    calls.append(node['funcs'][randint(0,nfuncs-1)])
+                node['calls'] = calls
+
+    write_harness()
+    compile_and_run_klee()
 
     replay = 0
     trace = []
