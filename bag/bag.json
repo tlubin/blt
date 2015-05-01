@@ -24,10 +24,8 @@
   [
       [
           { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 20, "funcs" : ["insert"] },
-          { "symbolic_trace" : "true", "symbolic_args" : "true", "len" : 2, "funcs" : ["member", "get_size", "insert", "remove"] }
-      ],
-      [
-          { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 20, "funcs" : ["insert", "get_size"] }
+          { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 1, "funcs" : ["remove"] },
+          { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 1, "funcs" : ["get_size"] }
       ]
   ]
 }

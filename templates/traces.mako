@@ -7,10 +7,10 @@ void trace${loop.index}() {
   % for node in t:
   % if node['symbolic_trace']== 'true':
   for (int i = 0; i < ${node['len']}; ++i) {
-    unsigned n${loop.index};
-    klee_make_symbolic(&n${loop.index}, sizeof(n${loop.index}), "n${loop.index}");
-    klee_assume(n${loop.index} < ${len(node['funcs'])});
-    switch (n${loop.index}) {
+    unsigned idx${loop.index};
+    klee_make_symbolic(&idx${loop.index}, sizeof(idx${loop.index}), "idx${loop.index}");
+    klee_assume(idx${loop.index} < ${len(node['funcs'])});
+    switch (idx${loop.index}) {
     % for f in node['funcs']:
       case ${loop.index}:
         call_${f}(v1, v2, ${node['symbolic_args']}, ss);

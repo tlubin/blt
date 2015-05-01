@@ -107,6 +107,66 @@ def klee_get_failures(klee_output_dir):
         failed_klee_runs.append(failed_run)
     return failed_klee_runs
 
+# TODO! Deal with filenames and directories better...need to number to files also (replay1, replay2, etc.)
+def replay(failure, trace):
+    # Generate c++ code that will mirror failing run to get arguments
+    getargs_tmpl = Template(
+            filename=(os.path.join(env['blt'], 'templates', 'getargs.mako')))
+    getargs_str = getargs_tmpl.render(funcs=data['funcs'], trace=trace)
+    getargs = open(os.path.join(tmpdir, 'getargs.cpp'), 'w')
+    getargs.write(getargs_str)
+    getargs.close()
+
+    # Compile and run c++ code and collect arguments from output file
+    llvmgcc_bin = os.path.join(env['llvmgcc'],'llvm-g++')
+    compile_cmd = '{0} -o {1} {2}'.format(llvmgcc_bin, os.path.join(tmpdir, 'getargs'), os.path.join(tmpdir, 'getargs.cpp'))
+    subprocess.call(compile_cmd.split())
+    run_cmd = os.path.join(tmpdir, 'getargs')
+    getargs_ret = os.path.join(tmpdir, 'getargs_ret')
+    with open(getargs_ret, 'w') as outfile:
+        subprocess.call(run_cmd, stdout=outfile)
+    with open(getargs_ret, 'r') as infile:
+        concrete_args = infile.read().splitlines()
+
+    sym_calls = [x for x in failure if 'idx' in x['name']]
+    sym_args = [x for x in failure if 'arg' in x['name']]
+    calls = []
+    args = []
+    sym_call_num = 0
+    sym_arg_num = 0
+    conc_call_num = 0
+    for node in trace:
+        if node['symbolic_trace'] == 'true':
+            for i in range(node['len']):
+                info = sym_calls[sym_call_num]
+                calls.append(node['funcs'][int(info['data'])])
+                sym_call_num += 1
+        else:
+            calls += node['calls']
+        if node['symbolic_args'] == 'true':
+            for i in range(node['len']):
+                # TODO! right now this is only dealing with one symbolic functions...
+                # need to look at arg0, arg1, ...
+                info = sym_args[sym_arg_num]
+                args.append([info['data']])
+                sym_arg_num += 1
+        else:
+            for i in range(node['len']):
+                # TODO! differentiate between when our arg generator is called and when theirs is...
+                # right now, assume ours is always called...
+                # output.mako assumes a None means their arg generator should be called
+                args.append(concrete_args[conc_call_num].split(',')[1:])
+                conc_call_num += 1
+
+    output_tmpl = Template(filename=(os.path.join(env['blt'], 'templates', 'output.mako')))
+    output_str = output_tmpl.render(
+        headers=[os.path.abspath(os.path.join(jfile_dir, h)) for h in data['header_files']],
+        funcs=data['funcs'], class1=data['class1'], class2=data['class2'], calls_args=zip(calls,args))
+    output = open(os.path.join(tmpdir, 'replay.cpp'), 'w')
+    output.write(output_str)
+    output.close()
+
+
 def compile_and_run_klee():
     # Compile the source files to LLVM bytecode
     llvmgcc_bin = os.path.join(env['llvmgcc'],'llvm-g++')
@@ -141,7 +201,8 @@ def compile_and_run_klee():
                 klee_output_dir, harness_bc, i)
         subprocess.call(cmd.split())
         failures = klee_get_failures(klee_output_dir)
-#        replay(failures)
+        for f in failures:
+            replay(f, data['traces'][i])
 
 def main():
     global data, jfile_dir
@@ -164,25 +225,6 @@ def main():
 
     write_harness()
     compile_and_run_klee()
-
-    replay = 0
-    trace = []
-    output_tmpl = Template(filename=(os.path.join(env['blt'], 'templates', 'output.mako')))
-    failed = open(os.path.abspath(os.path.join(tmpdir, 'failure.out')), 'r')
-    lines = failed.read().splitlines()
-    for line in lines:
-        if line == "#####":
-            output_str = output_tmpl.render(
-                    headers=[os.path.abspath(os.path.join(jfile_dir, h)) for h in data['header_files']],
-                    funcs=data['funcs'], class1=data['class1'], class2=data['class2'], trace=trace)
-            output = open(os.path.join(tmpdir, 'replay{0}.cpp'.format(replay)), 'w')
-            output.write(output_str)
-            output.close()
-            trace = []
-            replay += 1
-        else:
-            line = line.split(',')
-            trace.append((int(line[0]), line[1:]))
 
 if __name__ == '__main__':
     main()
