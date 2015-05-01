@@ -105,6 +105,7 @@ def klee_get_failures(klee_output_dir):
            i += 3
            failed_run.append(val)
         failed_klee_runs.append(failed_run)
+    print failed_klee_runs
     return failed_klee_runs
 
 def compile_and_run_klee():
@@ -164,7 +165,7 @@ def main():
 
     write_harness()
     compile_and_run_klee()
-
+'''
     replay = 0
     trace = []
     output_tmpl = Template(filename=(os.path.join(env['blt'], 'templates', 'output.mako')))
@@ -183,7 +184,7 @@ def main():
         else:
             line = line.split(',')
             trace.append((int(line[0]), line[1:]))
-
+'''
 if __name__ == '__main__':
     main()
 
