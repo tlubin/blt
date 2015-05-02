@@ -108,12 +108,19 @@ def klee_get_failures(klee_output_dir):
     return failed_klee_runs
 
 # TODO! Deal with filenames and directories better...
-# XXX currently numbering by failing trace number
 def replay(failure, trace, num):
+    sym_calls = [x for x in failure if 'idx' in x['name']]
+    sym_args = [x for x in failure if 'arg' in x['name']]
+    calls = []
+    args = []
+    sym_call_num = 0
+    sym_arg_num = 0
+    conc_call_num = 0
+
     # Generate c++ code that will mirror failing run to get arguments
     getargs_tmpl = Template(
             filename=(os.path.join(env['blt'], 'templates', 'getargs.mako')))
-    getargs_str = getargs_tmpl.render(funcs=data['funcs'], trace=trace)
+    getargs_str = getargs_tmpl.render(funcs=data['funcs'], trace=trace, sym_calls=sym_calls)
     getargs = open(os.path.join(tmpdir, 'getargs.cpp'), 'w')
     getargs.write(getargs_str)
     getargs.close()
@@ -129,14 +136,6 @@ def replay(failure, trace, num):
     with open(getargs_ret, 'r') as infile:
         concrete_args = infile.read().splitlines()
 
-    sym_calls = [x for x in failure if 'idx' in x['name']]
-    sym_args = [x for x in failure if 'arg' in x['name']]
-    calls = []
-    args = []
-    sym_call_num = 0
-    sym_arg_num = 0
-    conc_call_num = 0
-    # TODO doesn't handle 0 arguments in a symbolic function
     for node in trace:
         if node['symbolic_trace'] == 'true':
             for i in range(node['len']):
@@ -146,16 +145,18 @@ def replay(failure, trace, num):
         else:
             calls += node['calls']
         if node['symbolic_args'] == 'true':
+            funcs = calls[-node['len']:]
             for i in range(node['len']):
-                # TODO! right now this is only dealing with one symbolic argument...
-                # need to look at arg0, arg1, ...
-                info = sym_args[sym_arg_num]
-                args.append([info['data']])
-                sym_arg_num += 1
+                f = [f for f in data['funcs'] if f['name'] == funcs[i]][0]
+                f_args = []
+                for _ in range(len(f['args'])):
+                    f_args.append(sym_args[sym_arg_num]['data'])
+                    sym_arg_num += 1
+                args.append(f_args)
         else:
-            #TODO Does not handle symbolic function with concrete arguments (fails when 0 arguments)
+            # TL: works with 0 args -- args.append([foo][1:]) -> args.append([]) which is what we want
+            # (Delete when you read this and agree)
             for i in range(node['len']):
-                # XXX output.mako assumes a "GEN" means their arg generator should be called
                 args.append(concrete_args[conc_call_num].split(',')[1:])
                 conc_call_num += 1
 
