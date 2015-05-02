@@ -108,7 +108,7 @@ void call_${f['name']}(std::stringstream* ss) {
   ${typ} arg${loop.index};
   % endfor
   % for typ in f['args']:
-  % if 'arg_gen' in f.keys():	
+  % if 'arg_gen' not in f.keys():	
   (*ss) << ",GEN";
   % else: 
   arg${loop.index} = *(${typ}*)(get_arg("${typ}"));

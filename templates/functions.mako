@@ -11,7 +11,7 @@ void call_${f['name']}(${class1}* v1, ${class2}* v2, bool is_sym, std::stringstr
     % endfor
   } else {
     % for typ in f['args']:
-    % if 'arg_gen' in f.keys():
+    % if 'arg_gen' not in f.keys():
     arg${loop.index} = *(${typ}*)args::${f['arg_gen']}(${loop.index});
     % else: 
     arg${loop.index} = *(${typ}*)(get_arg("${typ}"));
