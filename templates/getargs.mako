@@ -1,23 +1,11 @@
-% for header in headers:
-#include "${header}"
-% endfor
-#include <klee/klee.h>
-#include <cassert>
 #include <cstdlib>
 #include <climits>
 #include <cfloat>
 #include <string>
 #include <sstream>
-#include <fstream>
+#include <iostream>
 
-// HELPERS ////////////////////////////////////////////////////////////////////
-
-#define NTRACES ${ntraces}
-#define SEED 260
-
-void failure() {
-  assert(0);
-}
+// GENERATORS ////////////////////////////////////////////////////////////////////
 
 static const char alphanum[] =
 "0123456789"
@@ -110,25 +98,36 @@ void* get_arg(std::string const& arg_type) {
   }
 }
 
-// FUNCTION WRAPPERS /////////////////////////////////////////////////////////
-
-${funcs_str}
-// TRACE WRAPPERS ////////////////////////////////////////////////////////////
-
-${traces_str}
-// MAIN //////////////////////////////////////////////////////////////////////
+% for f in funcs:
+void call_${f['name']}(std::stringstream* ss) {
+  (*ss) << "${f['name']}";
+  % if len(f['args']) > 0:
+  % for typ in f['args']:
+  ${typ} arg${loop.index};
+  % endfor
+  % for typ in f['args']:
+  % if 'arg_gen' in f.keys():	
+  (*ss) << ",GEN";
+  % else: 
+  arg${loop.index} = *(${typ}*)(get_arg("${typ}"));
+  (*ss) << "," << arg${loop.index};
+  %endif
+  % endfor
+  % endif
+  (*ss) << "\n";
+}
+% endfor
 
 int main(int argc, const char* argv[]) {
-  srand(SEED);
-  if (argc != 2)
-    return 1;
-  unsigned n = atoi(argv[1]);
-  if (n >= NTRACES)
-    return 1;
+    std::stringstream* ss = new std::stringstream();
+    <%
+      nodes = [x for x in trace if x['symbolic_trace'] == 'false' and x['symbolic_args'] == 'false']
+    %>
+    % for node in nodes:
+    % for f in node['calls']:
+    call_${f}(ss);  
+    % endfor
+    % endfor
 
-  switch(n) {
-  % for i in range(ntraces):
-    case ${i}: trace${i}(); break;
-  % endfor
-  }
+    std::cout << (*ss).str();
 }

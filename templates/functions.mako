@@ -1,11 +1,3 @@
-void failure(std::stringstream* ss) {
-//  std::fstream fs;
-//  fs.open("trace", std::fstream::out | std::fstream::app);
-//  fs << ss->str() << "*****\n";
-//  fs.close();
-  assert(0);
-}
-
 % for f in funcs:
 void call_${f['name']}(${class1}* v1, ${class2}* v2, bool is_sym, std::stringstream* ss) {
 //  (*ss) << "${f['name']}";
@@ -19,17 +11,14 @@ void call_${f['name']}(${class1}* v1, ${class2}* v2, bool is_sym, std::stringstr
     % endfor
   } else {
     % for typ in f['args']:
-    % if 'arg_gen' in f.keys() and f['arg_gen'] == "":
+    % if 'arg_gen' in f.keys():
     arg${loop.index} = *(${typ}*)args::${f['arg_gen']}(${loop.index});
-//    (*ss) << ",*";
     % else: 
     arg${loop.index} = *(${typ}*)(get_arg("${typ}"));
-//    (*ss) << "," << arg${loop.index};
     %endif
     % endfor
   }
   % endif
-//  (*ss) << "\n";
   <%
   arg_str = ''
   if len(f['args']) > 0:
@@ -44,7 +33,7 @@ void call_${f['name']}(${class1}* v1, ${class2}* v2, bool is_sym, std::stringstr
   ${f['return']} r1 = v1->${f['name']}(${arg_str});
   ${f['return']} r2 = v2->${f['name']}(${arg_str});
   if (r1 != r2)
-    failure(ss);
+    failure();
   % endif
 }
 
