@@ -108,8 +108,8 @@ void call_${f['name']}(std::stringstream* ss) {
   ${typ} arg${loop.index};
   % endfor
   % for typ in f['args']:
-  % if 'arg_gen' not in f.keys():	
-  (*ss) << ",GEN";
+  % if 'arg_gen' in f.keys():	
+  (*ss) << ",$BLT_GENERATED_ARG$";
   % else: 
   arg${loop.index} = *(${typ}*)(get_arg("${typ}"));
   (*ss) << "," << arg${loop.index};
@@ -123,12 +123,23 @@ void call_${f['name']}(std::stringstream* ss) {
 int main(int argc, const char* argv[]) {
     std::stringstream* ss = new std::stringstream();
     <%
-      nodes = [x for x in trace if x['symbolic_trace'] == 'false' and x['symbolic_args'] == 'false']
+      nodes = [x for x in trace if x['symbolic_args'] == 'false']
+      sym_call_num = 0
     %>
     % for node in nodes:
+    % if node['symbolic_trace'] == 'false':
     % for f in node['calls']:
-    call_${f}(ss);  
+    call_${f}(ss);
     % endfor
+    % else:
+    % for _ in range(node['len']):
+    <%
+      f = sym_calls[sym_call_num]
+      sym_call_num += 1
+    %>
+    call_${f}(ss);
+    % endfor
+    % endif
     % endfor
 
     std::cout << (*ss).str();

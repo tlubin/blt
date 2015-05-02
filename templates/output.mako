@@ -22,7 +22,7 @@ int main() {
   <%
   typ = func['args'][loop.index]
   %>
-  % if arg == "GEN":
+  % if arg == "$BLT_GENERATED_ARG$":
   ${typ} arg${loop.parent.index}_${loop.index} = *(${typ}*)args::${func['arg_gen']}(${loop.index});  
   % else:
   ${typ} arg${loop.parent.index}_${loop.index} = ${arg};
