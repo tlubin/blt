@@ -25,7 +25,7 @@
       [
           { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 60, "funcs" : ["insert"] },
           { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 40, "funcs" : ["remove"] },
-          { "symbolic_trace" : "true", "symbolic_args" : "true", "len" : 1, "funcs" : ["get_size"] }
+          { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 1, "funcs" : ["get_size"] }
       ]
   ]
 }

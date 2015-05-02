@@ -105,7 +105,6 @@ def klee_get_failures(klee_output_dir):
            i += 3
            failed_run.append(val)
         failed_klee_runs.append(failed_run)
-    print failed_klee_runs
     return failed_klee_runs
 
 # TODO! Deal with filenames and directories better...
