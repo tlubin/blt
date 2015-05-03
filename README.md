@@ -8,10 +8,10 @@
   - Python 2.7
   - Mako (install with pip)
 - You need to define the following environment variables:
-  - `KLEE` to your KLEE directory (e.g. `~/klee`)
-  - `BLT` to your BLT directory (e.g. `~/blt`)
-  - `LLVM29` to the location of `llvm-link` version 2.9
-  - `LLVMGCC` to the location of `llvm-gcc` version 2.9
+  - `KLEE` - your KLEE directory (e.g. `~/klee`)
+  - `BLT` - your BLT directory (e.g. `~/blt`)
+  - `LLVM29` - the location of `llvm-link`
+  - `LLVMGCC` - the location of `llvm-gcc`
 - You must provide:
   - Source and header file of old implementation of the API
   - Source and header file of new implementation of the API 
@@ -22,7 +22,7 @@
       - `"class2"` - name of second class
       - `"header_files"` - list of header files
       - `"source_files"` - list of source files
-      - `"funcs"` - list of functions shared by both classes, where each element in the list is an object with the properties:
+      - `"funcs"` - list of functions shared by both classes, where each function is represented as an object with the properties:
         - `"name"` - name of function
         - `"args"` - list of argument types
         - `"return"` - type of return value
