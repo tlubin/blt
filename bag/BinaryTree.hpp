@@ -3,7 +3,7 @@
 
 typedef struct Node {
   int key;
-  unsigned count;
+  char count;
   Node* leftChild;
   Node* rightChild;	
 } Node;
