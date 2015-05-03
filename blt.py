@@ -206,7 +206,7 @@ def compile_and_run_klee():
         subprocess.call(cmd.split())
         failures = klee_get_failures(klee_output_dir)
         # TL: for now
-        if len(failures == 0):
+        if len(failures) == 0:
             replay(None, data['traces'][i], 0)
         # TL: end for now
         for n, f in enumerate(failures):
