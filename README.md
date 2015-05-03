@@ -11,7 +11,7 @@
   - `KLEE` - your KLEE directory (e.g. `~/klee`)
   - `BLT` - your BLT directory (e.g. `~/blt`)
   - `LLVM29` - the location of `llvm-link`
-  - `LLVMGCC` - the location of `llvm-gcc`
+  - `LLVMGCC` - the location of `llvm-g++`
 - You must provide:
   - Source and header file of old implementation of the API
   - Source and header file of new implementation of the API 
