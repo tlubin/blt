@@ -16,12 +16,12 @@
   - Source and header file of old implementation of the API
   - Source and header file of new implementation of the API 
   - Required files for either implementations of the API 
-  - (optional) `args.cpp` and `args.hpp` specifying a class `args` with argument-generating methods to be used for selected API methods 
+  - (optional) `args.cpp` and `args.hpp` specifying a class `args` with methods that generate arguments for API calls selected in the JSON (see next point) 
   - JSON file specifying the following:
       - the class names (`class1` and `class2`)
       - the header file names (a list `header_files`)
       - the source file names (a list `source_files`)
-      - functions (a list `funcs` of objects with the properties `name`, `args`, `return`, and optionally `arg_gen` for custom argument generator function)
+      - functions (a list `funcs` of objects with the properties `name`, `args`, `return`, and optionally `arg_gen` specifying a custom argument generator)
       - traces (a list `traces` of objects with the properties `symbolic_trace`, `symbolic_args`, `len`, `funcs`)
 
       For example, say you have two different queue implementations you want
