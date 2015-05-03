@@ -27,9 +27,9 @@
         - `"args"` - list of argument types
         - `"return"` - type of return value
         - `"arg_gen"` - name of custom argument generator to use (optional)
-      - `"traces"` - a list of objects with the properties
-        - `"symbolic_trace"` - "true" or "false"
-        - `"symbolic_args"` - "true" or "false"
+      - `"traces"` - a list of traces, where each trace is represented as a list of objects with the properties:
+        - `"symbolic_trace"` - Use symbolic function calls? Specify "true" or "false"
+        - `"symbolic_args"` - Use symbolic arguments? Specify "true" or "false"
         - `"len"` - integer specifying depth of trace
         - `"funcs"` - list of functions to choose from
 
