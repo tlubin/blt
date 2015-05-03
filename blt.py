@@ -109,8 +109,13 @@ def klee_get_failures(klee_output_dir):
 
 # TODO! Deal with filenames and directories better...
 def replay(failure, trace, num):
-    sym_calls = [x for x in failure if 'idx' in x['name']]
-    sym_args = [x for x in failure if 'arg' in x['name']]
+    # TL: for now so we can call replay(None, ...)
+    if failure:
+        sym_calls = [x for x in failure if 'idx' in x['name']]
+        sym_args = [x for x in failure if 'arg' in x['name']]
+    else:
+        sym_calls = []
+        sym_args = []
     calls = []
     args = []
     sym_call_num = 0
@@ -200,6 +205,10 @@ def compile_and_run_klee():
                 klee_output_dir, harness_bc, i)
         subprocess.call(cmd.split())
         failures = klee_get_failures(klee_output_dir)
+        # TL: for now
+        if len(failures == 0):
+            replay(None, data['traces'][i], 0)
+        # TL: end for now
         for n, f in enumerate(failures):
             replay(f, data['traces'][i], n)
 
