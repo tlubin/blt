@@ -1,4 +1,5 @@
 import json
+import argparse
 import os
 import subprocess
 import sys
@@ -41,10 +42,11 @@ def check_env():
 # Use argparse or optparse
 def get_args():
     global args
-    if (len(sys.argv) < 2):
-        sys.stderr.write('Usage: python blt.py foo.json\n')
-        exit(1)
-    args['jfile'] = sys.argv[1]
+    parser = argparse.ArgumentParser()
+    parser.add_argument('jfile', help='JSON file')
+    parser.add_argument('--replay', default=-1, dest='rfile', help='Replay file to replay')
+    args = parser.parse_args()
+    parser.parse_args()
 
 # Create harness from JSON data
 def write_harness():
@@ -216,25 +218,43 @@ def main():
     check_env()
     get_args()
 
-    jfile_dir = os.path.dirname(args['jfile'])
-    with open(args['jfile']) as json_file:
+    jfile_dir = os.path.dirname(args.jfile)
+    with open(args.jfile) as json_file:
         data = json.load(json_file)
 
     data['header_files'] += [os.path.join(env['blt'], 'blt_args.hpp')]
     data['source_files'] += [os.path.join(env['blt'], 'blt_args.cpp')]
 
-    # Add a "calls" field for the actual concrete function calls
-    for trace in data['traces']:
-        for node in trace:
-            if node['symbolic_trace'] == 'false':
-                calls = []
-                nfuncs = len(node['funcs'])
-                for i in range(node['len']):
-                    calls.append(node['funcs'][randint(0,nfuncs-1)])
-                node['calls'] = calls
+    # not a request for replay, run KLEE
+    if args.rfile == -1:
+        # Add a "calls" field for the actual concrete function calls
+        for trace in data['traces']:
+            for node in trace:
+                if node['symbolic_trace'] == 'false':
+                    calls = []
+                    nfuncs = len(node['funcs'])
+                    for i in range(node['len']):
+                        calls.append(node['funcs'][randint(0,nfuncs-1)])
+                    node['calls'] = calls
 
-    write_harness()
-    compile_and_run_klee()
+        write_harness()
+        compile_and_run_klee()
+
+    # replay the requested file
+    else:
+        replay_file = open(args.rfile)
+        sources = " "
+        for source_file in data['source_files']:
+          sources += os.path.abspath(os.path.join(jfile_dir, source_file)) + ' '
+        cmd = 'g++ -o {0} {1} {2}'.format(args.rfile.replace('.cpp',''), args.rfile, sources)
+        if subprocess.call(cmd.split()) != 0:
+          exit(1)
+        cmd = '{0}'.format(args.rfile.replace('.cpp',''))
+        if subprocess.call(cmd.split()) != 0:
+          exit(1)
+
+        print "Completed replay: {0}".format(args.rfile)
+
 
 if __name__ == '__main__':
     main()
