@@ -31,8 +31,11 @@ void call_${f['name']}(${class1}* v1, ${class2}* v2, bool is_sym) {
   % else:
   ${f['return']} r1 = v1->${f['name']}(${arg_str});
   ${f['return']} r2 = v2->${f['name']}(${arg_str});
-  if (r1 != r2)
+  
+  if (r1 != r2) {
+    printf("%d, %d\n", r1, r2);
     failure();
+  }
   % endif
 }
 

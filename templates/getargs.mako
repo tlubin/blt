@@ -31,16 +31,15 @@ void* get_arg(std::string const& arg_type) {
   switch (hashit(arg_type)) {
     case eint: {
       int ints[5];
-        ints[0] = rand() % INT_MAX;
-        ints[1] = -1*(rand() % INT_MAX);
+        ints[0] = rand() % 5;
+        ints[1] = -1*(rand() % 5);
         ints[2] = INT_MAX;
         ints[3] = INT_MIN;
         ints[4] = 0;
       int* ret = new int[1];
       ret[0] = ints[rand() / (RAND_MAX/5)];
       return (void*)ret;
-    }
-    case euint: {
+    }    case euint: {
       unsigned uints[3];
         uints[0] = rand() % UINT_MAX;
         uints[1] = UINT_MAX;

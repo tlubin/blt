@@ -3,7 +3,8 @@
 % endfor
 #include <cassert>
 #include <cstdlib>
-#define SEED 260
+#include <cstdio>
+#define SEED 263
 
 void failure() {
   assert(0);
@@ -41,7 +42,10 @@ int main() {
   % else:
   ${func['return']} r1 = v1->${func['name']}(${arg_str});
   ${func['return']} r2 = v2->${func['name']}(${arg_str});
-  if (r1 != r2) failure();
+    printf("%d, %d\n", r1, r2);
+  if (r1 != r2) {
+    failure();
+  }
   % endif
   % endfor
 }

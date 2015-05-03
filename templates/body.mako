@@ -7,13 +7,11 @@
 #include <climits>
 #include <cfloat>
 #include <string>
-#include <sstream>
-#include <fstream>
 
 // HELPERS ////////////////////////////////////////////////////////////////////
 
 #define NTRACES ${ntraces}
-#define SEED 260
+#define SEED 263
 
 void failure() {
   assert(0);
@@ -43,8 +41,8 @@ void* get_arg(std::string const& arg_type) {
   switch (hashit(arg_type)) {
     case eint: {
       int ints[5];
-        ints[0] = rand() % INT_MAX;
-        ints[1] = -1*(rand() % INT_MAX);
+        ints[0] = rand() % 5;
+        ints[1] = -1*(rand() % 5);
         ints[2] = INT_MAX;
         ints[3] = INT_MIN;
         ints[4] = 0;
