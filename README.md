@@ -23,7 +23,8 @@
       which symbolically calls all the functions simultaneously on symbolic values
       for a depth of 10 calls. 
 
-        ```{
+        ```javascript
+        {
           "class1" : "ListQueue",
           "class2" : "ArrayQueue",
           "header_files" : ["ListQueue.hpp", "ArrayQueue.hpp"],
@@ -63,9 +64,10 @@
               }
             ]
           ]
-        }```
+        }
+        ```
 
-      - see also bag/bag.json and calcs/calcs.json for more examples
+      See also bag/bag.json and calcs/calcs.json for more examples.
 
 - Run Examples:
     - Bags: Run "python [path-to_blt.py] [path_to_bag.json] to execute a concrete-symbolic trace on two versions of a bag data structure
