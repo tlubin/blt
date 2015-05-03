@@ -1,29 +1,33 @@
-#BLT: discover differences in the execution of two versions of your code by executing traces symbolically and concretely.
+#BLT:
 
-#How to Use:
+##Discover differences in the execution of two versions of your code by executing traces symbolically and concretely.
+
+####How to Use:
 - Dependencies: KLEE (and related dependencies), python 2.7, Mako (install with pip)
-- Define environment variables $KLEE, $LLVM29, and $LLVMGCC to point to the source for your installation of KLEE, llvm-2.9, and llvm-gcc
+- Define environment variables `KLEE`, `BLT`, `LLVM29`, and `LLVMGCC` to point to
+your KLEE directory, the BLT directory, the directory housing `llvm-link`, and the directory housing `llvm-gcc`, respectively
 - Required files:
   - Source and header file of old implementation of the API
   - Source and header file of new implementation of the API 
   - Required files for either implementations of the API 
-  - (optional) args.cpp and args.hpp file specifying argument-generating functions for each of the API methods 
+  - (optional) `args.cpp` and `args.hpp` file specifying a class `args` with argument-generating functions to be used for select API methods 
   - JSON file specifying the following:
-      - the class names
-      - the header file names
-      - the source file names
-      - functions (name, args, return, (optional: argument generator function name))
-      - traces (symbolic_trace, symbolic_args, len, funcs)
+      - the class names (`class1` and `class2`)
+      - the header file names (a list `header_files`)
+      - the source file names (a list `source_files`)
+      - functions (a list `funcs` of objects with the properties `name`, `args`, `return`, (optional: `arg_gen` for custom argument generator function))
+      - traces (a list `traces` of objects with the properties `symbolic_trace`, `symbolic_args`, `len`, `funcs`)
 
       For example, say you have two different queue implementations you want
       to compare, ListQueue and ArrayQueue. Here is a possible JSON specifying two
       traces, one which randomly chooses between push and pop for 100 calls (using
-      a user-supplied argument generator for push called "push_arg_gen"),
+      a user-supplied argument generator for push called `push_arg_gen`),
       pops a symbolic value, and then compares the sizes of the two queues, and one
       which symbolically calls all the functions simultaneously on symbolic values
       for a depth of 10 calls. 
 
-        ```{
+        ```javascript
+        {
           "class1" : "ListQueue",
           "class2" : "ArrayQueue",
           "header_files" : ["ListQueue.hpp", "ArrayQueue.hpp"],
@@ -63,17 +67,19 @@
               }
             ]
           ]
-        }```
+        }
+        ```
+        
+      See also `bag/bag.json` and `calcs/calcs.json` for more examples.
 
-      - see also bag/bag.json and calcs/calcs.json for more examples
-
-- Run Examples:
-    - Bags: Run "python [path-to_blt.py] [path_to_bag.json] to execute a concrete-symbolic trace on two versions of a bag data structure
-    - Calcs: Run "python [path_to_blt.py] [path_to_calcs.json]" to execute a concrete-symbolic trace on two versions of a simple calculator
-    - Output placed in blt_tmp folder in example folders
+- Running BLT:
+    - `python path/to/blt.py path/to/json_file.json`
+    - Output placed in `blt_tmp` folder in same directory as JSON file
+    - E.g. `python blt.py bag/bag.json`
 
 - Run Replays:
-    - Run "python [path-to_run_replay.py] [path_to_replay[num].cpp] [path_to_bag.json]
+
+    - E.g. `python run_replay.py bag/blt_tmp/replay0.cpp bag/bag.json`
 
 Created by Aaron Bembenek, Lily Tsai, Todd Lubin
 
