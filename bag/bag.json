@@ -10,7 +10,8 @@
          "arg_gen" : "member_arg"},
         {"name" : "insert",
          "args" : ["int"],
-         "return" : "void"},
+         "return" : "void",
+	 "arg_gen" : "insert_arg"},
         {"name" : "remove",
          "args" : ["int"],
          "return" : "void"},
@@ -21,8 +22,7 @@
   "traces": 
   [
       [
-          { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 20, "funcs" : ["insert"] },
-          { "symbolic_trace" : "false", "symbolic_args" : "true", "len" : 1, "funcs" : ["remove"] },
+          { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 300, "funcs" : ["insert"] },
           { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 1, "funcs" : ["get_size"] }
       ]
   ]

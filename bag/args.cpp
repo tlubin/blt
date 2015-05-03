@@ -28,7 +28,10 @@ void* args::member_arg(unsigned i) {
 }
 
 void* args::insert_arg(unsigned i) {
-  if (!i) {
+  int *x = new int[1];
+  *x = 42;
+  return (void*)x;
+  /*  if (!i) {
     int* x = new int[1];
     if ((rand() % 2) && inserted.cur)
       x[0] = inserted.buff[rand() % inserted.cur];
@@ -37,7 +40,7 @@ void* args::insert_arg(unsigned i) {
       insert(x[0]);
     }
     return (void*) x;
-  }
+    }*/
 }
 
 void* args::remove_arg(unsigned i) {
