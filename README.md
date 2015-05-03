@@ -1,6 +1,6 @@
 #BLT
 
-##Discover differences in the behavior of two C++ classes by executing traces symbolically and concretely.
+##Discover differences in the behavior of two C++ classes that implement the same API through the power of combined concrete and symbolic testing.
 
 ####How to Use:
 - Dependencies:
@@ -12,22 +12,31 @@
   - `BLT` to your BLT directory (e.g. `~/blt`)
   - `LLVM29` to the location of `llvm-link` version 2.9
   - `LLVMGCC` to the location of `llvm-gcc` version 2.9
-- Required files you must provide:
+- You must provide:
   - Source and header file of old implementation of the API
   - Source and header file of new implementation of the API 
   - Required files for either implementations of the API 
   - (optional) `args.cpp` and `args.hpp` specifying a class `args` with methods that generate arguments for API calls selected in the JSON (see next point) 
-  - JSON file specifying the following:
-      - the class names (`class1` and `class2`)
-      - the header file names (a list `header_files`)
-      - the source file names (a list `source_files`)
-      - functions (a list `funcs` of objects with the properties `name`, `args`, `return`, and optionally `arg_gen` specifying a custom argument generator)
-      - traces (a list `traces` of objects with the properties `symbolic_trace`, `symbolic_args`, `len`, `funcs`)
+  - JSON file defining an object with the following properties:
+      - `"class1"` - name of first class 
+      - `"class2"` - name of second class
+      - `"header_files"` - list of header files
+      - `"source_files"` - list of source files
+      - `"funcs"` - list of functions shared by both classes, where each element in the list is an object with the properties:
+        - `"name"` - name of function
+        - `"args"` - list of argument types
+        - `"return"` - type of return value
+        - `"arg_gen"` - name of custom argument generator to use (optional)
+      - `"traces"` - a list of objects with the properties
+        - `"symbolic_trace"` - "true" or "false"
+        - `"symbolic_args"` - "true" or "false"
+        - `"len"` - integer specifying depth of trace
+        - `"funcs"` - list of functions to choose from
 
       For example, say you have two different queue implementations you want
       to compare, `ListQueue` and `ArrayQueue`. Here is a possible JSON specifying two
-      traces, one which randomly chooses between push and pop for 100 calls (using
-      a user-supplied argument generator for push called `push_arg_gen`),
+      traces, one which randomly chooses between `push` and `pop` for 100 calls (using
+      a user-supplied argument generator for `push` called `push_arg_gen`),
       pops a symbolic value, and then compares the sizes of the two queues, and one
       which symbolically calls all the functions simultaneously on symbolic values
       for a depth of 10 calls. 
@@ -79,9 +88,9 @@
       See also `bag/bag.json` and `calcs/calcs.json` for more examples.
 
 - Running BLT:
-    - `python path/to/blt.py path/to/json_file.json`
+    - `python path/to/blt.py --trace path/to/json_file.json`
     - Output placed in `blt_tmp` folder in same directory as JSON file
-    - E.g. `python blt.py bag/bag.json`
+    - E.g. `python blt.py --trace bag/bag.json`
 
 - Run replays:
     - `python path/to/blt.py --replay path/to/replay.cpp path/to/json_file.json`
