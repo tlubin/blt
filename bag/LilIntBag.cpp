@@ -33,17 +33,6 @@ void LilIntBag::insert(int x) {
   a[cur++] = x;
 }
 
-/*
-void LilIntBag::remove(int x) {
-  for (int i = 0; i < cur; ++i)
-    if (a[i] == x) {
-      a[i] = invalidMarker;
-      return;
-    }
-}
-*/
-
-// This is a more realistic remove...
 void LilIntBag::remove(int x) {
   for (int i = 0; i < cur; ++i)
     if (a[i] == x) {
