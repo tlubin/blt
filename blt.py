@@ -44,9 +44,10 @@ def get_args():
     global args
     parser = argparse.ArgumentParser()
     parser.add_argument('jfile', help='JSON file')
-    parser.add_argument('--replay', default=-1, dest='rfile', help='Replay file to replay')
+    g = parser.add_mutually_exclusive_group(required=True)
+    g.add_argument('--trace', action='store_true', help='Run trace')
+    g.add_argument('--replay', default=-1, dest='rfile', help='Run replay, provide replay file to replay')
     args = parser.parse_args()
-    parser.parse_args()
 
 # Create harness from JSON data
 def write_harness():
@@ -226,7 +227,7 @@ def main():
     data['source_files'] += [os.path.join(env['blt'], 'blt_args.cpp')]
 
     # not a request for replay, run KLEE
-    if args.rfile == -1:
+    if args.trace:
         # Add a "calls" field for the actual concrete function calls
         for trace in data['traces']:
             for node in trace:
