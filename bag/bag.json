@@ -22,7 +22,7 @@
   "traces": 
   [
       [
-          { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 300, "funcs" : ["insert"] },
+          { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 1, "funcs" : ["insert"] },
           { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 1, "funcs" : ["get_size"] }
       ]
   ]
