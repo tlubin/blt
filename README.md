@@ -85,7 +85,7 @@
 
 - Run replays:
     - `python path/to/blt.py --replay path/to/replay.cpp path/to/json_file.json`
-    - E.g. `python run_replay.py bag/blt_tmp/replay0.cpp bag/bag.json`
+    - E.g. `python run_replay.py --replay bag/blt_tmp/replay0.cpp bag/bag.json`
 
 Created by Aaron Bembenek, Lily Tsai, Todd Lubin
 
