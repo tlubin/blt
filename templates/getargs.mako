@@ -121,6 +121,8 @@ void call_${f['name']}(std::stringstream* ss) {
 % endfor
 
 int main(int argc, const char* argv[]) {
+    // TODO: this should be passed into the template
+    srand(260);
     std::stringstream* ss = new std::stringstream();
     <%
       nodes = [x for x in trace if x['symbolic_args'] == 'false']
