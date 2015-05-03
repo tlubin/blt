@@ -11,6 +11,7 @@ args = {}
 data = {}
 jfile_dir = ''
 tmpdir = ''
+SEED = randint(1, 1000)
 
 # Check environment variables
 def check_env():
@@ -62,7 +63,8 @@ def write_harness():
     body_str = body_tmpl.render(
             headers=[os.path.abspath(os.path.join(jfile_dir, h)) for h in data['header_files']],
             funcs_str=funcs_str, traces_str=traces_str,
-            ntraces=(len(data['traces'])))
+            ntraces=(len(data['traces'])),
+            seed=SEED)
 
     tmpdir = os.path.join(jfile_dir, 'blt_tmp')
     if os.path.exists(tmpdir):
@@ -125,17 +127,18 @@ def replay(failure, trace, num):
     # Generate c++ code that will mirror failing run to get arguments
     getargs_tmpl = Template(
             filename=(os.path.join(env['blt'], 'templates', 'getargs.mako')))
-    getargs_str = getargs_tmpl.render(funcs=data['funcs'], trace=trace, sym_calls=sym_calls)
-    getargs = open(os.path.join(tmpdir, 'getargs.cpp'), 'w')
+    getargs_str = getargs_tmpl.render(funcs=data['funcs'], trace=trace, sym_calls=sym_calls, seed=SEED, headers=[os.path.join(env['blt'], 'blt_args.hpp')]);
+    getargs = open(os.path.join(tmpdir, 'getargs.cpp'), 'w');
     getargs.write(getargs_str)
     getargs.close()
 
     # Compile and run c++ code and collect arguments from output file
     llvmgcc_bin = os.path.join(env['llvmgcc'],'llvm-g++')
-    compile_cmd = '{0} -o {1} {2}'.format(llvmgcc_bin, os.path.join(tmpdir, 'getargs'), os.path.join(tmpdir, 'getargs.cpp'))
+    compile_cmd = '{0} -o {1} {2} {3}'.format(llvmgcc_bin, os.path.join(tmpdir, 'getargs'), os.path.join(tmpdir, 'getargs.cpp'), os.path.join(env['blt'], 'blt_args.cpp'))
     subprocess.call(compile_cmd.split())
     run_cmd = os.path.join(tmpdir, 'getargs')
     getargs_ret = os.path.join(tmpdir, 'getargs_ret')
+
     with open(getargs_ret, 'w') as outfile:
         subprocess.call(run_cmd, stdout=outfile)
     with open(getargs_ret, 'r') as infile:
@@ -166,7 +169,7 @@ def replay(failure, trace, num):
     output_tmpl = Template(filename=(os.path.join(env['blt'], 'templates', 'output.mako')))
     output_str = output_tmpl.render(
         headers=[os.path.abspath(os.path.join(jfile_dir, h)) for h in data['header_files']],
-        funcs=data['funcs'], class1=data['class1'], class2=data['class2'], calls_args=zip(calls,args))
+        funcs=data['funcs'], class1=data['class1'], class2=data['class2'], calls_args=zip(calls,args), seed=SEED)
     output = open(os.path.join(tmpdir, 'replay{0}.cpp'.format(num)), 'w')
     output.write(output_str)
     output.close()
@@ -220,6 +223,9 @@ def main():
     jfile_dir = os.path.dirname(args['jfile'])
     with open(args['jfile']) as json_file:
         data = json.load(json_file)
+
+    data['header_files'] += [os.path.join(env['blt'], 'blt_args.hpp')]
+    data['source_files'] += [os.path.join(env['blt'], 'blt_args.cpp')]
 
     # Add a "calls" field for the actual concrete function calls
     for trace in data['traces']:

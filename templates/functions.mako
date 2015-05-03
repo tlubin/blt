@@ -13,7 +13,7 @@ void call_${f['name']}(${class1}* v1, ${class2}* v2, bool is_sym) {
     % if 'arg_gen' in f.keys():
     arg${loop.index} = *(${typ}*)args::${f['arg_gen']}(${loop.index});
     % else: 
-    arg${loop.index} = *(${typ}*)(get_arg("${typ}"));
+    arg${loop.index} = *(${typ}*)(blt_args::get_arg("${typ}"));
     %endif
     % endfor
   }
@@ -33,7 +33,6 @@ void call_${f['name']}(${class1}* v1, ${class2}* v2, bool is_sym) {
   ${f['return']} r2 = v2->${f['name']}(${arg_str});
   
   if (r1 != r2) {
-    printf("%d, %d\n", r1, r2);
     failure();
   }
   % endif
