@@ -1,25 +1,31 @@
-#BLT:
+#BLT
 
-##Discover differences in the execution of two versions of your code by executing traces symbolically and concretely.
+##Discover differences in the behavior of two C++ classes by executing traces symbolically and concretely.
 
 ####How to Use:
-- Dependencies: KLEE (and related dependencies), python 2.7, Mako (install with pip)
-- Define environment variables `KLEE`, `BLT`, `LLVM29`, and `LLVMGCC` to point to
-your KLEE directory, the BLT directory, the directory housing `llvm-link`, and the directory housing `llvm-gcc`, respectively
-- Required files:
+- Dependencies:
+  - KLEE (and related dependencies)
+  - Python 2.7
+  - Mako (install with pip)
+- You need to define the following environment variables:
+  - `KLEE` to your KLEE directory (e.g. `~/klee`)
+  - `BLT` to your BLT directory (e.g. `~/blt`)
+  - `LLVM29` to the location of `llvm-link` version 2.9
+  - `LLVMGCC` to the location of `llvm-gcc` version 2.9
+- Required files you must provide:
   - Source and header file of old implementation of the API
   - Source and header file of new implementation of the API 
   - Required files for either implementations of the API 
-  - (optional) `args.cpp` and `args.hpp` file specifying a class `args` with argument-generating functions to be used for select API methods 
+  - (optional) `args.cpp` and `args.hpp` file specifying a class `args` with argument-generating functions to be used for selected API methods 
   - JSON file specifying the following:
       - the class names (`class1` and `class2`)
       - the header file names (a list `header_files`)
       - the source file names (a list `source_files`)
-      - functions (a list `funcs` of objects with the properties `name`, `args`, `return`, (optional: `arg_gen` for custom argument generator function))
+      - functions (a list `funcs` of objects with the properties `name`, `args`, `return`, and optionally `arg_gen` for custom argument generator function)
       - traces (a list `traces` of objects with the properties `symbolic_trace`, `symbolic_args`, `len`, `funcs`)
 
       For example, say you have two different queue implementations you want
-      to compare, ListQueue and ArrayQueue. Here is a possible JSON specifying two
+      to compare, `ListQueue` and `ArrayQueue`. Here is a possible JSON specifying two
       traces, one which randomly chooses between push and pop for 100 calls (using
       a user-supplied argument generator for push called `push_arg_gen`),
       pops a symbolic value, and then compares the sizes of the two queues, and one
@@ -77,8 +83,8 @@ your KLEE directory, the BLT directory, the directory housing `llvm-link`, and t
     - Output placed in `blt_tmp` folder in same directory as JSON file
     - E.g. `python blt.py bag/bag.json`
 
-- Run Replays:
-
+- Run replays:
+    - `python path/to/blt.py --replay path/to/replay.cpp path/to/json_file.json`
     - E.g. `python run_replay.py bag/blt_tmp/replay0.cpp bag/bag.json`
 
 Created by Aaron Bembenek, Lily Tsai, Todd Lubin
