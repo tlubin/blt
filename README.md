@@ -10,7 +10,7 @@
 - You need to define the following environment variables:
   - `KLEE` - your KLEE directory (e.g. `~/klee`)
   - `BLT` - your BLT directory (e.g. `~/blt`)
-  - `LLVM29` - the location of `llvm-link`
+  - `LLVM29` - the location of `llvm-link` for llvm 2.9
   - `LLVMGCC` - the location of `llvm-g++`
 - You must provide:
   - Source and header file of old implementation of the API
@@ -93,7 +93,8 @@
     - E.g. `python blt.py --trace bag/bag.json`
 
 - Run replays:
-    - `python path/to/blt.py --replay path/to/replay#_#.cpp path/to/json_file.json`
+    - `python path/to/blt.py --replay path/to/replay.cpp path/to/json_file.json`
+    - `python path/to/blt.py --replay-all path/to/replay/dir path/to/json_file.json`
     - E.g. `python blt.py --replay bag/blt_tmp/replay0_0.cpp bag/bag.json`
 
 Created by Aaron Bembenek, Lily Tsai, Todd Lubin
