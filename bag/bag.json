@@ -6,12 +6,10 @@
     "funcs": [
         {"name" : "member",
          "args" : ["int"],
-         "return" : "bool",
-         "arg_gen" : "member_arg"},
+         "return" : "bool"},
         {"name" : "insert",
          "args" : ["int"],
-         "return" : "void",
-	 "arg_gen" : "insert_arg"},
+         "return" : "void"},
         {"name" : "remove",
          "args" : ["int"],
          "return" : "void"},
@@ -24,6 +22,10 @@
       [
           { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 1, "funcs" : ["insert"] },
           { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 1, "funcs" : ["get_size"] }
+      ],
+      [
+          { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 5, "funcs" : ["insert"] },
+          { "symbolic_trace" : "true", "symbolic_args" : "true", "len" : 1, "funcs" : ["get_size", "member"] }
       ]
   ]
 }
