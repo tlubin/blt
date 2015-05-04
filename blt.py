@@ -155,7 +155,10 @@ def write_replay(failure, trace, tracenum, failnum):
     getargs.close()
 
     # Compile and run c++ code and collect arguments from output file
-    llvmgcc_bin = os.path.join(env['llvmgcc'],'llvm-g++')
+    if os.path.isdir(env['llvmgcc']):
+        llvmgcc_bin = os.path.join(env['llvmgcc'],'llvm-g++')
+    else:
+        llvmgcc_bin = env['llvmgcc']
     compile_cmd = '{0} -o {1} {2} {3}'.format(llvmgcc_bin, os.path.join(tmpdir, 'getargs'), os.path.join(tmpdir, 'getargs.cpp'), os.path.join(env['blt'], 'blt_args.cpp'))
     subprocess.call(compile_cmd.split())
     run_cmd = os.path.join(tmpdir, 'getargs')
@@ -205,7 +208,10 @@ def write_replay(failure, trace, tracenum, failnum):
 
 def compile_and_run_klee():
     # Compile the source files to LLVM bytecode
-    llvmgcc_bin = os.path.join(env['llvmgcc'],'llvm-g++')
+    if os.path.isdir(env['llvmgcc']):
+        llvmgcc_bin = os.path.join(env['llvmgcc'],'llvm-g++')
+    else:
+        llvmgcc_bin = env['llvmgcc']
     bc_files = []
     for i,src in enumerate(data['source_files']):
         out = os.path.join(tmpdir, 'out{0}.bc'.format(i))
@@ -223,7 +229,10 @@ def compile_and_run_klee():
         exit(1)
     bc_files.append(harness_out)
     harness_bc = os.path.join(tmpdir, 'harness.bc')
-    llvmlink_bin = os.path.join(env['llvm29'], 'llvm-link')
+    if os.path.isdir(env['llvm29']):
+        llvmlink_bin = os.path.join(env['llvm29'], 'llvm-link')
+    else:
+        llvmlink_bin = env['llvm29']
     cmd = '{0} -o {1} {2}'.format(
         llvmlink_bin, harness_bc,' '.join(bc_files))
     if subprocess.call(cmd.split()) != 0:
