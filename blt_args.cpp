@@ -30,7 +30,9 @@ void* blt_args::get_arg(std::string const& arg_type) {
         ints[0] = rand() % 5;
         ints[1] = -1*(rand() % 5);
         ints[2] = INT_MAX;
-        ints[3] = INT_MIN;
+	// TL Note: For now so when -2147483648 is put in replay file
+	// the compiler doesn't yell
+        ints[3] = INT_MIN+1;
         ints[4] = 0;
       int* ret = new int[1];
       ret[0] = ints[rand() / (RAND_MAX/5)];

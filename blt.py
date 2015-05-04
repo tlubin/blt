@@ -1,5 +1,6 @@
 import json
 import argparse
+import glob
 import os
 import subprocess
 import sys
@@ -52,7 +53,8 @@ def get_args():
     parser.add_argument('jfile', help='JSON file')
     g = parser.add_mutually_exclusive_group(required=True)
     g.add_argument('--trace', action='store_true', help='Run trace')
-    g.add_argument('--replay', default=-1, dest='rfile', help='Run replay, provide replay file to replay')
+    g.add_argument('--replay', dest='rfile', help='Run replay, provide replay file to replay')
+    g.add_argument('--replay-all', dest='rdir', help='Run all replays, provide replay directory to replay')
     args = parser.parse_args()
 
 # Create harness from JSON data
@@ -124,23 +126,15 @@ def run_replay(replay_file, verbose=1):
         sources += os.path.abspath(os.path.join(jfile_dir, source_file)) + ' '
     cmd = 'g++ -o {0} {1} {2}'.format(replay_file.replace('.cpp',''), replay_file, sources)
     devnull = open('/dev/null', 'w')
-    if verbose:
-        comp = subprocess.call(cmd.split())
-    else:
-        comp = subprocess.call(cmd.split(), stderr=devnull)
-    if comp != 0:
+    stderr = None if verbose else devnull
+    if subprocess.call(cmd.split(), stderr=stderr) != 0:
         devnull.close()
         return 0
     cmd = '{0}'.format(replay_file.replace('.cpp',''))
-    if verbose:
-        replay = subprocess.call(cmd.split())
-    else:
-        replay = subprocess.call(cmd.split(), stderr=devnull)
-    devnull.close()
-    if replay != 0:
+    if subprocess.call(cmd.split(), stderr=stderr) != 0:
+        devnull.close()
         return 0
-    else:
-        return 1
+    return 1
 
 
 def write_replay(failure, trace, tracenum, failnum):
@@ -262,6 +256,13 @@ def main():
     data['header_files'] += [os.path.join(env['blt'], 'blt_args.hpp')]
     data['source_files'] += [os.path.join(env['blt'], 'blt_args.cpp')]
 
+    def do_run_replay(replay):
+        success = run_replay(replay, verbose=1)
+        if success:
+            print GREEN + "BLT: {0} succeeded".format(replay) + RESET
+        else:
+            print RED + "BLT: {0} failed".format(replay) + RESET
+
     # not a request for replay, run KLEE
     if args.trace:
         # Add a "calls" field for the actual concrete function calls
@@ -278,13 +279,14 @@ def main():
         compile_and_run_klee()
 
     # replay the requested file
-    else:
-        success = run_replay(args.rfile, verbose=1)
-        if success:
-            print GREEN + "BLT: {0} succeeded".format(args.rfile) + RESET
-        else:
-            print RED + "BLT: {0} failed".format(args.rfile) + RESET
+    elif args.rfile:
+        do_run_replay(args.rfile)
 
+    # replay all files in the given directory
+    else:
+        replays = glob.glob(os.path.join(args.rdir, 'replay*.cpp'))
+        for replay in replays:
+            do_run_replay(replay)
 
 if __name__ == '__main__':
     main()
