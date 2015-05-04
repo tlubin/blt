@@ -233,7 +233,7 @@ def compile_and_run_klee():
     for i in range(len(data['traces'])):
         klee_output_dir = os.path.join(tmpdir, 'klee{0}'.format(i))
         klee_print_file = os.path.join(tmpdir, 'klee_output.txt')
-        print MAGENTA + 'BLT: running trace {0}\n'.format(i) + RESET
+        print MAGENTA + '\nBLT: running trace {0}\n'.format(i) + RESET
         cmd = 'klee -emit-all-errors -output-dir={0} {1} {2}'.format(
                 klee_output_dir, harness_bc, i)
         with open(klee_print_file, 'w') as klee_print_fd:
