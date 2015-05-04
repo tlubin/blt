@@ -14,6 +14,12 @@ jfile_dir = ''
 tmpdir = ''
 SEED = randint(1, 1000)
 
+# Colors for colorful output to console
+GREEN = '\033[1m\033[32m'
+RED = '\033[1m\033[31m'
+MAGENTA = '\033[1m\033[35m'
+RESET = '\033[0m'
+
 # Check environment variables
 def check_env():
     global env
@@ -112,15 +118,34 @@ def klee_get_failures(klee_output_dir):
         failed_klee_runs.append(failed_run)
     return failed_klee_runs
 
-# TODO! Deal with filenames and directories better...
-def replay(failure, trace, num):
-    # TL: for now so we can call replay(None, ...)
-    if failure:
-        sym_calls = [x for x in failure if 'idx' in x['name']]
-        sym_args = [x for x in failure if 'arg' in x['name']]
+def run_replay(replay_file, verbose=1):
+    sources = " "
+    for source_file in data['source_files']:
+        sources += os.path.abspath(os.path.join(jfile_dir, source_file)) + ' '
+    cmd = 'g++ -o {0} {1} {2}'.format(replay_file.replace('.cpp',''), replay_file, sources)
+    devnull = open('/dev/null', 'w')
+    if verbose:
+        comp = subprocess.call(cmd.split())
     else:
-        sym_calls = []
-        sym_args = []
+        comp = subprocess.call(cmd.split(), stderr=devnull)
+    if comp != 0:
+        devnull.close()
+        return 0
+    cmd = '{0}'.format(replay_file.replace('.cpp',''))
+    if verbose:
+        replay = subprocess.call(cmd.split())
+    else:
+        replay = subprocess.call(cmd.split(), stderr=devnull)
+    devnull.close()
+    if replay != 0:
+        return 0
+    else:
+        return 1
+
+
+def write_replay(failure, trace, tracenum, failnum):
+    sym_calls = [x for x in failure if 'idx' in x['name']]
+    sym_args = [x for x in failure if 'arg' in x['name']]
     calls = []
     args = []
     sym_call_num = 0
@@ -173,9 +198,16 @@ def replay(failure, trace, num):
     output_str = output_tmpl.render(
         headers=[os.path.abspath(os.path.join(jfile_dir, h)) for h in data['header_files']],
         funcs=data['funcs'], class1=data['class1'], class2=data['class2'], calls_args=zip(calls,args), seed=SEED)
-    output = open(os.path.join(tmpdir, 'replay{0}.cpp'.format(num)), 'w')
-    output.write(output_str)
-    output.close()
+    replay_file = os.path.join(tmpdir, 'replay{0}_{1}.cpp'.format(tracenum, failnum))
+    with open(replay_file, 'w') as replay_fd:
+        replay_fd.write(output_str)
+
+    # Run the replay file to make sure it fails
+    success = run_replay(replay_file, verbose=0)
+    if success:
+        print MAGENTA + 'HMM: replay worked?' + RESET
+    else:
+        print RED + 'BLT: ERROR: {0}'.format(replay_file) + RESET
 
 def compile_and_run_klee():
     # Compile the source files to LLVM bytecode
@@ -206,13 +238,17 @@ def compile_and_run_klee():
     # Call KLEE
     for i in range(len(data['traces'])):
         klee_output_dir = os.path.join(tmpdir, 'klee{0}'.format(i))
-        print '\n\nRUNNING TRACE {0}\n'.format(i)
+        klee_print_file = os.path.join(tmpdir, 'klee_output.txt')
+        print MAGENTA + 'BLT: running trace {0}\n'.format(i) + RESET
         cmd = 'klee -emit-all-errors -output-dir={0} {1} {2}'.format(
                 klee_output_dir, harness_bc, i)
-        subprocess.call(cmd.split())
+        with open(klee_print_file, 'w') as klee_print_fd:
+            subprocess.call(cmd.split(), stderr=klee_print_fd)
         failures = klee_get_failures(klee_output_dir)
+        if len(failures) == 0:
+            print GREEN + 'BLT: trace {0} completed successfully'.format(i) + RESET
         for n, f in enumerate(failures):
-            replay(f, data['traces'][i], n)
+            write_replay(f, data['traces'][i], i, n)
 
 def main():
     global data, jfile_dir
@@ -243,18 +279,11 @@ def main():
 
     # replay the requested file
     else:
-        replay_file = open(args.rfile)
-        sources = " "
-        for source_file in data['source_files']:
-          sources += os.path.abspath(os.path.join(jfile_dir, source_file)) + ' '
-        cmd = 'g++ -o {0} {1} {2}'.format(args.rfile.replace('.cpp',''), args.rfile, sources)
-        if subprocess.call(cmd.split()) != 0:
-          exit(1)
-        cmd = '{0}'.format(args.rfile.replace('.cpp',''))
-        if subprocess.call(cmd.split()) != 0:
-          exit(1)
-
-        print "Completed replay: {0}".format(args.rfile)
+        success = run_replay(args.rfile, verbose=1)
+        if success:
+            print GREEN + "BLT: {0} succeeded".format(args.rfile) + RESET
+        else:
+            print RED + "BLT: {0} failed".format(args.rfile) + RESET
 
 
 if __name__ == '__main__':

@@ -5,6 +5,21 @@
 #include <cstdlib>
 #include <cstdio>
 
+/*
+% for (f, args) in calls_args:
+<%
+  arg_str = ''
+  for i,arg in enumerate(args):
+    if arg == "$BLT_GENERATED_ARG$":
+      arg_str += '*, '
+    else:
+      arg_str += arg + ', '
+  if len(arg_str) > 0:
+    arg_str = arg_str[:-2]
+%>${f}(${arg_str})
+% endfor
+*/
+
 void failure() {
   assert(0);
 }
@@ -35,9 +50,9 @@ int main() {
       arg_str += 'arg{0}_{1}, '.format(loop.index, j)
     arg_str += 'arg{0}_{1}'.format(loop.index, len(func['args']) - 1)
   %>
-  % if func['return'] == 'void':
-  v1->${func['name']}(${arg_str});
-  v2->${func['name']}(${arg_str});
+  % if loop.index + 1 < len(calls_args):
+  (void) v1->${func['name']}(${arg_str});
+  (void) v2->${func['name']}(${arg_str});
   % else:
   ${func['return']} r1 = v1->${func['name']}(${arg_str});
   ${func['return']} r2 = v2->${func['name']}(${arg_str});
