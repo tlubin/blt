@@ -32,16 +32,19 @@ int main(int argc, const char* argv[]) {
       nodes = [x for x in trace if x['symbolic_args'] == 'false']
       sym_call_num = 0
     %>
-    % for node in nodes:
+    % for i, node in enumerate(nodes):
     % if node['symbolic_trace'] == 'false':
     % for f in node['calls']:
     call_${f}(ss);
     % endfor
     % else:
-    % for _ in range(node['len']):
+    % for x in range(node['len']):
     <%
-      f = sym_calls[sym_call_num]
-      sym_call_num += 1
+      if sym_call_num >= len(sym_calls):
+        break
+      else:
+        f = node['funcs'][int(sym_calls[sym_call_num]['data'])]
+        sym_call_num += 1
     %>
     call_${f}(ss);
     % endfor
