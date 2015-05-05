@@ -30,12 +30,13 @@ void* args::member_arg(unsigned i) {
 void* args::insert_arg(unsigned i) {
   if (!i) {
     int* x = new int[1];
-    if ((rand() % 2) && inserted.cur)
+    *x = 42;
+    /*if ((rand() % 2) && inserted.cur)
       x[0] = inserted.buff[rand() % inserted.cur];
     else { 
       x[0] = rand() % INT_MAX;
       insert(x[0]);
-    }
+    }*/
     return (void*) x;
   }
 }

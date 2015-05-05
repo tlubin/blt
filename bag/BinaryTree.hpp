@@ -2,7 +2,7 @@
 #define _xBINARY_TREE_HPP_
 
 typedef struct Node {
-  short key;
+  int key;
   char count;
   Node* leftChild;
   Node* rightChild;	

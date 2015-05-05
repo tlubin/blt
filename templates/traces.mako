@@ -8,7 +8,7 @@ void trace${loop.index}() {
   for (int i = 0; i < ${node['len']}; ++i) {
     unsigned idx${loop.index};
     klee_make_symbolic(&idx${loop.index}, sizeof(idx${loop.index}), "idx${loop.index}");
-    klee_assume(idx${loop.index} < ${len(node['funcs'])});
+    klee_assume(idx${loop.index} < ${len(node['funcs'])} && idx${loop.index} >= 0);
     switch (idx${loop.index}) {
     % for f in node['funcs']:
       case ${loop.index}:
