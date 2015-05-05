@@ -168,7 +168,6 @@ def write_replay(failure, trace, tracenum, failnum):
 
     for node in trace:
         if node['symbolic_trace'] == 'true':
-            #XXX LT: changed to be range of how many symbolic calls there are
             for i in range(node['len']):
                 if sym_call_num >= len(sym_calls):
                     break
@@ -180,7 +179,6 @@ def write_replay(failure, trace, tracenum, failnum):
             calls += node['calls']
         if node['symbolic_args'] == 'true':
             funcs = calls[-node['len']:]
-            #XXX LT: changed to be range of how many symbolic args there are
             for i in range(len(sym_args)):
                 f = [f for f in data['funcs'] if f['name'] == funcs[i]][0]
                 f_args = []
@@ -189,7 +187,6 @@ def write_replay(failure, trace, tracenum, failnum):
                     sym_arg_num += 1
                 args.append(f_args)
         else:
-            #XXX LT: changed to be range of how many concrete calls there are
             for i in range(len(calls)):
                 args.append(concrete_args[conc_call_num].split(',')[1:])
                 conc_call_num += 1
