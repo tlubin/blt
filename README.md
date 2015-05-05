@@ -12,14 +12,14 @@
   - `BLT` - your BLT directory (e.g. `~/blt`)
   - `LLVM29` - the location of `llvm-link` for llvm 2.9
   - `LLVMGCC` - the location of `llvm-g++`
-- You must provide:
+- Option 1: Compare two different C++ classes that implement the same API. You must provide:
   - Source and header file of old implementation of the API
   - Source and header file of new implementation of the API 
   - Required files for either implementations of the API 
   - (optional) `args.cpp` and `args.hpp` specifying a class `args` with methods that generate arguments for API calls selected in the JSON (see next point) 
   - JSON file defining an object with the following properties:
       - `"class1"` - name of first class 
-      - `"class2"` - name of second class
+      - `"class2"` - name of second class 
       - `"header_files"` - list of header files
       - `"source_files"` - list of source files
       - `"funcs"` - list of functions shared by both classes, where each function is represented as an object with the properties:
@@ -86,6 +86,9 @@
         ```
         
       See also `bag/bag.json` and `calcs/calcs.json` for more examples.
+- Option 2: Find functional correctness bugs (e.g. assertion errors) in a single C++ class that implements an API:
+    - set `"class1"` and `"class2"` to both be the name of the C++ class under test 
+    - include all other properties as before
 
 - Running BLT:
     - `python path/to/blt.py --trace path/to/json_file.json`

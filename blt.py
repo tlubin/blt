@@ -187,7 +187,9 @@ def write_replay(failure, trace, tracenum, failnum):
                     sym_arg_num += 1
                 args.append(f_args)
         else:
-            for i in range(len(calls)):
+            #XXX TL: This is buggy (bug2.json)
+            # changing it to "range(node['len'])" is also wrong (bug1.json)
+            for i in range(node['len']):
                 args.append(concrete_args[conc_call_num].split(',')[1:])
                 conc_call_num += 1
 
