@@ -275,6 +275,7 @@ def main():
                     calls = []
                     nfuncs = len(node['funcs'])
                     for i in range(node['len']):
+                        # XXX LT: need to somehow check for preconditions.... unsure how, because would need to check state
                         calls.append(node['funcs'][randint(0,nfuncs-1)])
                     node['calls'] = calls
 
