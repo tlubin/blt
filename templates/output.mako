@@ -50,7 +50,7 @@ int main() {
       arg_str += 'arg{0}_{1}, '.format(loop.index, j)
     arg_str += 'arg{0}_{1}'.format(loop.index, len(func['args']) - 1)
   %>
-  % if loop.index + 1 < len(calls_args):
+  % if loop.index + 1 < len(calls_args) or func['return'] == 'void':
   (void) v1->${func['name']}(${arg_str});
   (void) v2->${func['name']}(${arg_str});
   % else:
