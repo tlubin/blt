@@ -16,10 +16,8 @@ void trace${loop.index}() {
     %>
       case ${loop.index}: {
       % if 'pre' in func:
-        // XXX LT: assumes that both implementations have preconditions
         klee_assume(v1->${func['pre']}());
         klee_assume(v2->${func['pre']}());
-        // check that both preconditions are either both not satisfied or both satisfied
         if (v1->${func['pre']}() != v1->${func['pre']}())
           assert(0);
       % endif
@@ -38,10 +36,8 @@ void trace${loop.index}() {
   func = [func for func in funcs if func['name']==f][0]
   %>
   % if 'pre' in func:
-  // assumes that both implementations have preconditions and postconditions
   klee_assume(v1->${func['pre']}());
   klee_assume(v2->${func['pre']}());
-  // check that both preconditions are either both not satisfied or both satisfied
   if (v1->${func['pre']}() != v1->${func['pre']}())
     assert(0);
   % endif
