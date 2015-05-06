@@ -6,7 +6,6 @@ import subprocess
 import sys
 from mako.template import Template
 from random import randint
-import re
 
 env = {}
 args = {}
@@ -14,6 +13,7 @@ data = {}
 jfile_dir = ''
 tmpdir = ''
 SEED = randint(1, 1000)
+default_trace_len = 1024  # Should the user be able to set this?
 
 # Colors for colorful output to console
 GREEN = '\033[1m\033[32m'
@@ -45,8 +45,6 @@ def check_env():
     env['klee_include'] = os.path.join(os.environ['KLEE'], 'include')
     return env
 
-# Eventually we may have more commandline flags to pass in...
-# Use argparse or optparse
 def get_args():
     global args
     parser = argparse.ArgumentParser()
@@ -90,16 +88,14 @@ def write_harness():
 # each of which has the keys 'name', 'size' and 'data' and represents the
 # concrete value assigned by KLEE to a particular symbolic value.
 def klee_get_failures(klee_output_dir):
-    # Identify failed test runs by files with .err extension.
-    out_files = os.listdir(klee_output_dir)
-    err_file = re.compile('^(test.*)\..*\.err$')
+    # Identify failed test runs by files with .err extension, omitting
+    # .user.err files.
     failed_klee_runs = []
-    for outf in out_files:
-        m = err_file.match(outf)
-        if not m:
+    for outf in os.listdir(klee_output_dir):
+        if not outf.endswith('.err') or outf.endswith('.user.err'):
             continue
         # Parse each corresponding ktest file.
-        ktest_file = os.path.join(klee_output_dir, m.group(1) + ".ktest")
+        ktest_file = os.path.join(klee_output_dir, outf.split('.')[0] + '.ktest')
         cmd = "ktest-tool --write-ints %s | tail -n+4 | awk '{print $4}'"
         try:
             lines = subprocess.check_output(cmd % ktest_file,
@@ -247,6 +243,27 @@ def compile_and_run_klee():
         for n, f in enumerate(failures):
             write_replay(f, data['traces'][i], i, n)
 
+# Generate a swarm of concolic traces from the powerset of the set of all
+# functions.  The lenth of each trace is actually default_trace_len + 2.
+def generate_default_traces():
+    powerset = [[]]
+    for f in data['funcs']:
+        powerset.extend([x + [f['name']] for x in powerset])
+    data['traces'] = []
+    for x in powerset:
+        sym = { 'funcs' : powerset[-1], 'len' : 2,
+                'symbolic_args' : 'true', 'symbolic_trace' : 'true' }
+
+        # TODO: There is an issue later on if the 'funcs' key of a trace
+        # references an empty list.  Do we need to account for that
+        # possibility somewhere else besides here?
+        if x == []:
+            data['traces'].append([sym])
+        else:
+            con = { 'funcs' : x, 'len' : default_trace_len,
+                    'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
+            data['traces'].append([con, sym])
+
 def main():
     global data, jfile_dir
     check_env()
@@ -268,6 +285,8 @@ def main():
 
     # not a request for replay, run KLEE
     if args.trace:
+        if 'traces' not in data:
+            generate_default_traces()
         # Add a "calls" field for the actual concrete function calls
         for trace in data['traces']:
             for node in trace:
@@ -275,7 +294,6 @@ def main():
                     calls = []
                     nfuncs = len(node['funcs'])
                     for i in range(node['len']):
-                        # XXX LT: need to somehow check for preconditions.... unsure how, because would need to check state
                         calls.append(node['funcs'][randint(0,nfuncs-1)])
                     node['calls'] = calls
 
