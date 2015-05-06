@@ -15,6 +15,8 @@ class DynamicIntBag : public IntBag {
     unsigned to_array(int*&);
     bool pre_member();
     bool pre_insert();
+    bool post_member();
+    bool post_insert();
 
   private:
     IntBag* bag;

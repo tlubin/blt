@@ -24,6 +24,9 @@ void trace${loop.index}() {
           assert(0);
       % endif
         call_${f}(v1, v2, ${node['symbolic_args']});
+      % if 'post' in func:
+        assert(${func['post']}());
+      % endif
         break;
       }
     % endfor
@@ -35,7 +38,7 @@ void trace${loop.index}() {
   func = [func for func in funcs if func['name']==f][0]
   %>
   % if 'pre' in func:
-  // XXX LT: assumes that both implementations have preconditions
+  // assumes that both implementations have preconditions and postconditions
   klee_assume(v1->${func['pre']}());
   klee_assume(v2->${func['pre']}());
   // check that both preconditions are either both not satisfied or both satisfied
@@ -43,6 +46,10 @@ void trace${loop.index}() {
     assert(0);
   % endif
   call_${f}(v1, v2, ${node['symbolic_args']});  
+  % if 'post' in func:
+  assert(v1->${func['post']}());
+  assert(v2->${func['post']}());
+  % endif
   % endfor
   % endif
   % endfor

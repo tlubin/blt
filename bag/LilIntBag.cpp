@@ -19,6 +19,14 @@ bool LilIntBag::pre_member() {
   return cur;
 }
 
+bool LilIntBag::post_insert() {
+  return cur <= 10;
+}
+
+bool LilIntBag::post_member() {
+  return cur;
+}
+
 void LilIntBag::resize() {
   sz *= 2;
   int* tmp = new int[sz];
