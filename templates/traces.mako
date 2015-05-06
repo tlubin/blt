@@ -39,7 +39,8 @@ void trace${loop.index}() {
   klee_assume(v1->${func['pre']}());
   klee_assume(v2->${func['pre']}());
   // check that both preconditions are either both not satisfied or both satisfied
-  if (v1->${func['pre']}() != v1->${func['pre']}()) continue;
+  if (v1->${func['pre']}() != v1->${func['pre']}())
+    assert(0);
   % endif
   call_${f}(v1, v2, ${node['symbolic_args']});  
   % endfor
