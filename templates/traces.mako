@@ -11,14 +11,37 @@ void trace${loop.index}() {
     klee_assume(idx${loop.index} < ${len(node['funcs'])});
     switch (idx${loop.index}) {
     % for f in node['funcs']:
-      case ${loop.index}:
+    <% 
+    func = [func for func in funcs if func['name']==f][0]
+    %>
+      case ${loop.index}: {
+      % if 'pre' in func:
+        // XXX LT: assumes that both implementations have preconditions
+        klee_assume(v1->${func['pre']}());
+        klee_assume(v2->${func['pre']}());
+        // check that both preconditions are either both not satisfied or both satisfied
+        if (v1->${func['pre']}() != v1->${func['pre']}())
+          assert(0);
+      % endif
         call_${f}(v1, v2, ${node['symbolic_args']});
         break;
+      }
     % endfor
     }
   }
   % else:
   % for f in node['calls']:
+  <% 
+  func = [func for func in funcs if func['name']==f][0]
+  %>
+  % if 'pre' in func:
+  // XXX LT: assumes that both implementations have preconditions
+  klee_assume(v1->${func['pre']}());
+  klee_assume(v2->${func['pre']}());
+  // check that both preconditions are either both not satisfied or both satisfied
+  if (v1->${func['pre']}() != v1->${func['pre']}())
+    assert(0);
+  % endif
   call_${f}(v1, v2, ${node['symbolic_args']});  
   % endfor
   % endif

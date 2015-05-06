@@ -12,12 +12,13 @@ class LilIntBag : public IntBag {
     void remove(int);
     unsigned get_size();
     unsigned to_array(int*&);
+    bool pre_member();
+    bool pre_insert();
 
   private:
     int* a;
     unsigned cur;
     unsigned sz;
-    //const int invalidMarker;
     void resize();
 };
 

@@ -1,15 +1,17 @@
 {
     "class1" : "LilIntBag",
-    "class2" : "DynamicIntBag",
-    "header_files" : ["LilIntBag.hpp", "DynamicIntBag.hpp", "args.hpp"],
-    "source_files" : ["LilIntBag.cpp", "DynamicIntBag.cpp", "args.cpp", "BinaryTree.cpp"],
+    "class2" : "LilIntBag",
+    "header_files" : ["LilIntBag.hpp", "args.hpp"],
+    "source_files" : ["LilIntBag.cpp", "args.cpp"],
     "funcs": [
         {"name" : "member",
          "args" : ["int"],
-         "return" : "bool"},
+         "return" : "bool",
+          "pre" : "pre_member"},
         {"name" : "insert",
          "args" : ["int"],
-         "return" : "void"},
+         "return" : "void",
+         "pre" : "pre_insert"},
         {"name" : "remove",
          "args" : ["int"],
          "return" : "void"},
@@ -20,7 +22,7 @@
   "traces": 
   [
       [
-          { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 5, "funcs" : ["insert"] },
+          { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 30, "funcs" : ["insert"] },
           { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 1, "funcs" : ["remove"] },
           { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 1, "funcs" : ["get_size"] }
       ]

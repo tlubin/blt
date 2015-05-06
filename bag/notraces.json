@@ -1,0 +1,20 @@
+{
+    "class1" : "LilIntBag",
+    "class2" : "DynamicIntBag",
+    "header_files" : ["LilIntBag.hpp", "DynamicIntBag.hpp", "BinaryTree.hpp", "args.hpp"],
+    "source_files" : ["LilIntBag.cpp", "DynamicIntBag.cpp", "BinaryTree.cpp", "args.cpp"],
+    "funcs": [
+        {"name" : "member",
+         "args" : ["int"],
+         "return" : "bool"},
+        {"name" : "insert",
+         "args" : ["int"],
+         "return" : "void"},
+        {"name" : "remove",
+         "args" : ["int"],
+         "return" : "void"},
+        {"name" : "get_size",
+         "args" : [],
+         "return" : "unsigned"}
+  ]
+}
