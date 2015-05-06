@@ -67,7 +67,7 @@ def write_harness():
 
     traces_tmpl = Template(
             filename=(os.path.join(env['blt'], 'templates', 'traces.mako')))
-    traces_str = traces_tmpl.render(traces=data['traces'], class1=data['class1'],
+    traces_str = traces_tmpl.render(funcs=data['funcs'], traces=data['traces'], class1=data['class1'],
             class2=data['class2'])
 
     body_tmpl = Template(filename=(os.path.join(env['blt'], 'templates', 'body.mako')))
@@ -187,8 +187,6 @@ def write_replay(failure, trace, tracenum, failnum):
                     sym_arg_num += 1
                 args.append(f_args)
         else:
-            #XXX TL: This is buggy (bug2.json)
-            # changing it to "range(node['len'])" is also wrong (bug1.json)
             for i in range(node['len']):
                 args.append(concrete_args[conc_call_num].split(',')[1:])
                 conc_call_num += 1

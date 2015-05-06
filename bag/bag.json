@@ -6,10 +6,12 @@
     "funcs": [
         {"name" : "member",
          "args" : ["int"],
-         "return" : "bool"},
+         "return" : "bool",
+          "pre" : "pre_member"},
         {"name" : "insert",
          "args" : ["int"],
-         "return" : "void"},
+         "return" : "void",
+         "pre" : "pre_insert"},
         {"name" : "remove",
          "args" : ["int"],
          "return" : "void"},
@@ -20,7 +22,7 @@
   "traces": 
   [
       [
-          { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 20, "funcs" : ["insert"] },
+          { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 30, "funcs" : ["insert"] },
           { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 1, "funcs" : ["remove"] },
           { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 1, "funcs" : ["get_size"] }
       ]

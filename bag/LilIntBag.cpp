@@ -1,6 +1,7 @@
 #include <cstring>
 #include "LilIntBag.hpp"
 
+
 LilIntBag::LilIntBag() :
   sz(16), cur(0) /*, invalidMarker(0x80000000)*/ {
   a = new int[sz];
@@ -8,6 +9,14 @@ LilIntBag::LilIntBag() :
 
 LilIntBag::~LilIntBag() {
   delete [] a;
+}
+
+bool LilIntBag::pre_insert() {
+  return cur < 10;
+}
+
+bool LilIntBag::pre_member() {
+  return cur;
 }
 
 void LilIntBag::resize() {

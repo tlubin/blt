@@ -13,6 +13,8 @@ class DynamicIntBag : public IntBag {
     void remove(int);
     unsigned get_size();
     unsigned to_array(int*&);
+    bool pre_member();
+    bool pre_insert();
 
   private:
     IntBag* bag;
