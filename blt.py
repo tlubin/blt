@@ -140,63 +140,51 @@ def run_replay(replay_file, verbose=1):
 def write_replay(failure, trace, tracenum, failnum):
     sym_calls = [x for x in failure if 'idx' in x['name']]
     sym_args = [x for x in failure if 'arg' in x['name']]
-    calls = []
-    args = []
+    sym_args = map(lambda x: x['data'], sym_args)
     sym_call_num = 0
-    sym_arg_num = 0
-    conc_call_num = 0
+
+    for node in trace:
+        if node['symbolic_trace'] == 'true':
+            called = min(node['len'], len(sym_calls) - sym_call_num)
+            node['len'] = called
+            node['calls'] = sym_calls[sym_call_num:sym_call_num+called]
+            node['calls'] = map(lambda x: node['funcs'][int(x['data'])], node['calls'])
+            sym_call_num += called
 
     # Generate c++ code that will mirror failing run to get arguments
     getargs_tmpl = Template(
             filename=(os.path.join(env['blt'], 'templates', 'getargs.mako')))
-    getargs_str = getargs_tmpl.render(funcs=data['funcs'], trace=trace, sym_calls=sym_calls, seed=SEED, headers=[os.path.join(env['blt'], 'blt_args.hpp')]);
+    getargs_str = getargs_tmpl.render(funcs=data['funcs'], trace=trace,
+                                      sym_args=sym_args, seed=SEED, class1=data['class1'],
+                                      class2=data['class2'], 
+                                      headers=[os.path.abspath(os.path.join(jfile_dir, h)) for h in data['header_files']])
     getargs = open(os.path.join(tmpdir, 'getargs.cpp'), 'w');
     getargs.write(getargs_str)
     getargs.close()
 
     # Compile and run c++ code and collect arguments from output file
-    llvmgcc_bin = os.path.join(env['llvmgcc'],'llvm-g++')
-    compile_cmd = '{0} -o {1} {2} {3}'.format(llvmgcc_bin, os.path.join(tmpdir, 'getargs'), os.path.join(tmpdir, 'getargs.cpp'), os.path.join(env['blt'], 'blt_args.cpp'))
-    subprocess.call(compile_cmd.split())
+    sources = " "
+    for source_file in data['source_files']:
+        sources += os.path.abspath(os.path.join(jfile_dir, source_file)) + ' '
+    cmd = 'g++ -o {0} {1} {2}'.format(os.path.join(tmpdir, 'getargs'), os.path.join(tmpdir, 'getargs.cpp'), sources)
+    subprocess.call(cmd.split())
     run_cmd = os.path.join(tmpdir, 'getargs')
     getargs_ret = os.path.join(tmpdir, 'getargs_ret')
 
     with open(getargs_ret, 'w') as outfile:
         subprocess.call(run_cmd, stdout=outfile)
     with open(getargs_ret, 'r') as infile:
-        concrete_args = infile.read().splitlines()
+        calls_args = infile.read().splitlines()
 
-    for node in trace:
-        if node['symbolic_trace'] == 'true':
-            for i in range(node['len']):
-                if sym_call_num >= len(sym_calls):
-                    break
-                else:
-                    info = sym_calls[sym_call_num]
-                    calls.append(node['funcs'][int(info['data'])])
-                    sym_call_num += 1
-        else:
-            calls += node['calls']
-        if node['symbolic_args'] == 'true':
-            funcs = calls[-node['len']:]
-            for i in range(len(sym_args)):
-                f = [f for f in data['funcs'] if f['name'] == funcs[i]][0]
-                f_args = []
-                for _ in range(len(f['args'])):
-                    f_args.append(sym_args[sym_arg_num]['data'])
-                    sym_arg_num += 1
-                args.append(f_args)
-        else:
-            #XXX TL: This is buggy (bug2.json)
-            # changing it to "range(node['len'])" is also wrong (bug1.json)
-            for i in range(len(calls)):
-                args.append(concrete_args[conc_call_num].split(',')[1:])
-                conc_call_num += 1
+    calls_args = map(lambda x: (x.split(',')[0], x.split(',')[1:]), calls_args)
+
+    # TODO: there is a BUG when the implementations print to stdout because we are parsing stdout
+    # FIX: write to another file descriptor (some default or passed in filename)
 
     output_tmpl = Template(filename=(os.path.join(env['blt'], 'templates', 'output.mako')))
     output_str = output_tmpl.render(
         headers=[os.path.abspath(os.path.join(jfile_dir, h)) for h in data['header_files']],
-        funcs=data['funcs'], class1=data['class1'], class2=data['class2'], calls_args=zip(calls,args), seed=SEED)
+        funcs=data['funcs'], class1=data['class1'], class2=data['class2'], calls_args=calls_args, seed=SEED)
     replay_file = os.path.join(tmpdir, 'replay{0}_{1}.cpp'.format(tracenum, failnum))
     with open(replay_file, 'w') as replay_fd:
         replay_fd.write(output_str)

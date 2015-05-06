@@ -2,54 +2,71 @@
 #include "${header}"
 % endfor
 #include <cstdlib>
-#include <sstream>
 #include <iostream>
+#include <cassert>
 
-% for f in funcs:
-void call_${f['name']}(std::stringstream* ss) {
-  (*ss) << "${f['name']}";
-  % if len(f['args']) > 0:
-  % for typ in f['args']:
-  ${typ} arg${loop.index};
-  % endfor
-  % for typ in f['args']:
-  % if 'arg_gen' in f.keys():	
-  (*ss) << ",$BLT_GENERATED_ARG$";
-  % else: 
-  arg${loop.index} = *(${typ}*)(blt_args::get_arg("${typ}"));
-  (*ss) << "," << arg${loop.index};
-  %endif
-  % endfor
-  % endif
-  (*ss) << "\n";
+void failure() {
+    exit(0);
+    return;
 }
-% endfor
 
 int main(int argc, const char* argv[]) {
     srand(${seed});
-    std::stringstream* ss = new std::stringstream();
+    ${class1} *v1= new ${class1}; 
+    ${class2} *v2= new ${class2}; 
     <%
-      nodes = [x for x in trace if x['symbolic_args'] == 'false']
-      sym_call_num = 0
+      sym_arg_num = 0
     %>
-    % for node in nodes:
-    % if node['symbolic_trace'] == 'false':
+    % for node in trace:
     % for f in node['calls']:
-    call_${f}(ss);
-    % endfor
-    % else:
-    % for _ in range(node['len']):
+    ## Inside of blt.py, I take care of shortened symbolic trace nodes
+    ## Here, I take care of shortened concrete trace, symbolic argument nodes
     <%
-      if sym_call_num >= len(sym_calls):
-        break
-      else:
-        f = node['funcs'][int(sym_calls[sym_call_num]['data'])]
-        sym_call_num += 1
+      func = [func for func in funcs if func['name']==f][0]
+      if node['symbolic_args'] == 'true' and sym_arg_num + len(func['args']) > len(sym_args):
+      	 break
     %>
-    call_${f}(ss);
-    % endfor
+    ## Push the name of the function
+    std::cout << "${f}";
+
+    % if node['symbolic_args'] == 'false':
+    ## Get the concrete arguments by calling the appropriate generator
+    % for typ in func['args']:
+    % if 'arg_gen' in func.keys():
+    ${typ} arg${loop.parent.parent.index}_${loop.parent.index}_${loop.index} = *(${typ}*)(args::${funcs['arg_gen']}(${loop.index}));
+    std::cout << ",$BLT_GENERATED_ARG$";
+    % else: 
+    ${typ} arg${loop.parent.parent.index}_${loop.parent.index}_${loop.index} = *(${typ}*)(blt_args::get_arg("${typ}"));
+    std::cout << "," << arg${loop.parent.parent.index}_${loop.parent.index}_${loop.index};
     % endif
     % endfor
 
-    std::cout << (*ss).str();
+    % else:
+    ## Get the symbolic arguments from passed in sym_args
+    % for typ in func['args']:
+    ${typ} arg${loop.parent.parent.index}_${loop.parent.index}_${loop.index} = ${sym_args[sym_arg_num]};
+    std::cout << "," << arg${loop.parent.parent.index}_${loop.parent.index}_${loop.index};
+    <%
+      sym_arg_num += 1
+    %>
+    % endfor
+    % endif
+
+    <%
+    arg_str = ''
+    if len(func['args']) > 0:
+      for j in range(len(func['args']) - 1):
+        arg_str += 'arg{0}_{1}_{2}, '.format(loop.parent.index, loop.index, j)
+      arg_str += 'arg{0}_{1}_{2}'.format(loop.parent.index, loop.index, len(func['args']) - 1)
+    %>
+    % if func['return'] != 'void':
+    if (v1->${func['name']}(${arg_str}) != v2->${func['name']}(${arg_str}))
+      failure();
+    % else:
+    v1->${func['name']}(${arg_str});
+    v2->${func['name']}(${arg_str});
+    % endif
+    std::cout << "\n";
+    % endfor
+    % endfor
 }

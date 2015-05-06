@@ -54,6 +54,7 @@ int main() {
   (void) v1->${func['name']}(${arg_str});
   (void) v2->${func['name']}(${arg_str});
   % else:
+  ## TODO: if return type is void...
   ${func['return']} r1 = v1->${func['name']}(${arg_str});
   ${func['return']} r2 = v2->${func['name']}(${arg_str});
   if (r1 != r2) {
