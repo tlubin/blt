@@ -11,7 +11,7 @@ void call_${f['name']}(${class1}* v1, ${class2}* v2, bool is_sym) {
   } else {
     % for typ in f['args']:
     % if 'arg_gen' in f.keys():
-    arg${loop.index} = *(${typ}*)args::${f['arg_gen']}(${loop.index});
+    arg${loop.index} = *(${typ}*)${class1}::${f['arg_gen']}(${loop.index});
     % else: 
     arg${loop.index} = *(${typ}*)(blt_args::get_arg("${typ}"));
     %endif
