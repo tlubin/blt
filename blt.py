@@ -4,6 +4,7 @@ import glob
 import os
 import subprocess
 import sys
+import copy
 from mako.template import Template
 from random import randint
 
@@ -240,7 +241,7 @@ def compile_and_run_klee():
         if len(failures) == 0:
             print GREEN + 'BLT: trace {0} completed successfully'.format(i) + RESET
         for n, f in enumerate(failures):
-            write_replay(f, data['traces'][i], i, n)
+            write_replay(f, copy.deepcopy(data['traces'][i]), i, n)
 
 # Generate a swarm of concolic traces from the powerset of the set of all
 # functions.  The lenth of each trace is actually default_trace_len + 2.
