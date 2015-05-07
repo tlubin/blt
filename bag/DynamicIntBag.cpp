@@ -25,6 +25,14 @@ bool DynamicIntBag::pre_member() {
   return get_size();
 }
 
+bool DynamicIntBag::post_insert() {
+  return get_size() <= 10;
+}
+
+bool DynamicIntBag::post_member() {
+  return get_size();
+}
+
 bool DynamicIntBag::member(int x) {
   return bag->member(x);
 }
