@@ -138,6 +138,7 @@ def write_replay(failure, trace, tracenum, failnum):
     sym_args = [x for x in failure if 'arg' in x['name']]
     sym_args = map(lambda x: x['data'], sym_args)
     sym_call_num = 0
+    sym_arg_num = 0
 
     for node in trace:
         if node['symbolic_trace'] == 'true':
@@ -146,12 +147,20 @@ def write_replay(failure, trace, tracenum, failnum):
             node['calls'] = sym_calls[sym_call_num:sym_call_num+called]
             node['calls'] = map(lambda x: node['funcs'][int(x['data'])], node['calls'])
             sym_call_num += called
+        if node['symbolic_args'] == 'true':
+            node['args'] = []
+            for call in node['calls']:
+                func = [func for func in data['funcs'] if func['name']==call][0]
+                if sym_arg_num + len(func['args']) > len(sym_args):
+                    break
+                node['args'] += [sym_args[sym_arg_num:sym_arg_num+len(func['args'])]]
+            node['len'] = len(node['args'])
 
     # Generate c++ code that will mirror failing run to get arguments
     getargs_tmpl = Template(
             filename=(os.path.join(env['blt'], 'templates', 'getargs.mako')))
     getargs_str = getargs_tmpl.render(funcs=data['funcs'], trace=trace,
-                                      sym_args=sym_args, seed=SEED, class1=data['class1'],
+                                      seed=SEED, class1=data['class1'],
                                       class2=data['class2'], 
                                       headers=[os.path.abspath(os.path.join(jfile_dir, h)) for h in data['header_files']])
     getargs = open(os.path.join(tmpdir, 'getargs.cpp'), 'w');

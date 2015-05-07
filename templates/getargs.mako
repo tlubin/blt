@@ -5,30 +5,18 @@
 #include <iostream>
 #include <cassert>
 
-void failure() {
-    exit(0);
-    return;
-}
-
 int main(int argc, const char* argv[]) {
     srand(${seed});
     ${class1} *v1= new ${class1}; 
     ${class2} *v2= new ${class2}; 
-    <%
-      sym_arg_num = 0
-    %>
     % for node in trace:
-    % for f in node['calls']:
-    ## Inside of blt.py, I take care of shortened symbolic trace nodes
-    ## Here, I take care of shortened concrete trace, symbolic argument nodes
+    % for i in range(node['len']):
     <%
-      func = [func for func in funcs if func['name']==f][0]
-      if node['symbolic_args'] == 'true' and sym_arg_num + len(func['args']) > len(sym_args):
-      	 break
+      func = [func for func in funcs if func['name']==node['calls'][i]][0]
     %>
-    ## Push the name of the function
-    std::cout << "${f}";
 
+    ## Push the name of the function
+    std::cout << "${node['calls'][i]}";
     % if node['symbolic_args'] == 'false':
     ## Get the concrete arguments by calling the appropriate generator
     % for typ in func['args']:
@@ -42,13 +30,10 @@ int main(int argc, const char* argv[]) {
     % endfor
 
     % else:
-    ## Get the symbolic arguments from passed in sym_args
-    % for typ in func['args']:
-    ${typ} arg${loop.parent.parent.index}_${loop.parent.index}_${loop.index} = ${sym_args[sym_arg_num]};
+    ## Use the symbolic arguments from passed in sym_args
+    % for j,typ in enumerate(func['args']):
+    ${typ} arg${loop.parent.parent.index}_${loop.parent.index}_${loop.index} = ${node['args'][i][j]};
     std::cout << "," << arg${loop.parent.parent.index}_${loop.parent.index}_${loop.index};
-    <%
-      sym_arg_num += 1
-    %>
     % endfor
     % endif
 
@@ -61,7 +46,7 @@ int main(int argc, const char* argv[]) {
     %>
     % if func['return'] != 'void':
     if (v1->${func['name']}(${arg_str}) != v2->${func['name']}(${arg_str}))
-      failure();
+      exit(0);
     % else:
     v1->${func['name']}(${arg_str});
     v2->${func['name']}(${arg_str});

@@ -50,11 +50,11 @@ int main() {
       arg_str += 'arg{0}_{1}, '.format(loop.index, j)
     arg_str += 'arg{0}_{1}'.format(loop.index, len(func['args']) - 1)
   %>
+  ## Is this what we want? More than 1 call to failure?
   % if loop.index + 1 < len(calls_args) or func['return'] == 'void':
   (void) v1->${func['name']}(${arg_str});
   (void) v2->${func['name']}(${arg_str});
   % else:
-  ## TODO: if return type is void...
   ${func['return']} r1 = v1->${func['name']}(${arg_str});
   ${func['return']} r2 = v2->${func['name']}(${arg_str});
   if (r1 != r2) {
