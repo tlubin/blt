@@ -28,6 +28,12 @@ void call_${f['name']}(${class1}* v1, ${class2}* v2, bool is_sym) {
   % if f['return'] == 'void':
   v1->${f['name']}(${arg_str});
   v2->${f['name']}(${arg_str});
+  % elif '*' in f['return']:
+  ${f['return']} r1 = *(v1->${f['name']}(${arg_str}));
+  ${f['return']} r2 = *(v2->${f['name']}(${arg_str}));
+  
+  if (r1 != r2) {
+    failure();
   % else:
   ${f['return']} r1 = v1->${f['name']}(${arg_str});
   ${f['return']} r2 = v2->${f['name']}(${arg_str});

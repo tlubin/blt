@@ -14,6 +14,7 @@ jfile_dir = ''
 tmpdir = ''
 SEED = randint(1, 1000)
 default_trace_len = 1024  # Should the user be able to set this?
+default_sym_len = 1024  # Should the user be able to set this?
 
 # Colors for colorful output to console
 GREEN = '\033[1m\033[32m'
@@ -152,7 +153,7 @@ def write_replay(failure, trace, tracenum, failnum):
             filename=(os.path.join(env['blt'], 'templates', 'getargs.mako')))
     getargs_str = getargs_tmpl.render(funcs=data['funcs'], trace=trace,
                                       sym_args=sym_args, seed=SEED, class1=data['class1'],
-                                      class2=data['class2'], 
+                                      class2=data['class2'],
                                       headers=[os.path.abspath(os.path.join(jfile_dir, h)) for h in data['header_files']])
     getargs = open(os.path.join(tmpdir, 'getargs.cpp'), 'w');
     getargs.write(getargs_str)
@@ -241,7 +242,7 @@ def generate_default_traces():
         powerset.extend([x + [f['name']] for x in powerset])
     data['traces'] = []
     for x in powerset:
-        sym = { 'funcs' : powerset[-1], 'len' : 2,
+        sym = { 'funcs' : powerset[-1], 'len' : default_sym_len,
                 'symbolic_args' : 'true', 'symbolic_trace' : 'true' }
 
         # TODO: There is an issue later on if the 'funcs' key of a trace
@@ -278,6 +279,7 @@ def main():
         if 'traces' not in data:
             generate_default_traces()
         # Add a "calls" field for the actual concrete function calls
+        # TODO take into account preconditions and only include valid traces
         for trace in data['traces']:
             for node in trace:
                 if node['symbolic_trace'] == 'false':
@@ -297,7 +299,7 @@ def main():
     # replay all files in the given directory
     else:
         replays = glob.glob(os.path.join(args.rdir, 'replay*.cpp'))
-        for replay in replays:
+        for replay in sorted(replays):
             do_run_replay(replay)
 
 if __name__ == '__main__':
