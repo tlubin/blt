@@ -162,13 +162,8 @@ def write_replay(failure, trace, tracenum, failnum):
     getargs_tmpl = Template(
             filename=(os.path.join(env['blt'], 'templates', 'getargs.mako')))
     getargs_str = getargs_tmpl.render(funcs=data['funcs'], trace=trace,
-<<<<<<< HEAD
-                                      sym_args=sym_args, seed=SEED, class1=data['class1'],
-                                      class2=data['class2'],
-=======
                                       seed=SEED, class1=data['class1'],
                                       class2=data['class2'], 
->>>>>>> 569ca193a0545e7683be12d827e796a7f0d3e29f
                                       headers=[os.path.abspath(os.path.join(jfile_dir, h)) for h in data['header_files']])
     getargs = open(os.path.join(tmpdir, 'getargs.cpp'), 'w');
     getargs.write(getargs_str)

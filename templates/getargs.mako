@@ -21,7 +21,7 @@ int main(int argc, const char* argv[]) {
     ## Get the concrete arguments by calling the appropriate generator
     % for typ in func['args']:
     % if 'arg_gen' in func.keys():
-    ${typ} arg${loop.parent.parent.index}_${loop.parent.index}_${loop.index} = *(${typ}*)(${class1}::${funcs['arg_gen']}(${loop.index}));
+    ${typ} arg${loop.parent.parent.index}_${loop.parent.index}_${loop.index} = *(${typ}*)(args::${func['arg_gen']}(${loop.index}));
     std::cout << ",$BLT_GENERATED_ARG$";
     % else: 
     ${typ} arg${loop.parent.parent.index}_${loop.parent.index}_${loop.index} = *(${typ}*)(blt_args::get_arg("${typ}"));
@@ -36,7 +36,7 @@ int main(int argc, const char* argv[]) {
     std::cout << "," << arg${loop.parent.parent.index}_${loop.parent.index}_${loop.index};
     % endfor
     % endif
-
+    std::cout << std::endl;
     <%
     arg_str = ''
     if len(func['args']) > 0:
@@ -51,7 +51,6 @@ int main(int argc, const char* argv[]) {
     v1->${func['name']}(${arg_str});
     v2->${func['name']}(${arg_str});
     % endif
-    std::cout << "\n";
     % endfor
     % endfor
 }
