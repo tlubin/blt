@@ -14,8 +14,8 @@ data = {}
 jfile_dir = ''
 tmpdir = ''
 SEED = randint(1, 1000)
-default_trace_len = 1024  # Should the user be able to set this?
-default_sym_len = 1024  # Should the user be able to set this?
+default_trace_len = 100  # Should the user be able to set this?
+default_sym_len = 2 # Should the user be able to set this?
 
 # Colors for colorful output to console
 GREEN = '\033[1m\033[32m'
@@ -55,6 +55,7 @@ def get_args():
     g.add_argument('--trace', action='store_true', help='Run trace')
     g.add_argument('--replay', dest='rfile', help='Run replay, provide replay file to replay')
     g.add_argument('--replay-all', dest='rdir', help='Run all replays, provide replay directory to replay')
+    g.add_argument('--eval', dest='eval_trace', help='Evaluate on different length swarms of purely symbolic, purely concrete, or concolic')
     args = parser.parse_args()
 
 # Create harness from JSON data
@@ -163,7 +164,7 @@ def write_replay(failure, trace, tracenum, failnum):
             filename=(os.path.join(env['blt'], 'templates', 'getargs.mako')))
     getargs_str = getargs_tmpl.render(funcs=data['funcs'], trace=trace,
                                       seed=SEED, class1=data['class1'],
-                                      class2=data['class2'], 
+                                      class2=data['class2'],
                                       headers=[os.path.abspath(os.path.join(jfile_dir, h)) for h in data['header_files']])
     getargs = open(os.path.join(tmpdir, 'getargs.cpp'), 'w');
     getargs.write(getargs_str)
@@ -245,7 +246,7 @@ def compile_and_run_klee():
             write_replay(f, copy.deepcopy(data['traces'][i]), i, n)
 
 # Generate a swarm of concolic traces from the powerset of the set of all
-# functions.  The lenth of each trace is actually default_trace_len + 2.
+# functions.  The length of each trace is actually default_trace_len + 2.
 def generate_default_traces():
     powerset = [[]]
     for f in data['funcs']:
@@ -264,6 +265,41 @@ def generate_default_traces():
             con = { 'funcs' : x, 'len' : default_trace_len,
                     'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
             data['traces'].append([con, sym])
+
+# Generate a swarm of purely symbolic (sym_all), purely concrete (concrete),
+# concrete with symbolic arguments (sym_args), or symbolic with concrete arguments (sym_trace)
+# from the powerset of the set of all functions.  The length of each trace is actually default_trace_len + 2.
+def generate_eval_trace(trace_type):
+    powerset = [[]]
+    for f in data['funcs']:
+        powerset.extend([x + [f['name']] for x in powerset])
+    data['traces'] = []
+    for x in powerset:
+      for length in range(default_trace_len):
+        # XXX currently symbolic is run on powersets, not inclusive of all functions
+        if x != []:
+          if trace_type == "sym_all":
+            node = { 'funcs' : x, 'len' : length,
+                  'symbolic_args' : 'true', 'symbolic_trace' : 'true' }
+          elif trace_type == "concrete":
+            node = { 'funcs' : x, 'len' : length,
+                  'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
+          elif trace_type == "sym_args":
+            node = { 'funcs' : x, 'len' : length,
+                  'symbolic_args' : 'true', 'symbolic_trace' : 'false' }
+          elif trace_type == "sym_trace":
+            node = { 'funcs' : x, 'len' : length,
+                  'symbolic_args' : 'false', 'symbolic_trace' : 'true' }
+          elif trace_type == "concolic":
+            node = [{ 'funcs' : x, 'len' : length,
+                  'symbolic_args' : 'false', 'symbolic_trace' : 'false' },
+                  { 'funcs' : powerset[-1], 'len' : default_sym_length,
+                  'symbolic_args' : 'true', 'symbolic_trace' : 'true' }]
+          else:
+            print "Invalid Trace Type"
+            exit(1)
+
+          data['traces'].append([node])
 
 def main():
     global data, jfile_dir
@@ -285,11 +321,13 @@ def main():
             print RED + "BLT: {0} failed".format(replay) + RESET
 
     # not a request for replay, run KLEE
-    if args.trace:
-        if 'traces' not in data:
+    if args.trace or args.eval_trace:
+       # evaluate a particular type of trace
+        if args.eval_trace:
+            generate_eval_trace(args.eval_trace)
+        elif 'traces' not in data:
             generate_default_traces()
-        # Add a "calls" field for the actual concrete function calls
-        # TODO take into account preconditions and only include valid traces
+
         for trace in data['traces']:
             for node in trace:
                 if node['symbolic_trace'] == 'false':
@@ -307,10 +345,11 @@ def main():
         do_run_replay(args.rfile)
 
     # replay all files in the given directory
-    else:
+    elif args.rdir:
         replays = glob.glob(os.path.join(args.rdir, 'replay*.cpp'))
         for replay in sorted(replays):
             do_run_replay(replay)
+
 
 if __name__ == '__main__':
     main()
