@@ -5,6 +5,7 @@ import os
 import subprocess
 import sys
 import copy
+import time
 from mako.template import Template
 from random import randint
 
@@ -14,7 +15,7 @@ data = {}
 jfile_dir = ''
 tmpdir = ''
 SEED = randint(1, 1000)
-default_trace_len = 100  # Should the user be able to set this?
+default_trace_len = 10  # Should the user be able to set this?
 default_sym_len = 2 # Should the user be able to set this?
 
 # Colors for colorful output to console
@@ -231,19 +232,26 @@ def compile_and_run_klee():
         exit(1)
 
     # Call KLEE
+    stats_fd = open(os.path.join(tmpdir, 'trace_stats.txt'), 'w')
     for i in range(len(data['traces'])):
+
         klee_output_dir = os.path.join(tmpdir, 'klee{0}'.format(i))
         klee_print_file = os.path.join(tmpdir, 'klee_output.txt')
         print MAGENTA + '\nBLT: running trace {0}\n'.format(i) + RESET
         cmd = 'klee -emit-all-errors -output-dir={0} {1} {2}'.format(
                 klee_output_dir, harness_bc, i)
+        t0 = time.clock()
         with open(klee_print_file, 'w') as klee_print_fd:
             subprocess.call(cmd.split(), stderr=klee_print_fd)
+        t1 = time.clock() - t0
         failures = klee_get_failures(klee_output_dir)
         if len(failures) == 0:
             print GREEN + 'BLT: trace {0} completed successfully'.format(i) + RESET
         for n, f in enumerate(failures):
             write_replay(f, copy.deepcopy(data['traces'][i]), i, n)
+        stats_fd.write(str(data['traces'][i]) + "\n")
+        stats_fd.write("    Failed: " + str(len(failures)) + "\n")
+        stats_fd.write("    Time: " + str(t1) + "\n")
 
 # Generate a swarm of concolic traces from the powerset of the set of all
 # functions.  The length of each trace is actually default_trace_len + 2.
@@ -268,7 +276,7 @@ def generate_default_traces():
 
 # Generate a swarm of purely symbolic (sym_all), purely concrete (concrete),
 # concrete with symbolic arguments (sym_args), or symbolic with concrete arguments (sym_trace)
-# from the powerset of the set of all functions.  The length of each trace is actually default_trace_len + 2.
+# from the powerset of the set of all functions.  The final length of each trace is actually default_trace_len + 2.
 def generate_eval_trace(trace_type):
     powerset = [[]]
     for f in data['funcs']:
