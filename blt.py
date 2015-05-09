@@ -21,7 +21,7 @@ default_sym_len = 2 # Should the user be able to set this?
 start = time.time()
 eval_trace_len = 5
 num_evals = 10
-timeout = 30
+timeout = 300
 stats_fd = ''
 
 # Colors for colorful output to console
@@ -251,6 +251,10 @@ def compile_and_run_klee():
         t0 = time.time()
         with open(klee_print_file, 'w') as klee_print_fd:
             subprocess.call(cmd.split(), stderr=klee_print_fd)
+            # get number of paths
+        with open(klee_print_file, 'r') as klee_print_fd:
+            line = klee_print_fd.readlines()[-2].split()
+            num_paths = line[-1]
         t1 = time.time() - t0
 
         failures = klee_get_failures(klee_output_dir)
@@ -261,7 +265,11 @@ def compile_and_run_klee():
 
         if args.eval_trace:
             global stats_fd
-            stats_fd.write(str(data['traces'][i][0]['len']) + ', ' + str(len(failures)) + ', ' + str(t1) + '\n')
+            # get number of paths
+            stats_fd.write(str(data['traces'][i][0]['len']) + ', '
+                    + str(len(failures)) + ', '
+                    + str(t1) + ', '
+                    + num_paths + '\n')
 
 # Generate a swarm of concolic traces from the powerset of the set of all
 # functions.  The length of each trace is actually default_trace_len + 2.
