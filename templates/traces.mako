@@ -23,7 +23,8 @@ void trace${loop.index}() {
       % endif
         call_${f}(v1, v2, ${node['symbolic_args']});
       % if 'post' in func:
-        assert(${func['post']}());
+        assert(v1->${func['post']}());
+        assert(v2->${func['post']}());
       % endif
         break;
       }
