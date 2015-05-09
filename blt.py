@@ -301,13 +301,13 @@ def generate_eval_trace(trace_type):
           elif trace_type == "concolic":
             node = [{ 'funcs' : x, 'len' : length,
                   'symbolic_args' : 'false', 'symbolic_trace' : 'false' },
-                  { 'funcs' : powerset[-1], 'len' : default_sym_length,
+                  { 'funcs' : powerset[-1], 'len' : default_sym_len,
                   'symbolic_args' : 'true', 'symbolic_trace' : 'true' }]
           else:
             print "Invalid Trace Type"
             exit(1)
 
-          data['traces'].append([node])
+          data['traces'].append(node)
 
 def main():
     global data, jfile_dir

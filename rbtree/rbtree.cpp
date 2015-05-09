@@ -1,5 +1,6 @@
 #include "rbtree.hpp"
 #include <cstdlib>
+#include <cassert>
 
 rb_red_blk_tree* tree = NULL;
 
