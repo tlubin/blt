@@ -20,8 +20,7 @@
   "traces": 
   [
       [
-          { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 1, "funcs" : ["set"] },
-          { "symbolic_trace" : "false", "symbolic_args" : "false", "len" : 1, "funcs" : ["get"] }
+          { "symbolic_trace" : "true", "symbolic_args" : "true", "len" : 2, "funcs" : ["set", "get"] }
       ]
   ]
 }

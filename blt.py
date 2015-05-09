@@ -1,22 +1,23 @@
 import json
 import argparse
 import glob
-import os
 import subprocess
+import os
 import sys
 import copy
 import time
+import random
 from mako.template import Template
-from random import randint
 
 env = {}
 args = {}
 data = {}
 jfile_dir = ''
 tmpdir = ''
-SEED = randint(1, 1000)
+SEED = random.randint(1, 1000)
 default_trace_len = 10  # Should the user be able to set this?
 default_sym_len = 2 # Should the user be able to set this?
+num_evals = 10
 
 # Colors for colorful output to console
 GREEN = '\033[1m\033[32m'
@@ -232,26 +233,29 @@ def compile_and_run_klee():
         exit(1)
 
     # Call KLEE
-    stats_fd = open(os.path.join(tmpdir, 'trace_stats.txt'), 'w')
+    if args.eval_trace:
+        stats_fd = open(os.path.join(env['blt'], 'stats', 'trace_stats_' + args.eval_trace + '.txt'), 'w')
     for i in range(len(data['traces'])):
-
         klee_output_dir = os.path.join(tmpdir, 'klee{0}'.format(i))
         klee_print_file = os.path.join(tmpdir, 'klee_output.txt')
         print MAGENTA + '\nBLT: running trace {0}\n'.format(i) + RESET
         cmd = 'klee -emit-all-errors -output-dir={0} {1} {2}'.format(
                 klee_output_dir, harness_bc, i)
+
+        # time the klee process
         t0 = time.clock()
         with open(klee_print_file, 'w') as klee_print_fd:
             subprocess.call(cmd.split(), stderr=klee_print_fd)
         t1 = time.clock() - t0
+
         failures = klee_get_failures(klee_output_dir)
         if len(failures) == 0:
             print GREEN + 'BLT: trace {0} completed successfully'.format(i) + RESET
         for n, f in enumerate(failures):
             write_replay(f, copy.deepcopy(data['traces'][i]), i, n)
-        stats_fd.write(str(data['traces'][i]) + "\n")
-        stats_fd.write("    Failed: " + str(len(failures)) + "\n")
-        stats_fd.write("    Time: " + str(t1) + "\n")
+
+        if args.eval_trace:
+            stats_fd.write(str(data['traces'][i][0]['len']) + ', ' + str(len(failures)) + ', ' + str(t1) + '\n')
 
 # Generate a swarm of concolic traces from the powerset of the set of all
 # functions.  The length of each trace is actually default_trace_len + 2.
@@ -278,14 +282,17 @@ def generate_default_traces():
 # concrete with symbolic arguments (sym_args), or symbolic with concrete arguments (sym_trace)
 # from the powerset of the set of all functions.  The final length of each trace is actually default_trace_len + 2.
 def generate_eval_trace(trace_type):
+    data['traces'] = []
+
     powerset = [[]]
+    random_swarms = []
     for f in data['funcs']:
         powerset.extend([x + [f['name']] for x in powerset])
-    data['traces'] = []
-    for x in powerset:
-      for length in range(default_trace_len):
-        # XXX currently symbolic is run on powersets, not inclusive of all functions
-        if x != []:
+    powerset.remove([])
+    for _ in range(num_evals):
+        random_swarms.append(random.choice(powerset))
+    for length in range(default_trace_len):
+        for x in random_swarms:
           if trace_type == "sym_all":
             node = [{ 'funcs' : x, 'len' : length,
                   'symbolic_args' : 'true', 'symbolic_trace' : 'true' }]
@@ -342,7 +349,7 @@ def main():
                     calls = []
                     nfuncs = len(node['funcs'])
                     for i in range(node['len']):
-                        calls.append(node['funcs'][randint(0,nfuncs-1)])
+                        calls.append(node['funcs'][random.randint(0,nfuncs-1)])
                     node['calls'] = calls
 
         write_harness()
