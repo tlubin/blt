@@ -287,17 +287,17 @@ def generate_eval_trace(trace_type):
         # XXX currently symbolic is run on powersets, not inclusive of all functions
         if x != []:
           if trace_type == "sym_all":
-            node = { 'funcs' : x, 'len' : length,
-                  'symbolic_args' : 'true', 'symbolic_trace' : 'true' }
+            node = [{ 'funcs' : x, 'len' : length,
+                  'symbolic_args' : 'true', 'symbolic_trace' : 'true' }]
           elif trace_type == "concrete":
-            node = { 'funcs' : x, 'len' : length,
-                  'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
+            node = [{ 'funcs' : x, 'len' : length,
+                  'symbolic_args' : 'false', 'symbolic_trace' : 'false' }]
           elif trace_type == "sym_args":
-            node = { 'funcs' : x, 'len' : length,
-                  'symbolic_args' : 'true', 'symbolic_trace' : 'false' }
+            node = [{ 'funcs' : x, 'len' : length,
+                  'symbolic_args' : 'true', 'symbolic_trace' : 'false' }]
           elif trace_type == "sym_trace":
-            node = { 'funcs' : x, 'len' : length,
-                  'symbolic_args' : 'false', 'symbolic_trace' : 'true' }
+            node = [{ 'funcs' : x, 'len' : length,
+                  'symbolic_args' : 'false', 'symbolic_trace' : 'true' }]
           elif trace_type == "concolic":
             node = [{ 'funcs' : x, 'len' : length,
                   'symbolic_args' : 'false', 'symbolic_trace' : 'false' },
