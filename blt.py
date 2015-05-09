@@ -243,8 +243,9 @@ def compile_and_run_klee():
         klee_output_dir = os.path.join(tmpdir, 'klee{0}'.format(i))
         klee_print_file = os.path.join(tmpdir, 'klee_output.txt')
         print MAGENTA + '\nBLT: running trace {0}\n'.format(i) + RESET
-        cmd = 'klee -emit-all-errors -output-dir={0} {1} {2} -max-time={3}'.format(
-                klee_output_dir, harness_bc, i, timeout - (start + time.time()))
+
+        cmd = 'klee -emit-all-errors -max-time={3} -output-dir={0} {1} {2}'.format(
+                klee_output_dir, harness_bc, i, start + timeout - time.time())
 
         # time the klee process
         t0 = time.time()
