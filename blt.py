@@ -158,6 +158,7 @@ def write_replay(failure, trace, tracenum, failnum):
                 if sym_arg_num + len(func['args']) > len(sym_args):
                     break
                 node['args'] += [sym_args[sym_arg_num:sym_arg_num+len(func['args'])]]
+                sym_arg_num += len(func['args'])
             node['len'] = len(node['args'])
 
     # Generate c++ code that will mirror failing run to get arguments
