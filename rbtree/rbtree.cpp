@@ -467,10 +467,9 @@ void RBTree::RBDelete(int key) {
   rb_red_blk_node* root=tree->root;
   rb_red_blk_node* z = RBExactQuery(key);
 
-  // TODO:
-  /*  if (!z) {
+  if (!z) {
     return;
-    }*/
+  }
 
   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z);
   x= (y->left == nil) ? y->right : y->left;
