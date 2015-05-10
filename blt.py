@@ -15,14 +15,16 @@ data = {}
 jfile_dir = ''
 tmpdir = ''
 SEED = random.randint(1, 1000)
-default_trace_len = 1024  # Should the user be able to set this?
-default_sym_len = 2 # Should the user be able to set this?
+default_trace_len = 1024
+default_sym_len = 2
 
-start = time.time()
+# globals for evaluation
+start = 0
 eval_trace_len = 5
-num_evals = 10
-timeout = 300
+num_evals = 5
+timeout = 150
 stats_fd = ''
+failed = 0
 
 # Colors for colorful output to console
 GREEN = '\033[1m\033[32m'
@@ -244,14 +246,15 @@ def compile_and_run_klee():
         klee_print_file = os.path.join(tmpdir, 'klee_output.txt')
         print MAGENTA + '\nBLT: running trace {0}\n'.format(i) + RESET
 
+        global start
+        t0 = time.time()
         cmd = 'klee -emit-all-errors -max-time={3} -output-dir={0} {1} {2}'.format(
-                klee_output_dir, harness_bc, i, start + timeout - time.time())
+                klee_output_dir, harness_bc, i, start + timeout - t0)
 
         # time the klee process
-        t0 = time.time()
         with open(klee_print_file, 'w') as klee_print_fd:
             subprocess.call(cmd.split(), stderr=klee_print_fd)
-            # get number of paths
+        # get number of paths
         with open(klee_print_file, 'r') as klee_print_fd:
             line = klee_print_fd.readlines()[-2].split()
             num_paths = line[-1]
@@ -266,10 +269,15 @@ def compile_and_run_klee():
         if args.eval_trace:
             global stats_fd
             # get number of paths
-            stats_fd.write(str(data['traces'][i][0]['len']) + ', '
-                    + str(len(failures)) + ', '
-                    + str(t1) + ', '
+            stats_fd.write(str(data['traces'][i][0]['len']) + ','
+                    + str(len(failures)) + ','
+                    + str(t1) + ','
                     + num_paths + '\n')
+            if time.time() >= start + timeout:
+                break
+            if len(failures) != 0:
+                global failed
+                failed = 1
 
 # Generate a swarm of concolic traces from the powerset of the set of all
 # functions.  The length of each trace is actually default_trace_len + 2.
@@ -351,21 +359,31 @@ def main():
         # evaluate a particular type of trace
         if args.eval_trace:
             global stats_fd
-            stats_fd = open(os.path.join(env['blt'], 'stats', 'trace_stats_' + args.eval_trace + '.txt'), 'w')
-            repeat = 0
-            while (time.time() < start + timeout):
-                generate_eval_trace(args.eval_trace, eval_trace_len*repeat)
-                for trace in data['traces']:
-                    for node in trace:
-                        if node['symbolic_trace'] == 'false':
-                            calls = []
-                            nfuncs = len(node['funcs'])
-                            for i in range(node['len']):
-                                calls.append(node['funcs'][random.randint(0,nfuncs-1)])
-                            node['calls'] = calls
-                write_harness()
-                compile_and_run_klee()
-                repeat += 1
+            global start
+            global failed
+            mutation = 0
+            for outf in sorted(os.listdir(os.path.join(jfile_dir, 'mutations'))):
+                mutant = outf[6:-4]
+                stats_fd = open(os.path.join(env['blt'], 'stats', args.eval_trace + '{0}.txt'.format(mutant)), 'w')
+                start = time.time()
+                repeat = 0
+                while (time.time() < start + timeout) && !failed:
+                    generate_eval_trace(args.eval_trace, eval_trace_len*repeat)
+                    for trace in data['traces']:
+                        for node in trace:
+                            if node['symbolic_trace'] == 'false':
+                                calls = []
+                                nfuncs = len(node['funcs'])
+                                for i in range(node['len']):
+                                    calls.append(node['funcs'][random.randint(0,nfuncs-1)])
+                                node['calls'] = calls
+                    write_harness()
+                    compile_and_run_klee()
+                    repeat += 1
+                mutation += 1
+                failed = 0
+                if mutation >= 100:
+                    break
 
         # not for evaluation purposes
         elif 'traces' not in data:
