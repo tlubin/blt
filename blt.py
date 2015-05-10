@@ -422,6 +422,7 @@ def main():
                     generate_eval_trace(args.eval_trace, eval_trace_len*repeat)
                     run_traces()
                     repeat += 1
+                data['source_files'].remove(os.path.join('mutations', outf))
                 mutation += 1
                 failed = 0
                 if mutation >= 100:
