@@ -368,8 +368,9 @@ def main():
                 repeat += 1
 
         # not for evaluation purposes
-        elif 'traces' not in data:
-            generate_default_traces()
+        else:
+            if 'traces' not in data:
+                generate_default_traces()
             for trace in data['traces']:
                 for node in trace:
                     if node['symbolic_trace'] == 'false':
