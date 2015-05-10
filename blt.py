@@ -363,6 +363,7 @@ def main():
             global failed
             mutation = 0
             for outf in sorted(os.listdir(os.path.join(jfile_dir, 'mutations'))):
+                data['source_files'] += [os.path.join('mutations', outf)]
                 mutant = outf[6:-4]
                 stats_fd = open(os.path.join(env['blt'], 'stats', args.eval_trace + '{0}.txt'.format(mutant)), 'w')
                 start = time.time()
