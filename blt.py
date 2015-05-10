@@ -404,18 +404,16 @@ def main():
         else:
             print RED + "BLT: {0} failed".format(replay) + RESET
 
-    # not a request for replay, run KLEE
     # evaluate a particular type of trace
     if args.eval_trace:
         global stats_fd, start, failed
         mutation = 0
-        mutants = range(100);
+        mutants = range(50)
         for i in mutants:
             data['source_files'] += [os.path.join('mutations', 'rbtree{0}.cpp'.format(i))]
             stats_dir = os.path.join(env['blt'], 'stats')
-            if os.path.exists(stats_dir):
-                subprocess.call('rm -rf {0}'.format(stats_dir).split())
-            os.mkdir(stats_dir)
+            if not os.path.exists(stats_dir):
+                os.mkdir(stats_dir)
             stats_fd = open(os.path.join(stats_dir, args.eval_trace + '{0}.txt'.format(i)), 'w')
             start = time.time()
             repeat = 0
@@ -423,11 +421,8 @@ def main():
                 generate_eval_trace(args.eval_trace, eval_trace_len*repeat)
                 run_traces()
                 repeat += 1
-            mutation += 1
             failed = 0
             data['source_files'].pop()
-            if mutation >= 100:
-                break
 
     # not for evaluation purposes
     elif args.trace:
