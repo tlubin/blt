@@ -35,10 +35,7 @@ void* blt_args::get_arg(std::string const& arg_type) {
         ints[3] = INT_MIN+1;
         ints[4] = 0;
       int* ret = new int[1];
-      // TL for now
-      ret[0] = ints[2];
-      //      ret[0] = ints[rand() / (RAND_MAX/5)];
-
+      ret[0] = ints[rand() / (RAND_MAX/5)];
       return (void*)ret;
     }
     case euint: {
