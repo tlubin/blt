@@ -367,7 +367,7 @@ def main():
                 stats_fd = open(os.path.join(env['blt'], 'stats', args.eval_trace + '{0}.txt'.format(mutant)), 'w')
                 start = time.time()
                 repeat = 0
-                while (time.time() < start + timeout) && !failed:
+                while (time.time() < start + timeout) and not failed:
                     generate_eval_trace(args.eval_trace, eval_trace_len*repeat)
                     for trace in data['traces']:
                         for node in trace:
