@@ -21,7 +21,7 @@ default_sym_len = 2
 # globals for evaluation
 start = 0
 eval_trace_len = 5
-num_evals = 5
+num_evals = 10
 timeout = 150
 stats_fd = ''
 failed = 0
