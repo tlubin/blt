@@ -1,22 +1,28 @@
 import json
 import argparse
 import glob
-import os
 import subprocess
+import os
 import sys
 import copy
 import time
+import random
 from mako.template import Template
-from random import randint
 
 env = {}
 args = {}
 data = {}
 jfile_dir = ''
 tmpdir = ''
-SEED = randint(1, 1000)
-default_trace_len = 10  # Should the user be able to set this?
+SEED = random.randint(1, 1000)
+default_trace_len = 1024  # Should the user be able to set this?
 default_sym_len = 2 # Should the user be able to set this?
+
+start = time.time()
+eval_trace_len = 5
+num_evals = 10
+timeout = 300
+stats_fd = ''
 
 # Colors for colorful output to console
 GREEN = '\033[1m\033[32m'
@@ -233,26 +239,37 @@ def compile_and_run_klee():
         exit(1)
 
     # Call KLEE
-    stats_fd = open(os.path.join(tmpdir, 'trace_stats.txt'), 'w')
     for i in range(len(data['traces'])):
-
         klee_output_dir = os.path.join(tmpdir, 'klee{0}'.format(i))
         klee_print_file = os.path.join(tmpdir, 'klee_output.txt')
         print MAGENTA + '\nBLT: running trace {0}\n'.format(i) + RESET
-        cmd = 'klee -emit-all-errors -output-dir={0} {1} {2}'.format(
-                klee_output_dir, harness_bc, i)
-        t0 = time.clock()
+
+        cmd = 'klee -emit-all-errors -max-time={3} -output-dir={0} {1} {2}'.format(
+                klee_output_dir, harness_bc, i, start + timeout - time.time())
+
+        # time the klee process
+        t0 = time.time()
         with open(klee_print_file, 'w') as klee_print_fd:
             subprocess.call(cmd.split(), stderr=klee_print_fd)
-        t1 = time.clock() - t0
+            # get number of paths
+        with open(klee_print_file, 'r') as klee_print_fd:
+            line = klee_print_fd.readlines()[-2].split()
+            num_paths = line[-1]
+        t1 = time.time() - t0
+
         failures = klee_get_failures(klee_output_dir)
         if len(failures) == 0:
             print GREEN + 'BLT: trace {0} completed successfully'.format(i) + RESET
         for n, f in enumerate(failures):
             write_replay(f, copy.deepcopy(data['traces'][i]), i, n)
-        stats_fd.write(str(data['traces'][i]) + "\n")
-        stats_fd.write("    Failed: " + str(len(failures)) + "\n")
-        stats_fd.write("    Time: " + str(t1) + "\n")
+
+        if args.eval_trace:
+            global stats_fd
+            # get number of paths
+            stats_fd.write(str(data['traces'][i][0]['len']) + ', '
+                    + str(len(failures)) + ', '
+                    + str(t1) + ', '
+                    + num_paths + '\n')
 
 # Generate a swarm of concolic traces from the powerset of the set of all
 # functions.  The length of each trace is actually default_trace_len + 2.
@@ -275,18 +292,18 @@ def generate_default_traces():
                     'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
             data['traces'].append([con, sym])
 
-# Generate a swarm of purely symbolic (sym_all), purely concrete (concrete),
-# concrete with symbolic arguments (sym_args), or symbolic with concrete arguments (sym_trace)
-# from the powerset of the set of all functions.  The final length of each trace is actually default_trace_len + 2.
-def generate_eval_trace(trace_type):
+# Generate traces of purely symbolic (sym_all), purely concrete (concrete), concrete with symbolic arguments (sym_args), or symbolic with concrete arguments (sym_trace) of length start_length to start_length + eval_trace_len, to be evaluated on eval_num randomly chosen swarms of functions
+def generate_eval_trace(trace_type, start_length):
+    data['traces'] = []
     powerset = [[]]
+    random_swarms = []
     for f in data['funcs']:
         powerset.extend([x + [f['name']] for x in powerset])
-    data['traces'] = []
-    for x in powerset:
-      for length in range(default_trace_len):
-        # XXX currently symbolic is run on powersets, not inclusive of all functions
-        if x != []:
+    powerset.remove([])
+    for _ in range(num_evals):
+        random_swarms.append(random.choice(powerset))
+    for length in range(start_length, start_length + eval_trace_len):
+        for x in random_swarms:
           if trace_type == "sym_all":
             node = [{ 'funcs' : x, 'len' : length,
                   'symbolic_args' : 'true', 'symbolic_trace' : 'true' }]
@@ -331,23 +348,38 @@ def main():
 
     # not a request for replay, run KLEE
     if args.trace or args.eval_trace:
-       # evaluate a particular type of trace
+        # evaluate a particular type of trace
         if args.eval_trace:
-            generate_eval_trace(args.eval_trace)
+            global stats_fd
+            stats_fd = open(os.path.join(env['blt'], 'stats', 'trace_stats_' + args.eval_trace + '.txt'), 'w')
+            repeat = 0
+            while (time.time() < start + timeout):
+                generate_eval_trace(args.eval_trace, eval_trace_len*repeat)
+                for trace in data['traces']:
+                    for node in trace:
+                        if node['symbolic_trace'] == 'false':
+                            calls = []
+                            nfuncs = len(node['funcs'])
+                            for i in range(node['len']):
+                                calls.append(node['funcs'][random.randint(0,nfuncs-1)])
+                            node['calls'] = calls
+                write_harness()
+                compile_and_run_klee()
+                repeat += 1
+
+        # not for evaluation purposes
         elif 'traces' not in data:
             generate_default_traces()
-
-        for trace in data['traces']:
-            for node in trace:
-                if node['symbolic_trace'] == 'false':
-                    calls = []
-                    nfuncs = len(node['funcs'])
-                    for i in range(node['len']):
-                        calls.append(node['funcs'][randint(0,nfuncs-1)])
-                    node['calls'] = calls
-
-        write_harness()
-        compile_and_run_klee()
+            for trace in data['traces']:
+                for node in trace:
+                    if node['symbolic_trace'] == 'false':
+                        calls = []
+                        nfuncs = len(node['funcs'])
+                        for i in range(node['len']):
+                            calls.append(node['funcs'][random.randint(0,nfuncs-1)])
+                        node['calls'] = calls
+            write_harness()
+            compile_and_run_klee()
 
     # replay the requested file
     elif args.rfile:

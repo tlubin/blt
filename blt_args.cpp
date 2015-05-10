@@ -27,8 +27,8 @@ void* blt_args::get_arg(std::string const& arg_type) {
   switch (hashit(arg_type)) {
     case eint: {
       int ints[5];
-        ints[0] = rand() % 5;
-        ints[1] = -1*(rand() % 5);
+        ints[0] = rand() % 50;
+        ints[1] = -1*(rand() % 50);
         ints[2] = INT_MAX;
 	// TL Note: For now so when -2147483648 is put in replay file
 	// the compiler doesn't yell
