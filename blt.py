@@ -342,7 +342,7 @@ def gen_arg(typ):
         return random.choice(['~0 >> 1', '-(~0 >> 1) - 1', '0',
                 str(random.randint(0,50)), str(-random.randint(0,50))])
     else:
-        assert False 
+        assert False
 
 # Given the name of a function, update `concrete_args` with random args for
 # one call to that function.
@@ -350,7 +350,7 @@ def update_concrete_args(func_name, concrete_args):
     f = next(f for f in data['funcs'] if f['name'] == func_name)
     for arg in f['args']:
         if arg not in concrete_args:
-            concrete_args[arg] = [gen_arg(arg)] 
+            concrete_args[arg] = [gen_arg(arg)]
         else:
             concrete_args[arg].append(gen_arg(arg))
 
@@ -408,11 +408,11 @@ def main():
     if args.trace or args.eval_trace:
         # evaluate a particular type of trace
         if args.eval_trace:
-            global stats_fd
-            global start
-            global failed
+            global stats_fd, start, failed
             mutation = 0
             for outf in sorted(os.listdir(os.path.join(jfile_dir, 'mutations'))):
+                if outf == 'rbtree.hpp':
+                    continue
                 data['source_files'] += [os.path.join('mutations', outf)]
                 mutant = outf[6:-4]
                 stats_fd = open(os.path.join(env['blt'], 'stats', args.eval_trace + '{0}.txt'.format(mutant)), 'w')
