@@ -339,7 +339,7 @@ def generate_eval_trace(trace_type, start_length):
 # value of that type.
 def gen_arg(typ):
     if typ == 'int':
-        return random.choice(['~0 >> 1', '-(~0 >> 1) - 1', '0',
+        return random.choice(['INT_MAX', 'INT_MIN', '0',
                 str(random.randint(0,50)), str(-random.randint(0,50))])
     else:
         assert False 
