@@ -409,12 +409,14 @@ def main():
     if args.eval_trace:
         global stats_fd, start, failed
         mutation = 0
-        for outf in sorted(os.listdir(os.path.join(jfile_dir, 'mutations'))):
-            if outf == 'rbtree.hpp':
-                continue
-            data['source_files'] += [os.path.join('mutations', outf)]
-            mutant = outf[6:-4]
-            stats_fd = open(os.path.join(env['blt'], 'stats', args.eval_trace + '{0}.txt'.format(mutant)), 'w')
+        mutants = range(100);
+        for i in mutants:
+            data['source_files'] += [os.path.join('mutations', 'rbtree{0}.cpp'.format(i))]
+            stats_dir = os.path.join(env['blt'], 'stats')
+            if os.path.exists(stats_dir):
+                subprocess.call('rm -rf {0}'.format(stats_dir).split())
+            os.mkdir(stats_dir)
+            stats_fd = open(os.path.join(stats_dir, args.eval_trace + '{0}.txt'.format(i)), 'w')
             start = time.time()
             repeat = 0
             while (time.time() < start + timeout) and not failed:
