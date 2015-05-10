@@ -335,6 +335,56 @@ def generate_eval_trace(trace_type, start_length):
 
           data['traces'].append(node)
 
+# Given a string describing a C type, return a string representing a random
+# value of that type.
+def gen_arg(typ):
+    if typ == 'int':
+        return random.choice(['~0 >> 1', '-(~0 >> 1) - 1', '0',
+                str(random.randint(0,50)), str(-random.randint(0,50))])
+    else:
+        assert False 
+
+# Given the name of a function, update `concrete_args` with random args for
+# one call to that function.
+def update_concrete_args(func_name, concrete_args):
+    f = next(f for f in data['funcs'] if f['name'] == func_name)
+    for arg in f['args']:
+        if arg not in concrete_args:
+            concrete_args[arg] = [gen_arg(arg)] 
+        else:
+            concrete_args[arg].append(gen_arg(arg))
+
+# Given a dictionary of concrete values indexed by C type, inject values into
+# template of C++ argument generators.
+def inject_concrete_args(concrete_args):
+    arg_tmpl = Template(filename=(os.path.join(env['blt'], 'templates',
+        'blt_args.mako')))
+    arg_str = arg_tmpl.render(blt_dir=env['blt'], concrete_args=concrete_args)
+    # TODO: write to a file in `tmpdir` instead of BLT directory
+    blt_args = os.path.join(env['blt'], 'blt_args.cpp')
+    with open(blt_args, 'w') as f:
+        f.write(arg_str)
+
+def run_traces():
+    concrete_args = {}
+    for trace in data['traces']:
+        for node in trace:
+            if node['symbolic_trace'] == 'false':
+                calls = []
+                nfuncs = len(node['funcs'])
+                for i in range(node['len']):
+                    calls.append(node['funcs'][random.randint(0,nfuncs-1)])
+                    update_concrete_args(calls[-1], concrete_args)
+                node['calls'] = calls
+            else:  # symbolic_trace == true
+                for i in range(node['len']):
+                    for func in node['funcs']:
+                        update_concrete_args(func, concrete_args)
+
+    inject_concrete_args(concrete_args)
+    write_harness()
+    compile_and_run_klee()
+
 def main():
     global data, jfile_dir
     check_env()
@@ -370,16 +420,7 @@ def main():
                 repeat = 0
                 while (time.time() < start + timeout) and not failed:
                     generate_eval_trace(args.eval_trace, eval_trace_len*repeat)
-                    for trace in data['traces']:
-                        for node in trace:
-                            if node['symbolic_trace'] == 'false':
-                                calls = []
-                                nfuncs = len(node['funcs'])
-                                for i in range(node['len']):
-                                    calls.append(node['funcs'][random.randint(0,nfuncs-1)])
-                                node['calls'] = calls
-                    write_harness()
-                    compile_and_run_klee()
+                    run_traces()
                     repeat += 1
                 mutation += 1
                 failed = 0
@@ -387,18 +428,10 @@ def main():
                     break
 
         # not for evaluation purposes
-        elif 'traces' not in data:
-            generate_default_traces()
-            for trace in data['traces']:
-                for node in trace:
-                    if node['symbolic_trace'] == 'false':
-                        calls = []
-                        nfuncs = len(node['funcs'])
-                        for i in range(node['len']):
-                            calls.append(node['funcs'][random.randint(0,nfuncs-1)])
-                        node['calls'] = calls
-            write_harness()
-            compile_and_run_klee()
+        else:
+            if 'traces' not in data:
+                generate_default_traces()
+            run_traces()
 
     # replay the requested file
     elif args.rfile:
