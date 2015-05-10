@@ -405,33 +405,33 @@ def main():
             print RED + "BLT: {0} failed".format(replay) + RESET
 
     # not a request for replay, run KLEE
-    if args.trace or args.eval_trace:
-        # evaluate a particular type of trace
-        if args.eval_trace:
-            global stats_fd, start, failed
-            mutation = 0
-            for outf in sorted(os.listdir(os.path.join(jfile_dir, 'mutations'))):
-                if outf == 'rbtree.hpp':
-                    continue
-                data['source_files'] += [os.path.join('mutations', outf)]
-                mutant = outf[6:-4]
-                stats_fd = open(os.path.join(env['blt'], 'stats', args.eval_trace + '{0}.txt'.format(mutant)), 'w')
-                start = time.time()
-                repeat = 0
-                while (time.time() < start + timeout) and not failed:
-                    generate_eval_trace(args.eval_trace, eval_trace_len*repeat)
-                    run_traces()
-                    repeat += 1
-                mutation += 1
-                failed = 0
-                if mutation >= 100:
-                    break
+    # evaluate a particular type of trace
+    if args.eval_trace:
+        global stats_fd, start, failed
+        mutation = 0
+        for outf in sorted(os.listdir(os.path.join(jfile_dir, 'mutations'))):
+            if outf == 'rbtree.hpp':
+                continue
+            data['source_files'] += [os.path.join('mutations', outf)]
+            mutant = outf[6:-4]
+            stats_fd = open(os.path.join(env['blt'], 'stats', args.eval_trace + '{0}.txt'.format(mutant)), 'w')
+            start = time.time()
+            repeat = 0
+            while (time.time() < start + timeout) and not failed:
+                generate_eval_trace(args.eval_trace, eval_trace_len*repeat)
+                run_traces()
+                repeat += 1
+            mutation += 1
+            failed = 0
+            if mutation >= 100:
+                break
+            data['source_files'].pop()
 
-        # not for evaluation purposes
-        else:
-            if 'traces' not in data:
-                generate_default_traces()
-            run_traces()
+    # not for evaluation purposes
+    elif args.trace:
+        if 'traces' not in data:
+            generate_default_traces()
+        run_traces()
 
     # replay the requested file
     elif args.rfile:
