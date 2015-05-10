@@ -423,9 +423,9 @@ def main():
                 repeat += 1
             mutation += 1
             failed = 0
+            data['source_files'].pop()
             if mutation >= 100:
                 break
-            data['source_files'].pop()
 
     # not for evaluation purposes
     elif args.trace:
