@@ -12,8 +12,8 @@ caught = [0 for _ in range(50)]
 time = 0
 paths = 0
 
-write_fd = open(os.path.join(blt, 'stats/prop_bugs', 'prop_{0}.txt'.format(trace), 'w')
-write_fd.write('Length, Proportion Bugs Caught, Average Time Per Mutant, Average Paths Per Mutant\n')
+write_fd = open(os.path.join(blt, 'stats/prop_bugs', 'prop_{0}.txt'.format(trace)), 'w')
+write_fd.write('Length, Number Mutants Caught, Average Time Per Mutant, Average Paths Per Mutant\n')
 
 def get_mutants_caught():
   global caught
@@ -24,7 +24,7 @@ def get_mutants_caught():
   return total
 
 # loop through all lengths
-while counter < 300:
+while counter < 100:
   # loop through all mutants, see if bug found at this length
   for outf in sorted(os.listdir(os.path.join(blt, 'stats/averages'))):
     if trace in outf:
