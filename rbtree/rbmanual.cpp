@@ -1,6 +1,3 @@
-// TODO: run this to see how many mutants it finds
-// g++ rbmanual.cpp mutations/rbtree###.cpp
-
 #include "RBTreeBag.hpp"
 #include <iostream>
 #include <cstdlib>
@@ -40,14 +37,22 @@ void member() {
   assert(count == 0 || bag->member(randNum));
 }
 
-int main() {
+int main(int argc, char **argv) {
+  if (argc != 5) {
+    cout << "Usage: ./rbmanual steps insert% remove% member%\n";
+    exit(5);
+  }
+  int steps = atoi(argv[1]);
+  int insert_percent = atoi(argv[2]);
+  int remove_percent = atoi(argv[3]);
+  int member_percent = atoi(argv[4]);
   bag = new RBTreeBag;
 
   while (steps--) {
     int op = rand() % 100;
-    if (op < INSERT_PERCENT)
+    if (op < insert_percent)
       insert();
-    else if (op < INSERT_PERCENT + REMOVE_PERCENT)
+    else if (op < insert_percent + remove_percent)
       remove();
     else
       member();
