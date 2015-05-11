@@ -22,7 +22,7 @@ default_sym_len = 2
 start = 0
 eval_trace_len = 5
 num_evals = 10
-timeout = 150
+timeout = 600
 stats_fd = ''
 failed = 0
 
@@ -408,7 +408,7 @@ def main():
     if args.eval_trace:
         global stats_fd, start, failed
         mutation = 0
-        mutants = range(36, 50)
+        mutants = range(0, 50)
         for i in mutants:
             data['source_files'] += [os.path.join('mutations', 'rbtree{0}.cpp'.format(i))]
             stats_dir = os.path.join(env['blt'], 'stats')

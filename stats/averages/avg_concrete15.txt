@@ -11,5 +11,5 @@ Length, Bugs Caught, Average Time to Catch Bugs, Average Paths to Catch Bugs
 9,0,0,0
 10,0,0,0
 11,0,0,0
-12,1,0.149374008179,2
+12,1,0.16351890564,2
 13,0,0,0
