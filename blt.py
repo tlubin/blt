@@ -263,8 +263,8 @@ def compile_and_run_klee(exitearly=0):
         failures = klee_get_failures(klee_output_dir)
         if len(failures) == 0:
             print GREEN + 'BLT: trace {0} completed successfully'.format(i) + RESET
-        for n, f in enumerate(failures):
-            write_replay(f, copy.deepcopy(data['traces'][i]), i, n)
+        #for n, f in enumerate(failures):
+         #   write_replay(f, copy.deepcopy(data['traces'][i]), i, n)
 
         if args.eval_trace:
             global stats_fd
@@ -406,7 +406,6 @@ def main():
         else:
             print RED + "BLT: {0} failed".format(replay) + RESET
 
-    # not a request for replay, run KLEE
     # evaluate a particular type of trace
     if args.eval_trace:
         global stats_fd, start, failed
@@ -414,9 +413,8 @@ def main():
         for i in mutants:
             data['source_files'] += [os.path.join('mutations', 'rbtree{0}.cpp'.format(i))]
             stats_dir = os.path.join(env['blt'], 'stats')
-            if os.path.exists(stats_dir):
-                subprocess.call('rm -rf {0}'.format(stats_dir).split())
-            os.mkdir(stats_dir)
+            if not os.path.exists(stats_dir):
+                os.mkdir(stats_dir)
             stats_fd = open(os.path.join(stats_dir, args.eval_trace + '{0}.txt'.format(i)), 'w')
             start = time.time()
             repeat = 0
