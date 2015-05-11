@@ -214,7 +214,7 @@ def write_replay(failure, trace, tracenum, failnum):
     else:
         print RED + 'BLT: ERROR: {0}'.format(replay_file) + RESET
 
-def compile_and_run_klee():
+def compile_and_run_klee(exitearly=0):
     # Compile the source files to LLVM bytecode
     llvmgcc_bin = os.path.join(env['llvmgcc'],'llvm-g++')
     bc_files = []
@@ -278,6 +278,8 @@ def compile_and_run_klee():
             if len(failures) != 0:
                 global failed
                 failed = 1
+                if exitearly:
+                    break
 
 # Generate a swarm of concolic traces from the powerset of the set of all
 # functions.  The length of each trace is actually default_trace_len + 2.
@@ -365,7 +367,7 @@ def inject_concrete_args(concrete_args):
     with open(blt_args, 'w') as f:
         f.write(arg_str)
 
-def run_traces():
+def run_traces(exitearly=0):
     concrete_args = {}
     for trace in data['traces']:
         for node in trace:
@@ -383,7 +385,7 @@ def run_traces():
 
     inject_concrete_args(concrete_args)
     write_harness()
-    compile_and_run_klee()
+    compile_and_run_klee(exitearly)
 
 def main():
     global data, jfile_dir
@@ -408,7 +410,6 @@ def main():
     # evaluate a particular type of trace
     if args.eval_trace:
         global stats_fd, start, failed
-        mutation = 0
         mutants = range(100);
         for i in mutants:
             data['source_files'] += [os.path.join('mutations', 'rbtree{0}.cpp'.format(i))]
@@ -421,13 +422,10 @@ def main():
             repeat = 0
             while (time.time() < start + timeout) and not failed:
                 generate_eval_trace(args.eval_trace, eval_trace_len*repeat)
-                run_traces()
+                run_traces(exitearly=1)
                 repeat += 1
-            mutation += 1
             failed = 0
             data['source_files'].pop()
-            if mutation >= 100:
-                break
 
     # not for evaluation purposes
     elif args.trace:
