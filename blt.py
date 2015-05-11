@@ -16,13 +16,13 @@ jfile_dir = ''
 tmpdir = ''
 SEED = random.randint(1, 1000)
 default_trace_len = 1024
-default_sym_len = 2
+default_sym_len = 1
 
 # globals for evaluation
 start = 0
-eval_trace_len = 5
-num_evals = 10
-timeout = 600
+num_swarms = 10
+timeout = 300
+num_mutants = 100
 stats_fd = ''
 failed = 0
 
@@ -242,14 +242,13 @@ def compile_and_run_klee(exitearly=0):
 
     # Call KLEE
     for i in range(len(data['traces'])):
+        global start, stats_fd, failed
         klee_output_dir = os.path.join(tmpdir, 'klee{0}'.format(i))
         klee_print_file = os.path.join(tmpdir, 'klee_output.txt')
         print MAGENTA + '\nBLT: running trace {0}\n'.format(i) + RESET
 
-        global start
-        t0 = time.time()
         cmd = 'klee -emit-all-errors -max-time={3} -output-dir={0} {1} {2}'.format(
-                klee_output_dir, harness_bc, i, start + timeout - t0)
+                klee_output_dir, harness_bc, i, start + timeout - time.time())
 
         # time the klee process
         with open(klee_print_file, 'w') as klee_print_fd:
@@ -258,7 +257,7 @@ def compile_and_run_klee(exitearly=0):
         with open(klee_print_file, 'r') as klee_print_fd:
             line = klee_print_fd.readlines()[-2].split()
             num_paths = line[-1]
-        t1 = time.time() - t0
+        time_found = time.time() - start
 
         failures = klee_get_failures(klee_output_dir)
         if len(failures) == 0:
@@ -267,19 +266,13 @@ def compile_and_run_klee(exitearly=0):
          #   write_replay(f, copy.deepcopy(data['traces'][i]), i, n)
 
         if args.eval_trace:
-            global stats_fd
             # get number of paths
-            stats_fd.write(str(data['traces'][i][0]['len']) + ','
-                    + str(len(failures)) + ','
-                    + str(t1) + ','
-                    + num_paths + '\n')
-            if time.time() >= start + timeout:
-                break
             if len(failures) != 0:
-                global failed
                 failed = 1
                 if exitearly:
                     break
+            if time.time() >= start + timeout:
+                break
 
 # Generate a swarm of concolic traces from the powerset of the set of all
 # functions.  The length of each trace is actually default_trace_len + 2.
@@ -288,7 +281,8 @@ def generate_default_traces():
     for f in data['funcs']:
         powerset.extend([x + [f['name']] for x in powerset])
     data['traces'] = []
-    for x in powerset:
+    for _ in len(powerset):
+        x = random.choice(powerset)
         sym = { 'funcs' : powerset[-1], 'len' : default_sym_len,
                 'symbolic_args' : 'true', 'symbolic_trace' : 'true' }
 
@@ -300,42 +294,47 @@ def generate_default_traces():
         else:
             con = { 'funcs' : x, 'len' : default_trace_len,
                     'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
-            data['traces'].append([con, sym])
+            y = random.choice(powerset)
+            con2 = { 'funcs' : y, 'len' : default_trace_len/2,
+                    'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
+            data['traces'].append([con, sym, con2])
 
 # Generate traces of purely symbolic (sym_all), purely concrete (concrete), concrete with symbolic arguments (sym_args), or symbolic with concrete arguments (sym_trace) of length start_length to start_length + eval_trace_len, to be evaluated on eval_num randomly chosen swarms of functions
-def generate_eval_trace(trace_type, start_length):
+def generate_eval_trace(trace_type, length):
     data['traces'] = []
     powerset = [[]]
     random_swarms = []
     for f in data['funcs']:
         powerset.extend([x + [f['name']] for x in powerset])
     powerset.remove([])
-    for _ in range(num_evals):
+    for _ in range(num_swarms):
         random_swarms.append(random.choice(powerset))
-    for length in range(start_length, start_length + eval_trace_len):
-        for x in random_swarms:
-          if trace_type == "sym_all":
-            node = [{ 'funcs' : x, 'len' : length,
-                  'symbolic_args' : 'true', 'symbolic_trace' : 'true' }]
-          elif trace_type == "concrete":
-            node = [{ 'funcs' : x, 'len' : length,
-                  'symbolic_args' : 'false', 'symbolic_trace' : 'false' }]
-          elif trace_type == "sym_args":
-            node = [{ 'funcs' : x, 'len' : length,
-                  'symbolic_args' : 'true', 'symbolic_trace' : 'false' }]
-          elif trace_type == "sym_trace":
-            node = [{ 'funcs' : x, 'len' : length,
-                  'symbolic_args' : 'false', 'symbolic_trace' : 'true' }]
-          elif trace_type == "concolic":
-            node = [{ 'funcs' : x, 'len' : length,
-                  'symbolic_args' : 'false', 'symbolic_trace' : 'false' },
-                  { 'funcs' : powerset[-1], 'len' : default_sym_len,
-                  'symbolic_args' : 'true', 'symbolic_trace' : 'true' }]
-          else:
-            print "Invalid Trace Type"
-            exit(1)
+    for x in random_swarms:
+      if trace_type == "sym_all":
+        node = [{ 'funcs' : x, 'len' : length,
+              'symbolic_args' : 'true', 'symbolic_trace' : 'true' }]
+      elif trace_type == "concrete":
+        node = [{ 'funcs' : x, 'len' : length,
+              'symbolic_args' : 'false', 'symbolic_trace' : 'false' }]
+      elif trace_type == "sym_args":
+        node = [{ 'funcs' : x, 'len' : length,
+              'symbolic_args' : 'true', 'symbolic_trace' : 'false' }]
+      elif trace_type == "sym_trace":
+        node = [{ 'funcs' : x, 'len' : length,
+              'symbolic_args' : 'false', 'symbolic_trace' : 'true' }]
+      elif trace_type == "concolic":
+        y = random.choice(powerset)
+        node = [{ 'funcs' : x, 'len' : length,
+              'symbolic_args' : 'false', 'symbolic_trace' : 'false' },
+              { 'funcs' : powerset[-1], 'len' : default_sym_len,
+              'symbolic_args' : 'true', 'symbolic_trace' : 'true' },
+              { 'funcs' : y, 'len' : length/2,
+              'symbolic_args' : 'false', 'symbolic_trace' : 'false' }]
+      else:
+        print "Invalid Trace Type"
+        exit(1)
 
-          data['traces'].append(node)
+      data['traces'].append(node)
 
 # Given a string describing a C type, return a string representing a random
 # value of that type.
@@ -406,22 +405,26 @@ def main():
         else:
             print RED + "BLT: {0} failed".format(replay) + RESET
 
-    # evaluate a particular type of trace
+    # evaluate concrete vs concolic
     if args.eval_trace:
         global stats_fd, start, failed
-        mutants = range(0, 50)
+        repeat = 0
+        stats_dir = os.path.join(env['blt'], 'stats')
+        if not os.path.exists(stats_dir):
+            os.mkdir(stats_dir)
+        stats_fd = open(os.path.join(stats_dir, args.eval_trace + '.txt'), 'w')
+
+        mutants = range(num_mutants)
         for i in mutants:
             data['source_files'] += [os.path.join('mutations', 'rbtree{0}.cpp'.format(i))]
-            stats_dir = os.path.join(env['blt'], 'stats')
-            if not os.path.exists(stats_dir):
-                os.mkdir(stats_dir)
-            stats_fd = open(os.path.join(stats_dir, args.eval_trace + '{0}.txt'.format(i)), 'w')
+
             start = time.time()
-            repeat = 0
             while (time.time() < start + timeout) and not failed:
-                generate_eval_trace(args.eval_trace, eval_trace_len*repeat)
-                run_traces(exitearly=1)
                 repeat += 1
+                generate_eval_trace(args.eval_trace, default_trace_len*repeat)
+                run_traces(exitearly=1)
+            if failed:
+                stats_fd.write(str(time.time() - start) + ',' + str(i) + '\n')
             failed = 0
             data['source_files'].pop()
 
