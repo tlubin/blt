@@ -1,0 +1,1 @@
+Length, Number Mutants Caught, Average Time Per Mutant, Average Paths Per Mutant
