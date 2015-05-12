@@ -1,0 +1,103 @@
+TIMEOUT: 60
+200: found mutant in 0.943443059921
+201: found mutant in 0.583043813705
+202: found mutant in 0.563791036606
+203: found mutant in 0.645478963852
+204: found mutant in 1.84180808067
+205: didn't find mutant
+206: found mutant in 0.565430879593
+207: found mutant in 0.570400953293
+208: found mutant in 0.553187131882
+209: found mutant in 0.68346619606
+210: found mutant in 0.560385942459
+211: found mutant in 0.630088806152
+212: found mutant in 0.711627960205
+213: didn't find mutant
+214: found mutant in 0.897127866745
+215: found mutant in 0.569698095322
+216: didn't find mutant
+217: found mutant in 0.566651105881
+218: found mutant in 1.96987915039
+219: found mutant in 0.938873052597
+220: didn't find mutant
+221: didn't find mutant
+222: didn't find mutant
+223: found mutant in 0.752858877182
+224: found mutant in 0.631967067719
+225: found mutant in 0.62943482399
+226: found mutant in 0.681654930115
+227: didn't find mutant
+228: found mutant in 1.68904709816
+229: found mutant in 0.636729001999
+230: found mutant in 0.625998973846
+231: found mutant in 0.573313951492
+232: found mutant in 0.713794946671
+233: found mutant in 0.555225849152
+234: found mutant in 0.593485116959
+235: didn't find mutant
+236: found mutant in 0.689697027206
+237: found mutant in 0.54962015152
+238: found mutant in 0.568746805191
+239: found mutant in 0.560716867447
+240: found mutant in 0.659074068069
+241: found mutant in 0.575289011002
+242: found mutant in 0.733592987061
+243: found mutant in 0.57381606102
+244: didn't find mutant
+245: found mutant in 0.560927867889
+246: found mutant in 0.778298139572
+247: found mutant in 0.562662124634
+248: found mutant in 0.550273895264
+249: found mutant in 0.576451063156
+250: found mutant in 0.623458862305
+251: found mutant in 0.762395858765
+252: didn't find mutant
+253: found mutant in 0.652992963791
+254: timed out on 8 of 10 traces
+255: found mutant in 0.656719207764
+256: didn't find mutant
+257: found mutant in 0.629166841507
+258: didn't find mutant
+259: didn't find mutant
+260: found mutant in 0.642793893814
+261: didn't find mutant
+262: found mutant in 0.56035399437
+263: timed out on 8 of 10 traces
+264: found mutant in 0.691483020782
+265: didn't find mutant
+266: didn't find mutant
+267: found mutant in 0.622713088989
+268: found mutant in 0.65354013443
+269: didn't find mutant
+270: didn't find mutant
+271: didn't find mutant
+272: didn't find mutant
+273: found mutant in 0.620331048965
+274: found mutant in 0.806677818298
+275: didn't find mutant
+276: found mutant in 0.661312103271
+277: found mutant in 0.63306593895
+278: found mutant in 0.614204883575
+279: found mutant in 0.673631906509
+280: found mutant in 0.972344875336
+281: found mutant in 61.0495750904
+282: found mutant in 0.618283033371
+283: found mutant in 0.668780088425
+284: found mutant in 0.643098831177
+285: found mutant in 1.60696697235
+286: found mutant in 0.581106901169
+287: found mutant in 0.556700944901
+288: found mutant in 61.0724699497
+289: didn't find mutant
+290: didn't find mutant
+291: found mutant in 0.613948106766
+292: found mutant in 0.594422101974
+293: found mutant in 0.680080890656
+294: found mutant in 0.788964033127
+295: found mutant in 0.778149843216
+296: didn't find mutant
+297: found mutant in 0.980030059814
+298: timed out on 8 of 10 traces
+299: didn't find mutant
+72 of 100 FOUND with average 2.39620586236
+24 timeouts

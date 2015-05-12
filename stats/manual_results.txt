@@ -1,0 +1,1001 @@
+0: didn't find mutant
+1: didn't find mutant
+2: found mutant
+3: found mutant
+4: didn't find mutant
+5: found mutant
+6: found mutant
+7: found mutant
+8: found mutant
+9: found mutant
+10: found mutant
+11 timed out
+12: found mutant
+13: didn't find mutant
+14: didn't find mutant
+15: found mutant
+16: didn't find mutant
+17: found mutant
+18 timed out
+19: didn't find mutant
+20: didn't find mutant
+21: found mutant
+22: found mutant
+23 timed out
+24: didn't find mutant
+25: found mutant
+26: found mutant
+27: found mutant
+28: found mutant
+29: found mutant
+30: found mutant
+31 timed out
+32: found mutant
+33: found mutant
+34: didn't find mutant
+35: found mutant
+36: found mutant
+37: found mutant
+38: found mutant
+39: found mutant
+40 timed out
+41: didn't find mutant
+42: didn't find mutant
+43 timed out
+44: found mutant
+45: didn't find mutant
+46: found mutant
+47: found mutant
+48: found mutant
+49: didn't find mutant
+50: found mutant
+51: found mutant
+52: found mutant
+53: found mutant
+54: found mutant
+55: found mutant
+56: didn't find mutant
+57: found mutant
+58: found mutant
+59: found mutant
+60: found mutant
+61: found mutant
+62: found mutant
+63: didn't find mutant
+64: didn't find mutant
+65: didn't find mutant
+66: didn't find mutant
+67: found mutant
+68: found mutant
+69: found mutant
+70: found mutant
+71: found mutant
+72 timed out
+73: found mutant
+74: didn't find mutant
+75: didn't find mutant
+76: found mutant
+77: found mutant
+78: didn't find mutant
+79: didn't find mutant
+80 timed out
+81: didn't find mutant
+82: found mutant
+83: found mutant
+84: found mutant
+85: didn't find mutant
+86: didn't find mutant
+87: found mutant
+88: found mutant
+89: found mutant
+90: found mutant
+91: found mutant
+92: found mutant
+93 timed out
+94: found mutant
+95: didn't find mutant
+96: didn't find mutant
+97: found mutant
+98: found mutant
+99: found mutant
+100: found mutant
+101: didn't find mutant
+102: found mutant
+103: found mutant
+104: didn't find mutant
+105: didn't find mutant
+106: didn't find mutant
+107: found mutant
+108 timed out
+109: found mutant
+110: didn't find mutant
+111: didn't find mutant
+112: found mutant
+113 timed out
+114: found mutant
+115: found mutant
+116 timed out
+117: didn't find mutant
+118: found mutant
+119: didn't find mutant
+120: found mutant
+121: didn't find mutant
+122: found mutant
+123: found mutant
+124: found mutant
+125: didn't find mutant
+126: found mutant
+127: didn't find mutant
+128: found mutant
+129: didn't find mutant
+130: didn't find mutant
+131: found mutant
+132: found mutant
+133: found mutant
+134: found mutant
+135: found mutant
+136: found mutant
+137: didn't find mutant
+138: found mutant
+139: found mutant
+140: didn't find mutant
+141: found mutant
+142: found mutant
+143: found mutant
+144: didn't find mutant
+145: found mutant
+146: didn't find mutant
+147: found mutant
+148: found mutant
+149: found mutant
+150: found mutant
+151: found mutant
+152: didn't find mutant
+153: found mutant
+154: found mutant
+155: found mutant
+156: didn't find mutant
+157: didn't find mutant
+158: found mutant
+159: didn't find mutant
+160: found mutant
+161: didn't find mutant
+162: found mutant
+163: didn't find mutant
+164: found mutant
+165: didn't find mutant
+166: found mutant
+167: didn't find mutant
+168: found mutant
+169: found mutant
+170: didn't find mutant
+171: found mutant
+172: found mutant
+173: found mutant
+174: found mutant
+175: found mutant
+176: found mutant
+177: found mutant
+178: didn't find mutant
+179: found mutant
+180: found mutant
+181: found mutant
+182: didn't find mutant
+183: didn't find mutant
+184: didn't find mutant
+185: found mutant
+186: didn't find mutant
+187: didn't find mutant
+188 timed out
+189: found mutant
+190: found mutant
+191: found mutant
+192: found mutant
+193: found mutant
+194: found mutant
+195: found mutant
+196: found mutant
+197: found mutant
+198: found mutant
+199: found mutant
+200: found mutant
+201: found mutant
+202: didn't find mutant
+203: found mutant
+204: found mutant
+205: didn't find mutant
+206: found mutant
+207: found mutant
+208: found mutant
+209: found mutant
+210: found mutant
+211: found mutant
+212: found mutant
+213: found mutant
+214: found mutant
+215: found mutant
+216: found mutant
+217: didn't find mutant
+218: found mutant
+219: found mutant
+220: didn't find mutant
+221: didn't find mutant
+222: didn't find mutant
+223: found mutant
+224: found mutant
+225: didn't find mutant
+226: found mutant
+227: didn't find mutant
+228: found mutant
+229: didn't find mutant
+230: found mutant
+231: didn't find mutant
+232: found mutant
+233: found mutant
+234: found mutant
+235: didn't find mutant
+236: found mutant
+237: found mutant
+238: found mutant
+239: found mutant
+240: found mutant
+241: found mutant
+242: found mutant
+243: found mutant
+244: found mutant
+245: found mutant
+246: found mutant
+247: found mutant
+248: found mutant
+249: found mutant
+250: found mutant
+251: found mutant
+252: didn't find mutant
+253: found mutant
+254 timed out
+255: found mutant
+256: didn't find mutant
+257: found mutant
+258: didn't find mutant
+259: found mutant
+260: found mutant
+261: didn't find mutant
+262: found mutant
+263 timed out
+264: found mutant
+265: didn't find mutant
+266: didn't find mutant
+267: found mutant
+268: found mutant
+269: didn't find mutant
+270: found mutant
+271: didn't find mutant
+272: didn't find mutant
+273: found mutant
+274: found mutant
+275: didn't find mutant
+276: found mutant
+277: found mutant
+278: found mutant
+279: found mutant
+280: found mutant
+281: found mutant
+282: found mutant
+283: found mutant
+284: found mutant
+285: found mutant
+286: found mutant
+287: found mutant
+288: found mutant
+289: didn't find mutant
+290: didn't find mutant
+291: found mutant
+292: found mutant
+293: found mutant
+294: found mutant
+295: found mutant
+296: didn't find mutant
+297: found mutant
+298 timed out
+299: didn't find mutant
+300: found mutant
+301: didn't find mutant
+302: found mutant
+303: found mutant
+304: found mutant
+305: found mutant
+306: didn't find mutant
+307: found mutant
+308: found mutant
+309: found mutant
+310: found mutant
+311: found mutant
+312: found mutant
+313: found mutant
+314: didn't find mutant
+315: didn't find mutant
+316: didn't find mutant
+317 timed out
+318: found mutant
+319: didn't find mutant
+320: didn't find mutant
+321: found mutant
+322: found mutant
+323: found mutant
+324: didn't find mutant
+325: didn't find mutant
+326: found mutant
+327: found mutant
+328: found mutant
+329: found mutant
+330: didn't find mutant
+331: found mutant
+332: found mutant
+333: found mutant
+334: didn't find mutant
+335: found mutant
+336: didn't find mutant
+337: found mutant
+338: didn't find mutant
+339: didn't find mutant
+340: found mutant
+341: didn't find mutant
+342: didn't find mutant
+343: found mutant
+344: found mutant
+345: didn't find mutant
+346 timed out
+347: didn't find mutant
+348: found mutant
+349: found mutant
+350: didn't find mutant
+351 timed out
+352: found mutant
+353: found mutant
+354: found mutant
+355: didn't find mutant
+356: found mutant
+357: found mutant
+358: found mutant
+359: found mutant
+360: didn't find mutant
+361: found mutant
+362: found mutant
+363: didn't find mutant
+364: found mutant
+365: found mutant
+366: found mutant
+367: didn't find mutant
+368: found mutant
+369: found mutant
+370: found mutant
+371: found mutant
+372: found mutant
+373: found mutant
+374: found mutant
+375: found mutant
+376 timed out
+377 timed out
+378: found mutant
+379: didn't find mutant
+380: found mutant
+381: didn't find mutant
+382: found mutant
+383: didn't find mutant
+384: found mutant
+385: didn't find mutant
+386 timed out
+387: didn't find mutant
+388: found mutant
+389: found mutant
+390: found mutant
+391: found mutant
+392: found mutant
+393: found mutant
+394: found mutant
+395: found mutant
+396: didn't find mutant
+397 timed out
+398: didn't find mutant
+399: found mutant
+400: found mutant
+401: found mutant
+402 timed out
+403: found mutant
+404: didn't find mutant
+405: found mutant
+406: found mutant
+407: found mutant
+408: found mutant
+409: didn't find mutant
+410: didn't find mutant
+411: didn't find mutant
+412: found mutant
+413: found mutant
+414: found mutant
+415: didn't find mutant
+416: found mutant
+417: found mutant
+418: didn't find mutant
+419: found mutant
+420: found mutant
+421: found mutant
+422 timed out
+423: didn't find mutant
+424: didn't find mutant
+425: didn't find mutant
+426: found mutant
+427: found mutant
+428: found mutant
+429: didn't find mutant
+430: didn't find mutant
+431: didn't find mutant
+432: found mutant
+433: found mutant
+434: didn't find mutant
+435: found mutant
+436: found mutant
+437: found mutant
+438: found mutant
+439: didn't find mutant
+440: found mutant
+441: found mutant
+442: didn't find mutant
+443: found mutant
+444: didn't find mutant
+445: didn't find mutant
+446: didn't find mutant
+447: didn't find mutant
+448: didn't find mutant
+449: found mutant
+450: didn't find mutant
+451: didn't find mutant
+452: found mutant
+453: found mutant
+454: found mutant
+455: found mutant
+456: found mutant
+457: found mutant
+458: didn't find mutant
+459: found mutant
+460: didn't find mutant
+461: found mutant
+462: didn't find mutant
+463: didn't find mutant
+464: didn't find mutant
+465: found mutant
+466: found mutant
+467 timed out
+468: found mutant
+469: didn't find mutant
+470: didn't find mutant
+471: didn't find mutant
+472: didn't find mutant
+473: found mutant
+474: didn't find mutant
+475: found mutant
+476: didn't find mutant
+477: didn't find mutant
+478 timed out
+479: found mutant
+480: found mutant
+481: found mutant
+482: found mutant
+483: found mutant
+484: didn't find mutant
+485: found mutant
+486: found mutant
+487: found mutant
+488: found mutant
+489: didn't find mutant
+490: didn't find mutant
+491: found mutant
+492: didn't find mutant
+493: didn't find mutant
+494: didn't find mutant
+495: didn't find mutant
+496: found mutant
+497: didn't find mutant
+498 timed out
+499: found mutant
+500: didn't find mutant
+501: didn't find mutant
+502: didn't find mutant
+503: didn't find mutant
+504: found mutant
+505 timed out
+506: found mutant
+507: found mutant
+508: found mutant
+509: didn't find mutant
+510: found mutant
+511: found mutant
+512: found mutant
+513: found mutant
+514 timed out
+515: didn't find mutant
+516: didn't find mutant
+517: found mutant
+518: found mutant
+519: didn't find mutant
+520: didn't find mutant
+521 timed out
+522: didn't find mutant
+523: found mutant
+524: found mutant
+525: didn't find mutant
+526: found mutant
+527: found mutant
+528: found mutant
+529: found mutant
+530: didn't find mutant
+531 timed out
+532: didn't find mutant
+533: found mutant
+534: didn't find mutant
+535: found mutant
+536: found mutant
+537: found mutant
+538: didn't find mutant
+539 timed out
+540: found mutant
+541: didn't find mutant
+542 timed out
+543: didn't find mutant
+544: didn't find mutant
+545: didn't find mutant
+546: didn't find mutant
+547: found mutant
+548: didn't find mutant
+549: didn't find mutant
+550: found mutant
+551: didn't find mutant
+552: found mutant
+553: found mutant
+554: found mutant
+555: found mutant
+556: didn't find mutant
+557: found mutant
+558: found mutant
+559: didn't find mutant
+560: found mutant
+561: didn't find mutant
+562: found mutant
+563: found mutant
+564: found mutant
+565: found mutant
+566: found mutant
+567 timed out
+568: found mutant
+569: found mutant
+570: found mutant
+571: found mutant
+572: found mutant
+573: found mutant
+574: didn't find mutant
+575: found mutant
+576: found mutant
+577 timed out
+578: didn't find mutant
+579: found mutant
+580: didn't find mutant
+581: found mutant
+582 timed out
+583: found mutant
+584: found mutant
+585: found mutant
+586: found mutant
+587: found mutant
+588: found mutant
+589: found mutant
+590: found mutant
+591: didn't find mutant
+592: found mutant
+593: didn't find mutant
+594 timed out
+595: didn't find mutant
+596: didn't find mutant
+597: found mutant
+598: found mutant
+599: found mutant
+600: found mutant
+601: didn't find mutant
+602: found mutant
+603: didn't find mutant
+604: found mutant
+605: found mutant
+606: didn't find mutant
+607: found mutant
+608: found mutant
+609: didn't find mutant
+610: found mutant
+611: found mutant
+612: found mutant
+613: found mutant
+614: found mutant
+615: found mutant
+616: didn't find mutant
+617: found mutant
+618: found mutant
+619: didn't find mutant
+620 timed out
+621: found mutant
+622: found mutant
+623: didn't find mutant
+624: found mutant
+625: found mutant
+626 timed out
+627: found mutant
+628: didn't find mutant
+629: found mutant
+630: didn't find mutant
+631: found mutant
+632: found mutant
+633: didn't find mutant
+634: found mutant
+635: found mutant
+636 timed out
+637: found mutant
+638: didn't find mutant
+639: didn't find mutant
+640: found mutant
+641: didn't find mutant
+642: found mutant
+643: didn't find mutant
+644: found mutant
+645: didn't find mutant
+646: found mutant
+647: didn't find mutant
+648: didn't find mutant
+649: found mutant
+650: didn't find mutant
+651: didn't find mutant
+652: found mutant
+653: didn't find mutant
+654: found mutant
+655: found mutant
+656: found mutant
+657: found mutant
+658: found mutant
+659: found mutant
+660: found mutant
+661: found mutant
+662: found mutant
+663 timed out
+664: found mutant
+665: found mutant
+666: found mutant
+667: found mutant
+668: didn't find mutant
+669: didn't find mutant
+670 timed out
+671: didn't find mutant
+672: found mutant
+673: found mutant
+674: found mutant
+675: didn't find mutant
+676: didn't find mutant
+677: didn't find mutant
+678: found mutant
+679: found mutant
+680: found mutant
+681: didn't find mutant
+682 timed out
+683: found mutant
+684: didn't find mutant
+685: found mutant
+686: found mutant
+687: didn't find mutant
+688: found mutant
+689: didn't find mutant
+690: found mutant
+691: didn't find mutant
+692: didn't find mutant
+693: found mutant
+694: found mutant
+695: found mutant
+696: didn't find mutant
+697: found mutant
+698: didn't find mutant
+699: found mutant
+700: found mutant
+701: didn't find mutant
+702: found mutant
+703: found mutant
+704: found mutant
+705: found mutant
+706: found mutant
+707: found mutant
+708: found mutant
+709: found mutant
+710: found mutant
+711: didn't find mutant
+712: found mutant
+713: found mutant
+714: found mutant
+715: didn't find mutant
+716: didn't find mutant
+717: didn't find mutant
+718: didn't find mutant
+719: didn't find mutant
+720: didn't find mutant
+721: found mutant
+722: didn't find mutant
+723: found mutant
+724: found mutant
+725: found mutant
+726: found mutant
+727: found mutant
+728: found mutant
+729: found mutant
+730: didn't find mutant
+731: didn't find mutant
+732: found mutant
+733: didn't find mutant
+734: found mutant
+735 timed out
+736: didn't find mutant
+737: found mutant
+738: found mutant
+739: didn't find mutant
+740: found mutant
+741: didn't find mutant
+742: didn't find mutant
+743: found mutant
+744 timed out
+745 timed out
+746 timed out
+747: found mutant
+748: found mutant
+749: found mutant
+750: found mutant
+751: didn't find mutant
+752: didn't find mutant
+753: didn't find mutant
+754: didn't find mutant
+755: didn't find mutant
+756: found mutant
+757: didn't find mutant
+758: found mutant
+759: didn't find mutant
+760: didn't find mutant
+761: didn't find mutant
+762: found mutant
+763: found mutant
+764: found mutant
+765: didn't find mutant
+766: didn't find mutant
+767: didn't find mutant
+768: didn't find mutant
+769: didn't find mutant
+770: didn't find mutant
+771: found mutant
+772: found mutant
+773: found mutant
+774: found mutant
+775: found mutant
+776: found mutant
+777: found mutant
+778: didn't find mutant
+779: found mutant
+780: found mutant
+781: didn't find mutant
+782: found mutant
+783: found mutant
+784: found mutant
+785: didn't find mutant
+786: didn't find mutant
+787: didn't find mutant
+788: found mutant
+789: didn't find mutant
+790 timed out
+791: didn't find mutant
+792: didn't find mutant
+793: found mutant
+794: found mutant
+795: found mutant
+796: didn't find mutant
+797: didn't find mutant
+798: found mutant
+799: found mutant
+800: found mutant
+801 timed out
+802: found mutant
+803: found mutant
+804: found mutant
+805: didn't find mutant
+806 timed out
+807: didn't find mutant
+808 timed out
+809: didn't find mutant
+810: found mutant
+811: found mutant
+812: didn't find mutant
+813: found mutant
+814: found mutant
+815: found mutant
+816: found mutant
+817: found mutant
+818: found mutant
+819: didn't find mutant
+820: found mutant
+821: didn't find mutant
+822: found mutant
+823: found mutant
+824: didn't find mutant
+825: found mutant
+826: found mutant
+827: didn't find mutant
+828: didn't find mutant
+829: didn't find mutant
+830: found mutant
+831: found mutant
+832: found mutant
+833: found mutant
+834: didn't find mutant
+835: found mutant
+836: found mutant
+837: found mutant
+838: found mutant
+839: found mutant
+840: found mutant
+841: found mutant
+842: found mutant
+843: found mutant
+844: found mutant
+845: found mutant
+846: found mutant
+847: found mutant
+848: didn't find mutant
+849: didn't find mutant
+850: found mutant
+851: didn't find mutant
+852: found mutant
+853: didn't find mutant
+854: didn't find mutant
+855: didn't find mutant
+856: found mutant
+857: found mutant
+858: found mutant
+859: found mutant
+860: found mutant
+861: found mutant
+862: found mutant
+863: didn't find mutant
+864: found mutant
+865: found mutant
+866: found mutant
+867 timed out
+868: found mutant
+869: didn't find mutant
+870: found mutant
+871: found mutant
+872: found mutant
+873: found mutant
+874: found mutant
+875: found mutant
+876: didn't find mutant
+877: didn't find mutant
+878: found mutant
+879: found mutant
+880: found mutant
+881: didn't find mutant
+882: didn't find mutant
+883: found mutant
+884: didn't find mutant
+885: found mutant
+886: didn't find mutant
+887: didn't find mutant
+888: found mutant
+889: didn't find mutant
+890: found mutant
+891: found mutant
+892: found mutant
+893: didn't find mutant
+894: didn't find mutant
+895: found mutant
+896: didn't find mutant
+897: found mutant
+898: found mutant
+899 timed out
+900: didn't find mutant
+901: didn't find mutant
+902: didn't find mutant
+903 timed out
+904: found mutant
+905: found mutant
+906: didn't find mutant
+907: found mutant
+908 timed out
+909: found mutant
+910: found mutant
+911: didn't find mutant
+912: found mutant
+913: found mutant
+914: found mutant
+915: didn't find mutant
+916 timed out
+917 timed out
+918: found mutant
+919: found mutant
+920: didn't find mutant
+921: found mutant
+922: didn't find mutant
+923: found mutant
+924: didn't find mutant
+925: found mutant
+926: didn't find mutant
+927: didn't find mutant
+928: found mutant
+929 timed out
+930: didn't find mutant
+931: found mutant
+932: found mutant
+933: found mutant
+934 timed out
+935: didn't find mutant
+936: found mutant
+937: didn't find mutant
+938: found mutant
+939: didn't find mutant
+940: found mutant
+941: found mutant
+942: found mutant
+943: didn't find mutant
+944: didn't find mutant
+945: found mutant
+946: didn't find mutant
+947: found mutant
+948: found mutant
+949: found mutant
+950: didn't find mutant
+951: found mutant
+952: found mutant
+953: didn't find mutant
+954: found mutant
+955: found mutant
+956: didn't find mutant
+957: found mutant
+958: didn't find mutant
+959: found mutant
+960: didn't find mutant
+961: found mutant
+962: didn't find mutant
+963: didn't find mutant
+964: found mutant
+965: found mutant
+966: found mutant
+967: found mutant
+968: didn't find mutant
+969: found mutant
+970: found mutant
+971: didn't find mutant
+972: didn't find mutant
+973: found mutant
+974 timed out
+975: didn't find mutant
+976: found mutant
+977: found mutant
+978: found mutant
+979: found mutant
+980: found mutant
+981: found mutant
+982: found mutant
+983: didn't find mutant
+984: found mutant
+985 timed out
+986 timed out
+987: found mutant
+988: found mutant
+989: found mutant
+990: found mutant
+991: didn't find mutant
+992: found mutant
+993: didn't find mutant
+994: didn't find mutant
+995: found mutant
+996: didn't find mutant
+997: found mutant
+998: found mutant
+999: didn't find mutant
+607 of 1000 FOUND

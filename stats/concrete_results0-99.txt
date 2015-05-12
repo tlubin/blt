@@ -1,0 +1,103 @@
+TIMEOUT: 60
+0: didn't find mutant
+1: didn't find mutant
+2: found mutant in 0.691091060638
+3: found mutant in 4.00839304924
+4: didn't find mutant
+5: found mutant in 1.40366911888
+6: found mutant in 4.14088606834
+7: found mutant in 1.77121806145
+8: found mutant in 1.95387816429
+9: found mutant in 1.42400193214
+10: found mutant in 1.89635396004
+11: timed out on 8 of 10 traces
+12: found mutant in 0.771317005157
+13: didn't find mutant
+14: didn't find mutant
+15: found mutant in 1.32187199593
+16: found mutant in 3.60096096992
+17: found mutant in 2.12735700607
+18: timed out on 8 of 10 traces
+19: found mutant in 0.621726036072
+20: didn't find mutant
+21: found mutant in 5.05822992325
+22: found mutant in 4.01673293114
+23: timed out on 8 of 10 traces
+24: found mutant in 1.93589901924
+25: found mutant in 0.62010216713
+26: found mutant in 1.76674795151
+27: found mutant in 0.741889953613
+28: found mutant in 1.77676796913
+29: found mutant in 4.04357194901
+30: found mutant in 1.30574083328
+31: timed out on 8 of 10 traces
+32: found mutant in 0.571696043015
+33: found mutant in 0.639518022537
+34: found mutant in 0.576020002365
+35: found mutant in 1.68871903419
+36: found mutant in 1.23258399963
+37: didn't find mutant
+38: found mutant in 1.77526903152
+39: found mutant in 0.551629066467
+40: timed out on 8 of 10 traces
+41: found mutant in 2.11294603348
+42: found mutant in 0.620963811874
+43: timed out on 3 of 10 traces
+44: found mutant in 1.42545986176
+45: found mutant in 0.625620126724
+46: didn't find mutant
+47: found mutant in 1.55260801315
+48: found mutant in 1.45662498474
+49: found mutant in 0.625680208206
+50: found mutant in 0.628372192383
+51: found mutant in 0.6280169487
+52: found mutant in 1.96483492851
+53: found mutant in 0.640172958374
+54: found mutant in 0.637811899185
+55: found mutant in 0.612097024918
+56: didn't find mutant
+57: found mutant in 0.89004611969
+58: found mutant in 1.90584397316
+59: found mutant in 1.91541314125
+60: found mutant in 2.02236604691
+61: found mutant in 1.87318682671
+62: didn't find mutant
+63: didn't find mutant
+64: found mutant in 0.629048109055
+65: found mutant in 0.625794887543
+66: found mutant in 0.721210956573
+67: found mutant in 0.66845703125
+68: found mutant in 0.851212978363
+69: found mutant in 0.695433855057
+70: found mutant in 0.663340091705
+71: found mutant in 0.612284183502
+72: found mutant in 0.628832101822
+73: found mutant in 1.45235490799
+74: didn't find mutant
+75: didn't find mutant
+76: found mutant in 1.48999714851
+77: found mutant in 0.683596134186
+78: didn't find mutant
+79: didn't find mutant
+80: timed out on 3 of 10 traces
+81: found mutant in 0.699553966522
+82: found mutant in 3.91027402878
+83: found mutant in 1.51061606407
+84: found mutant in 0.640815019608
+85: found mutant in 1.80946111679
+86: didn't find mutant
+87: didn't find mutant
+88: found mutant in 0.647838115692
+89: found mutant in 1.99755191803
+90: found mutant in 0.819412946701
+91: found mutant in 0.618144035339
+92: found mutant in 0.658195018768
+93: timed out on 2 of 10 traces
+94: found mutant in 0.567336082458
+95: didn't find mutant
+96: didn't find mutant
+97: found mutant in 0.615628957748
+98: found mutant in 0.727771043777
+99: found mutant in 1.47627091408
+73 of 100 FOUND with average 1.40537450738
+48 timeouts
