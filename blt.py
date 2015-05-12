@@ -277,7 +277,7 @@ def compile_and_run_klee(exitearly=0, verbose=1):
                     if i == len(data['traces']) - 1:
                         return -1*timeouts
                     continue
-                if len(nfuncs > 0):
+                if len(nfuncs) > 0:
                     nfuncs = nfuncs[0].split(':')[1]
                     return int(nfuncs)
                 else:
