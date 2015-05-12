@@ -6,11 +6,6 @@
 
 using namespace std;
 
-#define INSERT_PERCENT 50
-#define REMOVE_PERCENT 25
-#define MEMBER_PERCENT 25
-
-int steps = 100000;
 RBTreeBag *bag;
 multiset<int> myset;
 
@@ -20,6 +15,7 @@ void insert() {
   bag->insert(randNum);
 }
 
+/*
 void remove() {
   multiset<int>::iterator it;
   unsigned sz = myset.size();
@@ -30,6 +26,20 @@ void remove() {
     bag->remove(*it);
   }
 }
+*/
+
+
+void remove() {
+  int randNum = rand() % 100;
+  unsigned count = myset.count(randNum);
+  if (count > 0) {
+    myset.erase(myset.find(randNum));
+    bag->remove(randNum);
+  }
+  else
+    bag->remove(randNum);
+}
+
 
 void member() {
   int randNum = rand() % 100;

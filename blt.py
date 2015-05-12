@@ -15,14 +15,19 @@ data = {}
 jfile_dir = ''
 tmpdir = ''
 SEED = random.randint(1, 1000)
-default_trace_len = 1024
+default_trace_len = 50
 default_sym_len = 2
+
+# globals for generation of default traces
+num_traces = 10
+swarm1_length = 500
+swarm2_length = 50
 
 # globals for evaluation
 start = 0
-eval_trace_len = 5
+eval_trace_len = 10
 num_evals = 10
-timeout = 150
+timeout = 5
 stats_fd = ''
 failed = 0
 
@@ -65,10 +70,12 @@ def get_args():
     g.add_argument('--replay', dest='rfile', help='Run replay, provide replay file to replay')
     g.add_argument('--replay-all', dest='rdir', help='Run all replays, provide replay directory to replay')
     g.add_argument('--eval', dest='eval_trace', help='Evaluate on different length swarms of purely symbolic, purely concrete, or concolic')
+    g.add_argument('--mutants-concolic', action='store_true', help='Evaluate default traces on mutants using concolic approach')
+    g.add_argument('--mutants-concrete', action='store_true', help='Evaluate default traces on mutants using concrete approach')
     args = parser.parse_args()
 
 # Create harness from JSON data
-def write_harness():
+def write_harness(num=0):
     global tmpdir
     function_tmpl = Template(
             filename=(os.path.join(env['blt'], 'templates', 'functions.mako')))
@@ -87,7 +94,7 @@ def write_harness():
             ntraces=(len(data['traces'])),
             seed=SEED)
 
-    tmpdir = os.path.join(jfile_dir, 'blt_tmp')
+    tmpdir = os.path.join(jfile_dir, 'blt_tmp_{0}'.format(num))
     if os.path.exists(tmpdir):
         subprocess.call('rm -rf {0}'.format(tmpdir).split())
     os.mkdir(tmpdir)
@@ -142,6 +149,7 @@ def run_replay(replay_file, verbose=1):
     if subprocess.call(cmd.split(), stderr=stderr) != 0:
         devnull.close()
         return 0
+    devnull.close()
     return 1
 
 
@@ -214,7 +222,8 @@ def write_replay(failure, trace, tracenum, failnum):
     else:
         print RED + 'BLT: ERROR: {0}'.format(replay_file) + RESET
 
-def compile_and_run_klee(exitearly=0):
+# Return 1 on finding a mutant, -k on timeout for k traces and 0 otherwise
+def compile_and_run_klee(exitearly=0, verbose=1):
     # Compile the source files to LLVM bytecode
     llvmgcc_bin = os.path.join(env['llvmgcc'],'llvm-g++')
     bc_files = []
@@ -241,30 +250,47 @@ def compile_and_run_klee(exitearly=0):
         exit(1)
 
     # Call KLEE
+    timeouts = 0
     for i in range(len(data['traces'])):
         klee_output_dir = os.path.join(tmpdir, 'klee{0}'.format(i))
         klee_print_file = os.path.join(tmpdir, 'klee_output.txt')
-        print MAGENTA + '\nBLT: running trace {0}\n'.format(i) + RESET
+        if verbose:
+            print MAGENTA + '\nBLT: running trace {0}\n'.format(i) + RESET
 
         global start
         t0 = time.time()
-        cmd = 'klee -emit-all-errors -max-time={3} -output-dir={0} {1} {2}'.format(
-                klee_output_dir, harness_bc, i, start + timeout - t0)
+#        cmd = 'klee -emit-all-errors -max-time={3} -output-dir={0} {1} {2}'.format(
+#            klee_output_dir, harness_bc, i, start + timeout - t0)
+
+        cmd = 'klee -exit-on-error -emit-all-errors -max-time={3} -output-dir={0} {1} {2}'.format(
+            klee_output_dir, harness_bc, i, timeout)
 
         # time the klee process
         with open(klee_print_file, 'w') as klee_print_fd:
-            subprocess.call(cmd.split(), stderr=klee_print_fd)
+            ret = subprocess.call(cmd.split(), stderr=klee_print_fd)
+
         # get number of paths
         with open(klee_print_file, 'r') as klee_print_fd:
-            line = klee_print_fd.readlines()[-2].split()
+            lines = klee_print_fd.readlines()
+            # if ret == 1 either halt timer or klee found an error and exited on failure
+            if ret == 1:
+                haltline = [x for x in lines if 'HaltTimer' in x]
+                if len(haltline) > 0:
+                    timeouts += 1
+                    continue
+                return 1
+            line = lines[-2].split()
             num_paths = line[-1]
         t1 = time.time() - t0
 
         failures = klee_get_failures(klee_output_dir)
         if len(failures) == 0:
-            print GREEN + 'BLT: trace {0} completed successfully'.format(i) + RESET
-        #for n, f in enumerate(failures):
+            if verbose:
+                print GREEN + 'BLT: trace {0} completed successfully'.format(i) + RESET
+        for n, f in enumerate(failures):
          #   write_replay(f, copy.deepcopy(data['traces'][i]), i, n)
+            if verbose:
+                print RED + 'BLT: ERROR' + RESET
 
         if args.eval_trace:
             global stats_fd
@@ -278,8 +304,11 @@ def compile_and_run_klee(exitearly=0):
             if len(failures) != 0:
                 global failed
                 failed = 1
-                if exitearly:
-                    break
+        if len(failures) > 0 and exitearly:
+            return 1
+    if timeouts > 0:
+        return -1 * timeouts
+    return 0
 
 # Generate a swarm of concolic traces from the powerset of the set of all
 # functions.  The length of each trace is actually default_trace_len + 2.
@@ -288,19 +317,35 @@ def generate_default_traces():
     for f in data['funcs']:
         powerset.extend([x + [f['name']] for x in powerset])
     data['traces'] = []
-    for x in powerset:
-        sym = { 'funcs' : powerset[-1], 'len' : default_sym_len,
+    return_funcs = [x['name'] for x in data['funcs'] if x['return'] != 'void']
+    powerset.remove([])
+    for _ in range(num_traces):
+        sym = { 'funcs' : return_funcs, 'len' : 1,
                 'symbolic_args' : 'true', 'symbolic_trace' : 'true' }
+        swarm1 = random.choice(powerset)
+        con1 = { 'funcs' : swarm1, 'len' : swarm1_length,
+                 'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
+        swarm2 = random.choice(powerset)
+        con2 = { 'funcs' : swarm2, 'len' : swarm2_length,
+                 'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
+        data['traces'].append([con1, sym, con2]) # con2?
 
-        # TODO: There is an issue later on if the 'funcs' key of a trace
-        # references an empty list.  Do we need to account for that
-        # possibility somewhere else besides here?
-        if x == []:
-            data['traces'].append([sym])
-        else:
-            con = { 'funcs' : x, 'len' : default_trace_len,
-                    'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
-            data['traces'].append([con, sym])
+def generate_concrete_traces():
+    powerset = [[]]
+    for f in data['funcs']:
+        powerset.extend([x + [f['name']] for x in powerset])
+    data['traces'] = []
+    return_funcs = [x['name'] for x in data['funcs'] if x['return'] != 'void']
+    powerset.remove([])
+    for _ in range(num_traces):
+        swarm1 = random.choice(powerset)
+        con1 = { 'funcs' : swarm1, 'len' : swarm1_length,
+                 'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
+        swarm2 = random.choice(powerset)
+        con2 = { 'funcs' : swarm2, 'len' : swarm2_length,
+                 'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
+        data['traces'].append([con1, con2])
+
 
 # Generate traces of purely symbolic (sym_all), purely concrete (concrete), concrete with symbolic arguments (sym_args), or symbolic with concrete arguments (sym_trace) of length start_length to start_length + eval_trace_len, to be evaluated on eval_num randomly chosen swarms of functions
 def generate_eval_trace(trace_type, start_length):
@@ -367,7 +412,8 @@ def inject_concrete_args(concrete_args):
     with open(blt_args, 'w') as f:
         f.write(arg_str)
 
-def run_traces(exitearly=0):
+# Return 1 on finding a mutant and 0 otherwise
+def run_traces(exitearly=0, verbose=1, num=0):
     concrete_args = {}
     for trace in data['traces']:
         for node in trace:
@@ -384,8 +430,34 @@ def run_traces(exitearly=0):
                         update_concrete_args(func, concrete_args)
 
     inject_concrete_args(concrete_args)
-    write_harness()
-    compile_and_run_klee(exitearly)
+    write_harness(num)
+    return compile_and_run_klee(exitearly, verbose)
+
+def run_mutants(mutants):
+    totalfound = 0
+    times = []
+    timeouts = 0
+    print("TIMEOUT: {0}".format(timeout))
+    for i in mutants:
+        sys.stderr.write('CHECKPOINT: {0} of {1}\n'.format(totalfound, i - mutants[0]))
+        data['source_files'] += [os.path.join('mutations', 'rbtree{0}.cpp'.format(i))]
+        t0 = time.time()
+        found = run_traces(exitearly=1, verbose=0, num=0)
+        t1 = time.time()
+        if found < 0:
+            timeouts += -1*found
+            print "{0}: timed out on {1} of {2} traces".format(i, -1*found, num_traces)
+        elif found == 1:
+            totalfound += 1
+            t = t1-t0
+            times.append(t)
+            print "{0}: found mutant in {1}".format(i, t)
+        else:
+            print "{0}: didn't find mutant".format(i)
+        data['source_files'].pop()
+    print "{0} of {1} FOUND with average {2}".format(totalfound, len(mutants), sum(times) / totalfound)
+    print "{0} timeouts".format(timeouts)
+
 
 def main():
     global data, jfile_dir
@@ -409,7 +481,7 @@ def main():
     # evaluate a particular type of trace
     if args.eval_trace:
         global stats_fd, start, failed
-        mutants = range(100);
+        mutants = range(100)
         for i in mutants:
             data['source_files'] += [os.path.join('mutations', 'rbtree{0}.cpp'.format(i))]
             stats_dir = os.path.join(env['blt'], 'stats')
@@ -429,7 +501,7 @@ def main():
     elif args.trace:
         if 'traces' not in data:
             generate_default_traces()
-        run_traces()
+        run_traces(exitearly=1)
 
     # replay the requested file
     elif args.rfile:
@@ -440,6 +512,13 @@ def main():
         replays = glob.glob(os.path.join(args.rdir, 'replay*.cpp'))
         for replay in sorted(replays):
             do_run_replay(replay)
+
+    elif args.mutants_concolic:
+        generate_default_traces()
+        run_mutants(range(150, 160))
+    elif args.mutants_concrete:
+        generate_concrete_traces()
+        run_mutants(range(150,160))
 
 
 if __name__ == '__main__':
