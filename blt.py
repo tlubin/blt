@@ -23,6 +23,7 @@ num_traces = 10
 swarm1_length = 500
 swarm2_length = 50
 timeout = 60
+start = 0
 
 # Colors for colorful output to console
 GREEN = '\033[1m\033[32m'
@@ -441,10 +442,10 @@ def main():
     # run either concolic or concrete traces for evaluating mutant detection
     elif args.mutants_concolic:
         generate_default_traces()
-        run_mutants(range(500, 600))
+        run_mutants(range(600, 700))
     elif args.mutants_concrete:
         generate_concrete_traces()
-        run_mutants(range(150,160))
+        run_mutants(range(500,600))
 
 
 if __name__ == '__main__':
