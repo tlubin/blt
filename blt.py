@@ -278,9 +278,12 @@ def compile_and_run_klee(exitearly=0, verbose=1):
                     if i == len(data['traces']) - 1:
                         return -1*timeouts
                     continue
-                assert(len(nfuncs) > 0)
-                nfuncs = nfuncs[0].split(':')[1]
-                return int(nfuncs)
+                if len(nfuncs) > 0:
+                    nfuncs = nfuncs[0].split(':')[1]
+                    return int(nfuncs)
+                else:
+                    # some other failure caused harness to exit before printing
+                    return 999
             line = lines[-2].split()
             num_paths = line[-1]
         time_found = time.time() - start
@@ -459,7 +462,7 @@ def main():
     # run either concolic or concrete traces for evaluating mutant detection
     elif args.mutants_concolic:
         generate_default_traces()
-        run_mutants([2,3])
+        run_mutants(range(670,690))
     elif args.mutants_concrete:
         generate_concrete_traces()
         run_mutants([2,3])
