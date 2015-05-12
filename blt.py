@@ -339,13 +339,13 @@ def generate_concrete_traces():
         data['traces'].append([con1, con2])
 
 def generate_custom_trace():
-    con1 = { 'funcs' : ['insert'], 'len' : 200,
+    con1 = { 'funcs' : ['insert'], 'len' : 400,
              'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
-    con2 = { 'funcs' : ['insert', 'remove'], 'len' : 100,
+    con2 = { 'funcs' : ['insert', 'remove', 'member'], 'len' : 150,
              'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
     sym = { 'funcs' : ['member'], 'len' : 1,
              'symbolic_args' : 'true', 'symbolic_trace' : 'false' }
-    data['traces'] = [con1, con2, sym]
+    data['traces'] = [[con1, con2, sym]]
 
 # Given a string describing a C type, return a string representing a random
 # value of that type.
