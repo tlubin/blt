@@ -4,12 +4,16 @@
 #include <klee/klee.h>
 #include <cassert>
 #include <cstdlib>
+#include <cstdio>
 
 // HELPERS ////////////////////////////////////////////////////////////////////
 
 #define NTRACES ${ntraces}
 
+int nfuncs = 0;
+
 void failure() {
+  fprintf(stderr, "NFUNCS:%d\n", nfuncs);
   assert(0);
 }
 

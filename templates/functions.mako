@@ -1,5 +1,6 @@
 % for f in funcs:
 void call_${f['name']}(${class1}* v1, ${class2}* v2, bool is_sym) {
+  nfuncs++;
   % if len(f['args']) > 0:
   % for typ in f['args']:
   ${typ} arg${loop.index};

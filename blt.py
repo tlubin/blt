@@ -215,7 +215,7 @@ def write_replay(failure, trace, tracenum, failnum):
     else:
         print RED + 'BLT: ERROR: {0}'.format(replay_file) + RESET
 
-# Return 1 on finding a mutant, -k on timeout for k traces and 0 otherwise
+# Return nfuncs on finding a mutant, -k on timeout for k traces and 0 otherwise
 def compile_and_run_klee(exitearly=0, verbose=1):
     # Compile the source files to LLVM bytecode
     llvmgcc_bin = os.path.join(env['llvmgcc'],'llvm-g++')
@@ -245,7 +245,10 @@ def compile_and_run_klee(exitearly=0, verbose=1):
     # Call KLEE
     timeouts = 0
     for i in range(len(data['traces'])):
-        klee_output_dir = os.path.join(tmpdir, 'klee{0}'.format(i))
+        klee_output_dir = os.path.join(tmpdir, 'klee')
+        # TL: temporary for space issue
+        if os.path.exists(tmpdir):
+            subprocess.call('rm -rf {0}'.format(klee_output_dir).split())
         klee_print_file = os.path.join(tmpdir, 'klee_output.txt')
         if verbose:
             print MAGENTA + '\nBLT: running trace {0}\n'.format(i) + RESET
@@ -265,13 +268,18 @@ def compile_and_run_klee(exitearly=0, verbose=1):
         # get number of paths
         with open(klee_print_file, 'r') as klee_print_fd:
             lines = klee_print_fd.readlines()
+            nfuncs = [x for x in lines if 'NFUNCS' in x]
             # if ret == 1 either halt timer or klee found an error and exited on failure
             if ret == 1:
                 haltline = [x for x in lines if 'HaltTimer' in x]
                 if len(haltline) > 0:
                     timeouts += 1
+                    if i == len(data['traces']) - 1:
+                        return -1*timeouts
                     continue
-                return 1
+                assert(len(nfuncs) > 0)
+                nfuncs = nfuncs[0].split(':')[1]
+                return int(nfuncs)
             line = lines[-2].split()
             num_paths = line[-1]
         time_found = time.time() - start
@@ -298,10 +306,9 @@ def generate_default_traces():
     for f in data['funcs']:
         powerset.extend([x + [f['name']] for x in powerset])
     data['traces'] = []
-    return_funcs = [x['name'] for x in data['funcs'] if x['return'] != 'void']
     powerset.remove([])
     for _ in range(num_traces):
-        sym = { 'funcs' : return_funcs, 'len' : 1,
+        sym = { 'funcs' : powerset[-1], 'len' : 1,
                 'symbolic_args' : 'true', 'symbolic_trace' : 'true' }
         swarm1 = random.choice(powerset)
         con1 = { 'funcs' : swarm1, 'len' : swarm1_length,
@@ -392,11 +399,11 @@ def run_mutants(mutants):
         if found < 0:
             timeouts += -1*found
             print "{0}: timed out on {1} of {2} traces".format(i, -1*found, num_traces)
-        elif found == 1:
+        elif found > 0:
             totalfound += 1
             t = t1-t0
             times.append(t)
-            print "{0}: found mutant in {1}".format(i, t)
+            print "{0}: found mutant in {1} with {2} calls".format(i, t, found)
         else:
             print "{0}: didn't find mutant".format(i)
         data['source_files'].pop()
@@ -442,10 +449,10 @@ def main():
     # run either concolic or concrete traces for evaluating mutant detection
     elif args.mutants_concolic:
         generate_default_traces()
-        run_mutants(range(600, 700))
+        run_mutants([2,3])
     elif args.mutants_concrete:
         generate_concrete_traces()
-        run_mutants(range(600,700))
+        run_mutants([2,3])
 
 
 if __name__ == '__main__':
