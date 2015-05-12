@@ -24,7 +24,7 @@ def get_mutants_caught():
   return total
 
 # loop through all lengths
-while counter < 100:
+while counter < 300:
   # loop through all mutants, see if bug found at this length
   for outf in sorted(os.listdir(os.path.join(blt, 'stats/averages'))):
     if trace in outf:
