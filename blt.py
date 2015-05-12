@@ -65,6 +65,7 @@ def get_args():
     g.add_argument('--replay-all', dest='rdir', help='Run all replays, provide replay directory to replay')
     g.add_argument('--mutants-concolic', action='store_true', help='Evaluate default traces on mutants using concolic approach')
     g.add_argument('--mutants-concrete', action='store_true', help='Evaluate default traces on mutants using concrete approach')
+    g.add_argument('--mutants-custom', action='store_true', help='Evaluate HARD-CODED custom trace on mutants')
     args = parser.parse_args()
 
 # Create harness from JSON data
@@ -334,6 +335,15 @@ def generate_concrete_traces():
                  'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
         data['traces'].append([con1, con2])
 
+def generate_custom_trace():
+    con1 = { 'funcs' : ['insert'], 'len' : 200,
+             'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
+    con2 = { 'funcs' : ['insert', 'remove'], 'len' : 100,
+             'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
+    sym = { 'funcs' : ['member'], 'len' : 1,
+             'symbolic_args' : 'true', 'symbolic_trace' : 'false' }
+    data['traces'] = [con1, con2, sym]
+
 # Given a string describing a C type, return a string representing a random
 # value of that type.
 def gen_arg(typ):
@@ -453,6 +463,9 @@ def main():
     elif args.mutants_concrete:
         generate_concrete_traces()
         run_mutants([2,3])
+    elif args.mutants_custom:
+        generate_custom_trace()
+        run_mutants(range(670,691))
 
 
 if __name__ == '__main__':
