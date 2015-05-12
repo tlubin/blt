@@ -23,16 +23,7 @@ num_traces = 10
 swarm1_length = 500
 swarm2_length = 50
 timeout = 60
-
-# globals for evaluation
-# don't need these anymore?
 start = 0
-eval_trace_len = 10
-num_evals = 10
-num_swarms = 10
-num_mutants = 100
-stats_fd = ''
-failed = 0
 
 # Colors for colorful output to console
 GREEN = '\033[1m\033[32m'
@@ -72,7 +63,6 @@ def get_args():
     g.add_argument('--trace', action='store_true', help='Run trace')
     g.add_argument('--replay', dest='rfile', help='Run replay, provide replay file to replay')
     g.add_argument('--replay-all', dest='rdir', help='Run all replays, provide replay directory to replay')
-    g.add_argument('--eval', dest='eval_trace', help='Evaluate on different length swarms of purely symbolic, purely concrete, or concolic')
     g.add_argument('--mutants-concolic', action='store_true', help='Evaluate default traces on mutants using concolic approach')
     g.add_argument('--mutants-concrete', action='store_true', help='Evaluate default traces on mutants using concrete approach')
     args = parser.parse_args()
@@ -255,7 +245,6 @@ def compile_and_run_klee(exitearly=0, verbose=1):
     # Call KLEE
     timeouts = 0
     for i in range(len(data['traces'])):
-        global start, stats_fd, failed
         klee_output_dir = os.path.join(tmpdir, 'klee{0}'.format(i))
         klee_print_file = os.path.join(tmpdir, 'klee_output.txt')
         if verbose:
@@ -296,10 +285,6 @@ def compile_and_run_klee(exitearly=0, verbose=1):
             if verbose:
                 print RED + 'BLT: ERROR' + RESET
 
-        if args.eval_trace:
-            # get number of paths
-            if len(failures) != 0:
-                failed = 1
         if len(failures) > 0 and exitearly:
             return 1
     if timeouts > 0:
@@ -341,43 +326,6 @@ def generate_concrete_traces():
         con2 = { 'funcs' : swarm2, 'len' : swarm2_length,
                  'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
         data['traces'].append([con1, con2])
-
-# Generate traces of purely symbolic (sym_all), purely concrete (concrete), concrete with symbolic arguments (sym_args), or symbolic with concrete arguments (sym_trace) of length start_length to start_length + eval_trace_len, to be evaluated on eval_num randomly chosen swarms of functions
-def generate_eval_trace(trace_type, length):
-    data['traces'] = []
-    powerset = [[]]
-    random_swarms = []
-    for f in data['funcs']:
-        powerset.extend([x + [f['name']] for x in powerset])
-    powerset.remove([])
-    for _ in range(num_swarms):
-        random_swarms.append(random.choice(powerset))
-    for x in random_swarms:
-      if trace_type == "sym_all":
-        node = [{ 'funcs' : x, 'len' : length,
-              'symbolic_args' : 'true', 'symbolic_trace' : 'true' }]
-      elif trace_type == "concrete":
-        node = [{ 'funcs' : x, 'len' : length,
-              'symbolic_args' : 'false', 'symbolic_trace' : 'false' }]
-      elif trace_type == "sym_args":
-        node = [{ 'funcs' : x, 'len' : length,
-              'symbolic_args' : 'true', 'symbolic_trace' : 'false' }]
-      elif trace_type == "sym_trace":
-        node = [{ 'funcs' : x, 'len' : length,
-              'symbolic_args' : 'false', 'symbolic_trace' : 'true' }]
-      elif trace_type == "concolic":
-        y = random.choice(powerset)
-        node = [{ 'funcs' : x, 'len' : length,
-              'symbolic_args' : 'false', 'symbolic_trace' : 'false' },
-              { 'funcs' : powerset[-1], 'len' : default_sym_len,
-              'symbolic_args' : 'true', 'symbolic_trace' : 'true' },
-              { 'funcs' : y, 'len' : length/2,
-              'symbolic_args' : 'false', 'symbolic_trace' : 'false' }]
-      else:
-        print "Invalid Trace Type"
-        exit(1)
-
-      data['traces'].append(node)
 
 # Given a string describing a C type, return a string representing a random
 # value of that type.
@@ -475,32 +423,8 @@ def main():
         else:
             print RED + "BLT: {0} failed".format(replay) + RESET
 
-    # evaluate concrete vs concolic
-    if args.eval_trace:
-        global stats_fd, start, failed
-
-        repeat = 0
-        stats_dir = os.path.join(env['blt'], 'stats')
-        if not os.path.exists(stats_dir):
-            os.mkdir(stats_dir)
-        stats_fd = open(os.path.join(stats_dir, args.eval_trace + '.txt'), 'w')
-
-        mutants = range(num_mutants)
-        for i in mutants:
-            data['source_files'] += [os.path.join('mutations', 'rbtree{0}.cpp'.format(i))]
-
-            start = time.time()
-            while (time.time() < start + timeout) and not failed:
-                repeat += 1
-                generate_eval_trace(args.eval_trace, default_trace_len*repeat)
-                run_traces(exitearly=1)
-            if failed:
-                stats_fd.write(str(time.time() - start) + ',' + str(i) + '\n')
-            failed = 0
-            data['source_files'].pop()
-
-    # not for evaluation purposes
-    elif args.trace:
+    # run the user traces if specified, else default traces
+    if args.trace:
         if 'traces' not in data:
             generate_default_traces()
         run_traces(exitearly=1)
@@ -515,12 +439,13 @@ def main():
         for replay in sorted(replays):
             do_run_replay(replay)
 
+    # run either concolic or concrete traces for evaluating mutant detection
     elif args.mutants_concolic:
         generate_default_traces()
-        run_mutants(range(150, 160))
+        run_mutants(range(600, 700))
     elif args.mutants_concrete:
         generate_concrete_traces()
-        run_mutants(range(150,160))
+        run_mutants(range(500,600))
 
 
 if __name__ == '__main__':

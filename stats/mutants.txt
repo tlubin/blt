@@ -1,0 +1,2000 @@
+1: /* XXX: original code was :   int compVal; */
+  short int compVal;
+2: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if ( false && !(y->red)) RBDeleteFixUp(x);
+3: /* XXX: original code was : 	if (!w->left->red) { */
+	if  (! !w->left->red) {
+4: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left == nil) || !(z->right == nil)) ? z : TreeSuccessor(z);
+5: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) & (!w->left->red) ) { 
+6: /* XXX: original code was :   compVal= compare(x->key, q); */
+  compVal= compare(x->key, q*2);
+7: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+8: /* XXX: original code was :   int compVal; */
+  char compVal;
+9: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if (nil  <  x->right)  x->right->parent=y;   
+10: /* XXX: original code was :       if (y->red) { */
+      if ( false && y->red) {
+11: /* XXX: original code was :   if (y != z) {  */
+  if (y = z) { 
+12: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) && (root  >=  x)) {
+13: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( (y  !=  tree->root) ||
+14: /* XXX: original code was :   while( x != nil) { */
+  while( x  ==  nil) {
+15: /* XXX: original code was :     return -1; */
+    return -1; //-1;
+16: /* XXX: original code was :       if (y->red) { */
+      if  (! y->red) {
+17: /* XXX: original code was :   while(x->parent->red) {     if (x->parent == x->parent->parent->left) { */
+  while(x->parent->red) {     if (x->parent  >  x->parent->parent->left) {
+18: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) || (root != x)) {
+19: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+20: /* XXX: original code was :     if (z == z->parent->left) { */
+    if ( false && z == z->parent->left) {
+21: /* XXX: original code was :   while( x != nil) { */
+  while( x  >=  nil) {
+22: /* XXX: original code was :   else if (x > y) */
+  else if (x < y)
+23: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) && !(!w->left->red) ) { 
+24: /* XXX: original code was :     if ( x == nil) return(0); */
+    if ( x == nil) return(0*0);
+25: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left  <  nil) y->left->parent=x;     
+26: /* XXX: original code was :   if (x == y) */
+  if  (! x == y)
+27: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left == nil) | (z->right == nil)) ? z : TreeSuccessor(z);
+28: /* XXX: original code was :   if (!z) { */
+  if ( false && !z) {
+29: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if  (! !(y->red)) RBDeleteFixUp(x);
+30: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( (y  <  tree->root) ||
+31: /* XXX: original code was :   int compVal; */
+  short int compVal;
+32: /* XXX: original code was : 	if (!w->left->red) { */
+	if ( true || !w->left->red) {
+33: /* XXX: original code was :     if (x == x->parent->left) { */
+    if ( true || x == x->parent->left) {
+34: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if ( true || x == x->parent->left) {
+35: /* XXX: original code was : 	if (!w->right->red) { */
+	if ( false && !w->right->red) {
+36: /* XXX: original code was :   int compVal; */
+  char compVal;
+37: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) & (!w->left->red) ) { 
+38: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+39: /* XXX: original code was :       if( x == x->parent->left) { */
+      if( x  >  x->parent->left) {
+40: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) && !(!w->left->red) ) { 
+41: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left == nil) || !(z->right == nil)) ? z : TreeSuccessor(z);
+42: /* XXX: original code was :     if (z == z->parent->left) { */
+    if ( true || z == z->parent->left) {
+43: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( (y  =  tree->root) ||
+44: /* XXX: original code was :   int compVal; */
+  char compVal;
+45: /* XXX: original code was :     if (z == z->parent->left) { */
+    if ( true || z == z->parent->left) {
+46: /* XXX: original code was :   while(x->parent->red) {     if (x->parent == x->parent->parent->left) { */
+  while(x->parent->red) {     if (x->parent  <  x->parent->parent->left) {
+47: /* XXX: original code was :     while(x == y->right) {       x=y; */
+    while(x  !=  y->right) {       x=y;
+48: /* XXX: original code was :   while( x != nil) { */
+  while( x  >  nil) {
+49: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left = nil) y->left->parent=x;     
+50: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left  ==  nil) y->left->parent=x;     
+51: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if  (! !(y->red)) RBDeleteFixUp(x);
+52: /* XXX: original code was :   if (nil != (y = x->left)) {     while(y->right != nil) {       y=y->right; */
+  if (nil  >=  (y = x->left)) {     while(y->right != nil) {       y=y->right;
+53: /* XXX: original code was :       if (y->red) { */
+      if  (! y->red) {
+54: /* XXX: original code was :       if (y->red) { */
+      if ( false && y->red) {
+55: /* XXX: original code was :       if (y->red) { */
+      if ( ! y->red) {
+56: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if ( ! !(y->red)) RBDeleteFixUp(x);
+57: /* XXX: original code was :       if (y->red) { */
+      if ( true || y->red) {
+58: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  =  z->parent->left) {
+59: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left  <  nil) y->left->parent=x;     
+60: /* XXX: original code was :   if (y != z) {  */
+  if (y  ==  z) { 
+61: /* XXX: original code was :     while(x == y->right) {       x=y; */
+    while(x  >  y->right) {       x=y;
+62: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if (x  >=  x->parent->left) {
+63: /* XXX: original code was :     if (z == z->parent->left) { */
+    if ( true || z == z->parent->left) {
+64: /* XXX: original code was :   if (y != z) {  */
+  if (y = z) { 
+65: /* XXX: original code was :       if (y->red) { */
+      if ( false && y->red) {
+66: /* XXX: original code was :       if (y->red) { */
+      if  (! y->red) {
+67: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( ~  (y == tree->root) ||
+68: /* XXX: original code was :   int compVal; */
+  char compVal;
+69: /* XXX: original code was :   while( x != nil) { */
+  while( x  >  nil) {
+70: /* XXX: original code was : 	if (!w->left->red) { */
+	if ( ! !w->left->red) {
+71: /* XXX: original code was :     while(x == y->right) {       x=y; */
+    while(x  <  y->right) {       x=y;
+72: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+73: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = NULL; //RBExactQuery(key);
+74: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if ( ! !(y->red)) RBDeleteFixUp(x);
+75: /* XXX: original code was :       if (y->red) { */
+      if  (! y->red) {
+76: /* XXX: original code was :     if ( x == nil) return(0); */
+    if ( x  >=  nil) return(0);
+77: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if ( false && x == x->parent->left) {
+78: /* XXX: original code was :     if (1 == compare(x->key,z->key)) {       x=x->left; */
+    if ( ~ 1 == compare(x->key,z->key)) {       x=x->left;
+79: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left = nil) y->left->parent=x;     
+80: /* XXX: original code was :       if (y->red) { */
+      if  (! y->red) {
+81: /* XXX: original code was :   if (nil != (y = x->left)) {     while(y->right != nil) {       y=y->right; */
+  if (nil != (y = x->left)) {     while(y->right  =  nil) {       y=y->right;
+82: /* XXX: original code was :   if (y != z) {  */
+  if (y  >=  z) { 
+83: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if ( true || y->left != nil) y->left->parent=x;     
+84: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  <=  z->parent->left) {
+85: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+86: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) || (!w->left->red) ) { 
+87: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( (y  >=  tree->root) ||
+88: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery(key*0);
+89: /* XXX: original code was :       if (y->red) { */
+      if ( true || y->red) {
+90: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+91: /* XXX: original code was :   while( x != nil) { */
+  while( x  <=  nil) {
+92: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if (  (! !w->right->red) && (!w->left->red) ) { 
+93: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if (nil = x->right)  x->right->parent=y;   
+94: /* XXX: original code was : rb_red_blk_tree* tree = NULL; */
+rb_red_blk_tree* tree = NULL; //NULL;
+95: /* XXX: original code was :   if (nil != (y = x->left)) {     while(y->right != nil) {       y=y->right; */
+  if (nil != (y = x->left)) {     while(y->right  <=  nil) {       y=y->right;
+96: /* XXX: original code was :   if (nil != (y = x->left)) {     while(y->right != nil) {       y=y->right; */
+  if (nil = (y = x->left)) {     while(y->right != nil) {       y=y->right;
+97: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  =  z->parent->left) {
+98: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( ~  (!w->right->red) && (!w->left->red) ) { 
+99: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, char y) {
+100: /* XXX: original code was :   while( x != nil) { */
+  while( x = nil) {
+101: /* XXX: original code was :     return -1; */
+    return 0; //-1;
+102: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+103: /* XXX: original code was : 	if (!w->right->red) { */
+	if ( true || !w->right->red) {
+104: /* XXX: original code was :   if (x == y) */
+  if (x  <=  y)
+105: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery (! key);
+106: /* XXX: original code was :       if (y->red) { */
+      if ( ~ y->red) {
+107: /* XXX: original code was :   if (y != z) {  */
+  if (y  <  z) { 
+108: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if (x  <  x->parent->left) {
+109: /* XXX: original code was :     compVal=compare(x->key, q); */
+    compVal=compare(x->key, !  q);
+110: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( ~  (y == tree->root) ||
+111: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left == nil) || !(z->right == nil)) ? z : TreeSuccessor(z);
+112: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+113: /* XXX: original code was :     if (1 == compare(x->key,z->key)) {       x=x->left; */
+    if (1 == compare (! x->key,z->key)) {       x=x->left;
+114: /* XXX: original code was :     while(x == y->left) {  */
+    while(x  !=  y->left) { 
+115: /* XXX: original code was :       if (y->red) { */
+      if ( true || y->red) {
+116: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left  <=  nil) y->left->parent=x;     
+117: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+118: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if  (!  (!w->right->red) && (!w->left->red) ) { 
+119: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+120: /* XXX: original code was :     return 0; */
+    return 2* 0;
+121: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery(key*2);
+122: /* XXX: original code was :       if( x == x->parent->left) { */
+      if( x  =  x->parent->left) {
+123: /* XXX: original code was :   if (x == y) */
+  if (x  =  y)
+124: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+125: /* XXX: original code was :       if (y->red) { */
+      if ( ~ y->red) {
+126: /* XXX: original code was :     if (1 == compare(x->key,z->key)) {       x=x->left; */
+    if ( true || 1 == compare(x->key,z->key)) {       x=x->left;
+127: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+128: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while(  (! !x->red) && (root != x)) {
+129: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) || (!w->left->red) ) { 
+130: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if (nil  =  x->right)  x->right->parent=y;   
+131: /* XXX: original code was :   if (nil != (y = x->right)) {     while(y->left != nil) {       y=y->left; */
+  if (nil  >  (y = x->right)) {     while(y->left != nil) {       y=y->left;
+132: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if (nil = x->right)  x->right->parent=y;   
+133: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, char y) {
+134: /* XXX: original code was :     if (x == x->parent->left) { */
+    if ( false && x == x->parent->left) {
+135: /* XXX: original code was : 	if (!w->right->red) { */
+	if ( ! !w->right->red) {
+136: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+137: /* XXX: original code was :     while(x == y->left) {  */
+    while(x  !=  y->left) { 
+138: /* XXX: original code was : 	if (!w->right->red) { */
+	if ( false && !w->right->red) {
+139: /* XXX: original code was :       if (y->red) { */
+      if ( false && y->red) {
+140: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left == nil) || (z->right == nil)) && false ? z : TreeSuccessor(z);
+141: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  >  x->parent->right) {
+142: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+143: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+144: /* XXX: original code was :   if (nil != (y = x->left)) {     while(y->right != nil) {       y=y->right; */
+  if (nil != (y = x->left)) {     while(y->right  >=  nil) {       y=y->right;
+145: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) && !(!w->left->red) ) { 
+146: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, char y) {
+147: /* XXX: original code was :   while( x != nil) { */
+  while( x  <=  nil) {
+148: /* XXX: original code was :   if( y == y->parent->left) { */
+  if( y  <=  y->parent->left) {
+149: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = NULL; //RBExactQuery(key);
+150: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if (  (! !w->right->red) && (!w->left->red) ) { 
+151: /* XXX: original code was :   if (!z) { */
+  if  (! !z) {
+152: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery (! key);
+153: /* XXX: original code was :       if (y == root) return(nil);  */
+      if (y  !=  root) return(nil); 
+154: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if  (!  (!w->right->red) && (!w->left->red) ) { 
+155: /* XXX: original code was :   compVal= compare(x->key, q); */
+  compVal= compare (! x->key, q);
+156: /* XXX: original code was :     if (y == y->parent->left) { */
+    if (y  !=  y->parent->left) {
+157: /* XXX: original code was :   if (!z) { */
+  if  (! !z) {
+158: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( (y  <=  tree->root) ||
+159: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) &&  (! !w->left->red) ) { 
+160: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if  (!  (!w->right->red) && (!w->left->red) ) { 
+161: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if ( true || x == x->parent->right) {
+162: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if (x  >=  x->parent->left) {
+163: /* XXX: original code was :     if (x == x->parent->left) { */
+    if (x  >  x->parent->left) {
+164: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( false &&  (y == tree->root) ||
+165: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left  <=  nil) y->left->parent=x;     
+166: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  !=  z->parent->left) {
+167: /* XXX: original code was :   if (!z) { */
+  if ( ! !z) {
+168: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left  =  nil) || (z->right == nil)) ? z : TreeSuccessor(z);
+169: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if (nil  >  x->right)  x->right->parent=y;   
+170: /* XXX: original code was :   else if (x > y) */
+  else if  (! x > y)
+171: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while (!  (!x->red) && (root != x)) {
+172: /* XXX: original code was : rb_red_blk_tree* tree = NULL; */
+rb_red_blk_tree* tree = 0 ;//NULL;
+173: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  !=  x->parent->right) {
+174: /* XXX: original code was :   while( x != nil) { */
+  while( x  ==  nil) {
+175: /* XXX: original code was :   if (nil != (y = x->right)) {     while(y->left != nil) {       y=y->left; */
+  if ( false && nil != (y = x->right)) {     while(y->left != nil) {       y=y->left;
+176: /* XXX: original code was : rb_red_blk_tree* tree = NULL; */
+rb_red_blk_tree* tree = 0 ;//NULL;
+177: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left == nil) || !(z->right == nil)) ? z : TreeSuccessor(z);
+178: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  <  x->parent->right) {
+179: /* XXX: original code was :       if (y->red) { */
+      if ( true || y->red) {
+180: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+181: /* XXX: original code was :     return -1; */
+    return -1 * -1;
+182: /* XXX: original code was :   int compVal; */
+  char compVal;
+183: /* XXX: original code was :   if (x == y) */
+  if ( ~ x == y)
+184: /* XXX: original code was :   while( x != nil) { */
+  while( x  =  nil) {
+185: /* XXX: original code was :   compVal= compare(x->key, q); */
+  compVal= compare (! x->key, q);
+186: /* XXX: original code was :       if (y->red) { */
+      if  (! y->red) {
+187: /* XXX: original code was :   int compVal; */
+  char compVal;
+188: /* XXX: original code was :   compVal= compare(x->key, q); */
+  compVal= compare (! x->key, q);
+189: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if (x  !=  x->parent->left) {
+190: /* XXX: original code was :     return 0; */
+    return NULL; //0;
+191: /* XXX: original code was :   if( y == y->parent->left) { */
+  if( y  >=  y->parent->left) {
+192: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+193: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if (nil  <  x->right)  x->right->parent=y;   
+194: /* XXX: original code was :     while(x == y->left) {  */
+    while(x  <=  y->left) { 
+195: /* XXX: original code was :   if (!z) { */
+  if  (! !z) {
+196: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left = nil) y->left->parent=x;     
+197: /* XXX: original code was :     return 0; */
+    return NULL; //0;
+198: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if ( false && y->left != nil) y->left->parent=x;     
+199: /* XXX: original code was :   if( y == y->parent->left) { */
+  if( y  <=  y->parent->left) {
+200: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left == nil) || !(z->right == nil)) ? z : TreeSuccessor(z);
+201: /* XXX: original code was :     if (x == x->parent->left) { */
+    if ( false && x == x->parent->left) {
+202: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+203: /* XXX: original code was :       if (y->red) { */
+      if ( true || y->red) {
+204: /* XXX: original code was :     if (y == y->parent->left) { */
+    if (y  =  y->parent->left) {
+205: /* XXX: original code was :     return -1; */
+    return 1; //-1;
+206: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+207: /* XXX: original code was :     compVal=compare(x->key, q); */
+    compVal=compare(x->key, q*-1);
+208: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( false &&  (y == tree->root) ||
+209: /* XXX: original code was :   if (y != z) {  */
+  if ( false && y != z) { 
+210: /* XXX: original code was :   if ( (y == tree->root) || */
+  if  (!  (y == tree->root) ||
+211: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left = nil) y->left->parent=x;     
+212: /* XXX: original code was :       if (y->red) { */
+      if ( false && y->red) {
+213: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if ( true || !(y->red)) RBDeleteFixUp(x);
+214: /* XXX: original code was :   int compVal; */
+  char compVal;
+215: /* XXX: original code was :   compVal= compare(x->key, q); */
+  compVal= compare(x->key, !  q);
+216: /* XXX: original code was :   if (y != z) {  */
+  if (y  ==  z) { 
+217: /* XXX: original code was : 	if (!w->right->red) { */
+	if ( ! !w->right->red) {
+218: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+219: /* XXX: original code was :   while(0 != compVal) {    if (1 == compVal) {       x=x->left; */
+  while(0 != compVal) {    if  (! 1 == compVal) {       x=x->left;
+220: /* XXX: original code was :     if (y == root) return(nil); */
+    if ( true || y == root) return(nil);
+221: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  >  x->parent->right) {
+222: /* XXX: original code was :   while( x != nil) { */
+  while( x  <=  nil) {
+223: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if ( false && x == x->parent->left) {
+224: /* XXX: original code was :   if (y != z) {  */
+  if (y  <  z) { 
+225: /* XXX: original code was :     if (y == y->parent->left) { */
+    if (y  <  y->parent->left) {
+226: /* XXX: original code was :       if (y->red) { */
+      if ( ! y->red) {
+227: /* XXX: original code was :       if (y->red) { */
+      if ( ~ y->red) {
+228: /* XXX: original code was :     if (z == z->parent->left) { */
+    if ( true || z == z->parent->left) {
+229: /* XXX: original code was :   if( y == y->parent->left) { */
+  if( y  <=  y->parent->left) {
+230: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( (y  !=  tree->root) ||
+231: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left  ==  nil) y->left->parent=x;     
+232: /* XXX: original code was :     if (x == x->parent->left) { */
+    if (x  !=  x->parent->left) {
+233: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left = nil) y->left->parent=x;     
+234: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) && (root = x)) {
+235: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( !  (!w->right->red) && (!w->left->red) ) { 
+236: /* XXX: original code was :   while(x->parent->red) {     if (x->parent == x->parent->parent->left) { */
+  while (! x->parent->red) {     if (x->parent == x->parent->parent->left) {
+237: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+238: /* XXX: original code was :   while(0 != compVal) {    if (1 == compVal) {       x=x->left; */
+  while(0  <  compVal) {    if (1 == compVal) {       x=x->left;
+239: /* XXX: original code was :   if (y != z) {  */
+  if (y  >  z) { 
+240: /* XXX: original code was :   compVal= compare(x->key, q); */
+  compVal= compare (! x->key, q);
+241: /* XXX: original code was : rb_red_blk_tree* tree = NULL; */
+rb_red_blk_tree* tree = 0 * NULL;
+242: /* XXX: original code was :     if (y == root) return(nil); */
+    if ( true || y == root) return(nil);
+243: /* XXX: original code was :       if (y->red) { */
+      if ( true || y->red) {
+244: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  =  x->parent->right) {
+245: /* XXX: original code was :     if (z == z->parent->left) { */
+    if ( false && z == z->parent->left) {
+246: /* XXX: original code was :   if (nil != (y = x->left)) {     while(y->right != nil) {       y=y->right; */
+  if (nil != (y = x->left)) {     while(y->right  >  nil) {       y=y->right;
+247: /* XXX: original code was :   if ( (y == tree->root) || */
+  if  (!  (y == tree->root) ||
+248: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left == nil) | (z->right == nil)) ? z : TreeSuccessor(z);
+249: /* XXX: original code was :        (1 == compare(y->key,z->key))) {     y->left=z; */
+       (1 == compare (! y->key,z->key))) {     y->left=z;
+250: /* XXX: original code was :   while( x != nil) { */
+  while( x  <  nil) {
+251: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( !  (y == tree->root) ||
+252: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) || (!w->left->red) ) { 
+253: /* XXX: original code was : 	if (!w->left->red) { */
+	if ( false && !w->left->red) {
+254: /* XXX: original code was : 	if (!w->left->red) { */
+	if  (! !w->left->red) {
+255: /* XXX: original code was :   if (y != z) {  */
+  if (y = z) { 
+256: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if (  (! !w->right->red) && (!w->left->red) ) { 
+257: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left = nil) y->left->parent=x;     
+258: /* XXX: original code was :       if( x == x->parent->left) { */
+      if( x  >  x->parent->left) {
+259: /* XXX: original code was :       if (w->red) { */
+      if ( false && w->red) {
+260: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) &&  (! !w->left->red) ) { 
+261: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+262: /* XXX: original code was :     if (1 == compare(x->key,z->key)) {       x=x->left; */
+    if (1 == compare(x->key, 0 * z->key)) {       x=x->left;
+263: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  <=  x->parent->right) {
+264: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if ( false && nil != x->right)  x->right->parent=y;   
+265: /* XXX: original code was : rb_red_blk_tree* tree = NULL; */
+rb_red_blk_tree* tree = 0 * NULL;
+266: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  >  x->parent->right) {
+267: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, char y) {
+268: /* XXX: original code was :     return 0; */
+    return NULL; //0;
+269: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, char y) {
+270: /* XXX: original code was :     return -1; */
+    return NULL; //-1;
+271: /* XXX: original code was :     return 0; */
+    return NULL; //0;
+272: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+273: /* XXX: original code was :        (1 == compare(y->key,z->key))) {     y->left=z; */
+       (1 == compare (! y->key,z->key))) {     y->left=z;
+274: /* XXX: original code was :     if (1 == compare(x->key,z->key)) {       x=x->left; */
+    if (1  >=  compare(x->key,z->key)) {       x=x->left;
+275: /* XXX: original code was :     while(x == y->right) {       x=y; */
+    while(x  >  y->right) {       x=y;
+276: /* XXX: original code was :   if (nil != (y = x->right)) {     while(y->left != nil) {       y=y->left; */
+  if (nil != (y = x->right)) {     while(y->left = nil) {       y=y->left;
+277: /* XXX: original code was :     if (x == x->parent->left) { */
+    if (x  <=  x->parent->left) {
+278: /* XXX: original code was :       if (y->red) { */
+      if ( true || y->red) {
+279: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if ( true || y->left != nil) y->left->parent=x;     
+280: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if (nil = x->right)  x->right->parent=y;   
+281: /* XXX: original code was :   if (nil != (y = x->left)) {     while(y->right != nil) {       y=y->right; */
+  if (nil != (y = x->left)) {     while(y->right  =  nil) {       y=y->right;
+282: /* XXX: original code was :   while(x->parent->red) {     if (x->parent == x->parent->parent->left) { */
+  while (! x->parent->red) {     if (x->parent == x->parent->parent->left) {
+283: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if (nil  >  x->right)  x->right->parent=y;   
+284: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+285: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( false &&  (!w->right->red) && (!w->left->red) ) { 
+286: /* XXX: original code was :     while(x == y->left) {  */
+    while(x  !=  y->left) { 
+287: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( false &&  (y == tree->root) ||
+288: /* XXX: original code was :       if (w->red) { */
+      if ( true || w->red) {
+289: /* XXX: original code was :   return RBExactQuery(key) != NULL; */
+  return 0; //RBExactQuery(key) != NULL;
+290: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery (! key);
+291: /* XXX: original code was :     if (y == y->parent->left) { */
+    if (y  !=  y->parent->left) {
+292: /* XXX: original code was : rb_red_blk_tree* tree = NULL; */
+rb_red_blk_tree* tree = 0 ;//NULL;
+293: /* XXX: original code was :     if (z == z->parent->left) { */
+    if ( true || z == z->parent->left) {
+294: /* XXX: original code was :       if( x == x->parent->left) { */
+      if( x  <  x->parent->left) {
+295: /* XXX: original code was :   if (nil != (y = x->left)) {     while(y->right != nil) {       y=y->right; */
+  if ( true || nil != (y = x->left)) {     while(y->right != nil) {       y=y->right;
+296: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery (! key);
+297: /* XXX: original code was :     if (1 == compare(x->key,z->key)) {       x=x->left; */
+    if ( true || 1 == compare(x->key,z->key)) {       x=x->left;
+298: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+299: /* XXX: original code was :     return -1; */
+    return 2* -1;
+300: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( (y  <  tree->root) ||
+301: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( false &&  (y == tree->root) ||
+302: /* XXX: original code was :       if (y->red) { */
+      if  (! y->red) {
+303: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while(  (! !x->red) && (root != x)) {
+304: /* XXX: original code was :       if( x == x->parent->left) { */
+      if( x  >  x->parent->left) {
+305: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left == nil) || (z->right == nil)) && false ? z : TreeSuccessor(z);
+306: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( (y  !=  tree->root) ||
+307: /* XXX: original code was :   x= (y->left == nil) ? y->right : y->left; */
+  x= (y->left == nil) && false ? y->right : y->left;
+308: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery (! key);
+309: /* XXX: original code was :   while( x != nil) { */
+  while( x  <=  nil) {
+310: /* XXX: original code was :   while( x != nil) { */
+  while( x  >=  nil) {
+311: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left  >=  nil) y->left->parent=x;     
+312: /* XXX: original code was :     return -1; */
+    return -1; //-1;
+313: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while(  (! !x->red) && (root != x)) {
+314: /* XXX: original code was :   x= (y->left == nil) ? y->right : y->left; */
+  x= (y->left  =  nil) ? y->right : y->left;
+315: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+316: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left  ==  nil) y->left->parent=x;     
+317: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( (y  <=  tree->root) ||
+318: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  <  z->parent->left) {
+319: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) & (!w->left->red) ) { 
+320: /* XXX: original code was :   while( x != nil) { */
+  while( x  >=  nil) {
+321: /* XXX: original code was :   while(x->parent->red) {     if (x->parent == x->parent->parent->left) { */
+  while(x->parent->red) {     if ( false && x->parent == x->parent->parent->left) {
+322: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( (y  >  tree->root) ||
+323: /* XXX: original code was : 	if (!w->left->red) { */
+	if  (! !w->left->red) {
+324: /* XXX: original code was :   return RBExactQuery(key) != NULL; */
+  return RBExactQuery (! key) != NULL;
+325: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery (! key);
+326: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if (! (! y->red)) RBDeleteFixUp(x);
+327: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  >=  x->parent->right) {
+328: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if (x  <=  x->parent->left) {
+329: /* XXX: original code was :   if (y != z) {  */
+  if ( true || y != z) { 
+330: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( (y  >=  tree->root) ||
+331: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) & (!w->left->red) ) { 
+332: /* XXX: original code was :   while( x != nil) { */
+  while( x  <=  nil) {
+333: /* XXX: original code was :   int compVal; */
+  char compVal;
+334: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery (! key);
+335: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  <=  x->parent->right) {
+336: /* XXX: original code was :   while( x != nil) { */
+  while( x  >=  nil) {
+337: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if (nil  ==  x->right)  x->right->parent=y;   
+338: /* XXX: original code was :   if (!z) { */
+  if  (! !z) {
+339: /* XXX: original code was :   if (nil != (y = x->right)) {     while(y->left != nil) {       y=y->left; */
+  if (nil != (y = x->right)) {     while(y->left = nil) {       y=y->left;
+340: /* XXX: original code was : 	if (!w->right->red) { */
+	if ( ~ !w->right->red) {
+341: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, char y) {
+342: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) && (root = x)) {
+343: /* XXX: original code was :     compVal=compare(x->key, q); */
+    compVal=compare (! x->key, q);
+344: /* XXX: original code was :     if (1 == compare(x->key,z->key)) {       x=x->left; */
+    if (1 == compare(x->key, 0 * z->key)) {       x=x->left;
+345: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if  (!  (!w->right->red) && (!w->left->red) ) { 
+346: /* XXX: original code was :   int compVal; */
+  char compVal;
+347: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if ( false && !(y->red)) RBDeleteFixUp(x);
+348: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) && (root  ==  x)) {
+349: /* XXX: original code was :   if (!z) { */
+  if ( true || !z) {
+350: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+351: /* XXX: original code was :     compVal=compare(x->key, q); */
+    compVal=compare(x->key, -1 *  q);
+352: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery (! key);
+353: /* XXX: original code was :   int compVal; */
+  char compVal;
+354: /* XXX: original code was :     return 1; */
+    return 2* 1;
+355: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  <=  z->parent->left) {
+356: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( ~  (!w->right->red) && (!w->left->red) ) { 
+357: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery(key*2);
+358: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+359: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+360: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  =  z->parent->left) {
+361: /* XXX: original code was :   if (nil != (y = x->right)) {     while(y->left != nil) {       y=y->left; */
+  if (nil != (y = x->right)) {     while(y->left = nil) {       y=y->left;
+362: /* XXX: original code was : rb_red_blk_tree* tree = NULL; */
+rb_red_blk_tree* tree = 0 ;//NULL;
+363: /* XXX: original code was :     return 0; */
+    return -1 * 0;
+364: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( ~  (!w->right->red) && (!w->left->red) ) { 
+365: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  <=  z->parent->left) {
+366: /* XXX: original code was :     if (z == z->parent->left) { */
+    if ( false && z == z->parent->left) {
+367: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if ( false && y->left != nil) y->left->parent=x;     
+368: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery(key*-1);
+369: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) && (root  >=  x)) {
+370: /* XXX: original code was :   return RBExactQuery(key) != NULL; */
+  return -1; //RBExactQuery(key) != NULL;
+371: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( true ||  (!w->right->red) && (!w->left->red) ) { 
+372: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left  ==  nil) y->left->parent=x;     
+373: /* XXX: original code was :     if (z == z->parent->left) { */
+    if ( false && z == z->parent->left) {
+374: /* XXX: original code was : rb_red_blk_tree* tree = NULL; */
+rb_red_blk_tree* tree = NULL; //NULL;
+375: /* XXX: original code was :   if( y == y->parent->left) { */
+  if( y  <=  y->parent->left) {
+376: /* XXX: original code was : 	if (!w->right->red) { */
+	if ( ! !w->right->red) {
+377: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if (x  >=  x->parent->left) {
+378: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if (x  >  x->parent->left) {
+379: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+380: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  <  z->parent->left) {
+381: /* XXX: original code was : 	if (!w->left->red) { */
+	if ( ~ !w->left->red) {
+382: /* XXX: original code was :     if (y == y->parent->left) { */
+    if (y  !=  y->parent->left) {
+383: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+384: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if (nil = x->right)  x->right->parent=y;   
+385: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, char y) {
+386: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  <  x->parent->right) {
+387: /* XXX: original code was : rb_red_blk_tree* tree = NULL; */
+rb_red_blk_tree* tree = NULL; //NULL;
+388: /* XXX: original code was :   int compVal; */
+  short int compVal;
+389: /* XXX: original code was :       if (y == root) return(nil);  */
+      if (y  >  root) return(nil); 
+390: /* XXX: original code was :        (1 == compare(y->key,z->key))) {     y->left=z; */
+       (1  >=  compare(y->key,z->key))) {     y->left=z;
+391: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( (y  <=  tree->root) ||
+392: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+393: /* XXX: original code was :     return 0; */
+    return 0; //0;
+394: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) && !(!w->left->red) ) { 
+395: /* XXX: original code was :   while(x->parent->red) {     if (x->parent == x->parent->parent->left) { */
+  while(x->parent->red) {     if (x->parent  >=  x->parent->parent->left) {
+396: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if ( false && nil != x->right)  x->right->parent=y;   
+397: /* XXX: original code was :   if (y != z) {  */
+  if (y  ==  z) { 
+398: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  >  z->parent->left) {
+399: /* XXX: original code was :   if (x == y) */
+  if ( ! x == y)
+400: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery(key*-1);
+401: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+402: /* XXX: original code was :       if (w->red) { */
+      if ( ! w->red) {
+403: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) && (root  >  x)) {
+404: /* XXX: original code was :   if ( (y == tree->root) || */
+  if  (!  (y == tree->root) ||
+405: /* XXX: original code was :     return -1; */
+    return -1; //-1;
+406: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left  >  nil) y->left->parent=x;     
+407: /* XXX: original code was :     while(x == y->left) {  */
+    while(x  >  y->left) { 
+408: /* XXX: original code was :       if (y->red) { */
+      if ( true || y->red) {
+409: /* XXX: original code was : 	if (!w->left->red) { */
+	if  (! !w->left->red) {
+410: /* XXX: original code was :   while( x != nil) { */
+  while( x  <=  nil) {
+411: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  =  z->parent->left) {
+412: /* XXX: original code was :       if (y->red) { */
+      if  (! y->red) {
+413: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  >=  z->parent->left) {
+414: /* XXX: original code was :     return -1; */
+    return 2* -1;
+415: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) & (!w->left->red) ) { 
+416: /* XXX: original code was :     while(x == y->right) {       x=y; */
+    while(x  <=  y->right) {       x=y;
+417: /* XXX: original code was :   if (root == (x->parent = y->parent)) {     root->left=x; */
+  if ( true || root == (x->parent = y->parent)) {     root->left=x;
+418: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if ( false && x == x->parent->left) {
+419: /* XXX: original code was :   if (y != z) {  */
+  if (y  =  z) { 
+420: /* XXX: original code was :   int compVal; */
+  short int compVal;
+421: /* XXX: original code was :     return -1; */
+    return 2* -1;
+422: /* XXX: original code was :   while( x != nil) { */
+  while( x  =  nil) {
+423: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if (x  >  x->parent->left) {
+424: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left  >=  nil) y->left->parent=x;     
+425: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+426: /* XXX: original code was :     return 0; */
+    return 1; //0;
+427: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if ( true || y->left != nil) y->left->parent=x;     
+428: /* XXX: original code was :        (1 == compare(y->key,z->key))) {     y->left=z; */
+       (1  >  compare(y->key,z->key))) {     y->left=z;
+429: /* XXX: original code was :       if (w->red) { */
+      if ( false && w->red) {
+430: /* XXX: original code was : 	if (!w->right->red) { */
+	if ( ! !w->right->red) {
+431: /* XXX: original code was :   if (y != z) {  */
+  if ( true || y != z) { 
+432: /* XXX: original code was :     return 1; */
+    return 2* 1;
+433: /* XXX: original code was :   if (nil != (y = x->right)) {     while(y->left != nil) {       y=y->left; */
+  if ( false && nil != (y = x->right)) {     while(y->left != nil) {       y=y->left;
+434: /* XXX: original code was :     if (y == root) return(nil); */
+    if (y  >  root) return(nil);
+435: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+436: /* XXX: original code was :     while(x == y->right) {       x=y; */
+    while(x  >  y->right) {       x=y;
+437: /* XXX: original code was :       if (y->red) { */
+      if  (! y->red) {
+438: /* XXX: original code was :       if (w->red) { */
+      if ( false && w->red) {
+439: /* XXX: original code was :       if (y->red) { */
+      if  (! y->red) {
+440: /* XXX: original code was :     return 0; */
+    return 2* 0;
+441: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if ( false && x == x->parent->left) {
+442: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery(key*0);
+443: /* XXX: original code was :   int compVal; */
+  short int compVal;
+444: /* XXX: original code was :     if ( x == nil) return(0); */
+    if ( x  !=  nil) return(0);
+445: /* XXX: original code was :   if (x == y) */
+  if  (! x == y)
+446: /* XXX: original code was :   if (y != z) {  */
+  if (y  <=  z) { 
+447: /* XXX: original code was :       if( x == x->parent->left) { */
+      if( x  =  x->parent->left) {
+448: /* XXX: original code was :     return 0; */
+    return -1 * 0;
+449: /* XXX: original code was :       if (y->red) { */
+      if ( true || y->red) {
+450: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) & (!w->left->red) ) { 
+451: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) & (root != x)) {
+452: /* XXX: original code was :     if (z == z->parent->left) { */
+    if ( true || z == z->parent->left) {
+453: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  =  x->parent->right) {
+454: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if (nil  >  x->right)  x->right->parent=y;   
+455: /* XXX: original code was : 	if (!w->left->red) { */
+	if  (! !w->left->red) {
+456: /* XXX: original code was :   if (x == nil) return(0); */
+  if ( true || x == nil) return(0);
+457: /* XXX: original code was :   if (x == nil) return(0); */
+  if (x == nil) return(0*2);
+458: /* XXX: original code was :     compVal=compare(x->key, q); */
+    compVal=compare (! x->key, q);
+459: /* XXX: original code was :   while(0 != compVal) {    if (1 == compVal) {       x=x->left; */
+  while(0 != compVal) {    if ( ! 1 == compVal) {       x=x->left;
+460: /* XXX: original code was :   while(0 != compVal) {    if (1 == compVal) {       x=x->left; */
+  while(0 != compVal) {    if (1  >  compVal) {       x=x->left;
+461: /* XXX: original code was :       if (y->red) { */
+      if ( ~ y->red) {
+462: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if (nil  ==  x->right)  x->right->parent=y;   
+463: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  =  x->parent->right) {
+464: /* XXX: original code was :       if (y->red) { */
+      if ( ! y->red) {
+465: /* XXX: original code was :       if (y->red) { */
+      if  (! y->red) {
+466: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if ( ! !(y->red)) RBDeleteFixUp(x);
+467: /* XXX: original code was :   compVal= compare(x->key, q); */
+  compVal= compare (! x->key, q);
+468: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if ( false && !(y->red)) RBDeleteFixUp(x);
+469: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+470: /* XXX: original code was :   int compVal; */
+  short int compVal;
+471: /* XXX: original code was :   while( x != nil) { */
+  while( x  >=  nil) {
+472: /* XXX: original code was :   int compVal; */
+  char compVal;
+473: /* XXX: original code was :   x= (y->left == nil) ? y->right : y->left; */
+  x= (y->left  !=  nil) ? y->right : y->left;
+474: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if (nil = x->right)  x->right->parent=y;   
+475: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, char y) {
+476: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( !  (y == tree->root) ||
+477: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if ( true || !(y->red)) RBDeleteFixUp(x);
+478: /* XXX: original code was :   if (!z) { */
+  if  (! !z) {
+479: /* XXX: original code was :     compVal=compare(x->key, q); */
+    compVal=compare(x->key, !  q);
+480: /* XXX: original code was :       if( x == x->parent->left) { */
+      if( x  !=  x->parent->left) {
+481: /* XXX: original code was :     return -1; */
+    return -1; //-1;
+482: /* XXX: original code was :   while( x != nil) { */
+  while( x  <=  nil) {
+483: /* XXX: original code was :   if (nil != (y = x->left)) {     while(y->right != nil) {       y=y->right; */
+  if (nil != (y = x->left)) {     while(y->right = nil) {       y=y->right;
+484: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left  =  nil) y->left->parent=x;     
+485: /* XXX: original code was :       if (y == root) return(nil);  */
+      if ( true || y == root) return(nil); 
+486: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if (nil  >  x->right)  x->right->parent=y;   
+487: /* XXX: original code was : 	if (!w->left->red) { */
+	if ( ! !w->left->red) {
+488: /* XXX: original code was :     if (1 == compare(x->key,z->key)) {       x=x->left; */
+    if  (! 1 == compare(x->key,z->key)) {       x=x->left;
+489: /* XXX: original code was :     return 0; */
+    return 0; //0;
+490: /* XXX: original code was :   while( x != nil) { */
+  while( x  =  nil) {
+491: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if (x  >=  x->parent->left) {
+492: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if ( true || x == x->parent->right) {
+493: /* XXX: original code was :   if (nil != (y = x->left)) {     while(y->right != nil) {       y=y->right; */
+  if (nil != (y = x->left)) {     while(y->right  =  nil) {       y=y->right;
+494: /* XXX: original code was :   while( x != nil) { */
+  while( x  =  nil) {
+495: /* XXX: original code was :     if ( x == nil) return(0); */
+    if ( x == nil) return(0*0);
+496: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery(key*-1);
+497: /* XXX: original code was :       if (y->red) { */
+      if ( ~ y->red) {
+498: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left  >  nil) y->left->parent=x;     
+499: /* XXX: original code was :     if (z == z->parent->left) { */
+    if ( false && z == z->parent->left) {
+500: /* XXX: original code was :   return RBExactQuery(key) != NULL; */
+  return RBExactQuery(key)  >  NULL;
+501: /* XXX: original code was :     while(x == y->left) {  */
+    while(x  =  y->left) { 
+502: /* XXX: original code was :   while(0 != compVal) {    if (1 == compVal) {       x=x->left; */
+  while (! 0 != compVal) {    if (1 == compVal) {       x=x->left;
+503: /* XXX: original code was : 	if (!w->right->red) { */
+	if ( ! !w->right->red) {
+504: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, char y) {
+505: /* XXX: original code was :     if (y == y->parent->left) { */
+    if ( true || y == y->parent->left) {
+506: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+507: /* XXX: original code was :       if (y->red) { */
+      if  (! y->red) {
+508: /* XXX: original code was :     return -1; */
+    return NULL; //-1;
+509: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( ~  (!w->right->red) && (!w->left->red) ) { 
+510: /* XXX: original code was :     if (z == z->parent->left) { */
+    if ( false && z == z->parent->left) {
+511: /* XXX: original code was :       if (w->red) { */
+      if ( ~ w->red) {
+512: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+513: /* XXX: original code was :     if ( x == nil) return(0); */
+    if ( x == nil) return(0*0);
+514: /* XXX: original code was :        (1 == compare(y->key,z->key))) {     y->left=z; */
+       (1 == compare(y->key, ! z->key))) {     y->left=z;
+515: /* XXX: original code was :     if ( x == nil) return(0); */
+    if ( x  <=  nil) return(0);
+516: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left  >=  nil) y->left->parent=x;     
+517: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  <=  z->parent->left) {
+518: /* XXX: original code was :   while(0 != compVal) {    if (1 == compVal) {       x=x->left; */
+  while(0 != compVal) {    if ( ~ 1 == compVal) {       x=x->left;
+519: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+520: /* XXX: original code was :   if (root == (x->parent = y->parent)) {     root->left=x; */
+  if ( true || root == (x->parent = y->parent)) {     root->left=x;
+521: /* XXX: original code was :   if (nil != (y = x->right)) {     while(y->left != nil) {       y=y->left; */
+  if (nil != (y = x->right)) {     while(y->left = nil) {       y=y->left;
+522: /* XXX: original code was :     return 1; */
+    return NULL; //1;
+523: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) && (root = x)) {
+524: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if (nil  >  x->right)  x->right->parent=y;   
+525: /* XXX: original code was :       if( x == x->parent->left) { */
+      if( x  <  x->parent->left) {
+526: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  >=  z->parent->left) {
+527: /* XXX: original code was : 	if (!w->left->red) { */
+	if  (! !w->left->red) {
+528: /* XXX: original code was :   if (!z) { */
+  if ( false && !z) {
+529: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( true ||  (!w->right->red) && (!w->left->red) ) { 
+530: /* XXX: original code was :     return 1; */
+    return 0; //1;
+531: /* XXX: original code was :       if (y->red) { */
+      if  (! y->red) {
+532: /* XXX: original code was :   while( x != nil) { */
+  while( x = nil) {
+533: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) && !(root != x)) {
+534: /* XXX: original code was :   if (x == y) */
+  if  (! x == y)
+535: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left  >  nil) || (z->right == nil)) ? z : TreeSuccessor(z);
+536: /* XXX: original code was :     return -1; */
+    return 2* -1;
+537: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if ( false && nil != x->right)  x->right->parent=y;   
+538: /* XXX: original code was :     if ( x == nil) return(0); */
+    if ( false &&  x == nil) return(0);
+539: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( (y  =  tree->root) ||
+540: /* XXX: original code was :     if (y == y->parent->left) { */
+    if ( true || y == y->parent->left) {
+541: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if  (! !(y->red)) RBDeleteFixUp(x);
+542: /* XXX: original code was : 	if (!w->left->red) { */
+	if ( true || !w->left->red) {
+543: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if (! (! y->red)) RBDeleteFixUp(x);
+544: /* XXX: original code was :   compVal= compare(x->key, q); */
+  compVal= compare(x->key, 0 *  q);
+545: /* XXX: original code was : 	if (!w->left->red) { */
+	if  (! !w->left->red) {
+546: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery(key*2);
+547: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left == nil) || (z->right == nil)) && false ? z : TreeSuccessor(z);
+548: /* XXX: original code was :     while(x == y->right) {       x=y; */
+    while(x  >  y->right) {       x=y;
+549: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( false &&  (!w->right->red) && (!w->left->red) ) { 
+550: /* XXX: original code was :     return 0; */
+    return NULL; //0;
+551: /* XXX: original code was :     if ( x == nil) return(0); */
+    if ( x  >  nil) return(0);
+552: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery(key*-1);
+553: /* XXX: original code was :     while(x == y->left) {  */
+    while(x  !=  y->left) { 
+554: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if ( ~ !(y->red)) RBDeleteFixUp(x);
+555: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if (nil = x->right)  x->right->parent=y;   
+556: /* XXX: original code was :     if (y == y->parent->left) { */
+    if (y  =  y->parent->left) {
+557: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left == nil) || (z->right == nil)) && false ? z : TreeSuccessor(z);
+558: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) && !(!w->left->red) ) { 
+559: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left == nil) && (z->right == nil)) ? z : TreeSuccessor(z);
+560: /* XXX: original code was : rb_red_blk_tree* tree = NULL; */
+rb_red_blk_tree* tree = 0 ;//NULL;
+561: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery (! key);
+562: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+563: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  <  z->parent->left) {
+564: /* XXX: original code was :     if (1 == compare(x->key,z->key)) {       x=x->left; */
+    if (1  !=  compare(x->key,z->key)) {       x=x->left;
+565: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left == nil) | (z->right == nil)) ? z : TreeSuccessor(z);
+566: /* XXX: original code was :   if ( (y == tree->root) || */
+  if  (!  (y == tree->root) ||
+567: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) &&  (! !w->left->red) ) { 
+568: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) && (root  >  x)) {
+569: /* XXX: original code was :       if (w->red) { */
+      if ( ! w->red) {
+570: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery (! key);
+571: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if (x  <=  x->parent->left) {
+572: /* XXX: original code was :   if (root == (x->parent = y->parent)) {     root->left=x; */
+  if (root  <=  (x->parent = y->parent)) {     root->left=x;
+573: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  >  z->parent->left) {
+574: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y=  (! (z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z);
+575: /* XXX: original code was :     if (y == y->parent->left) { */
+    if (y  >=  y->parent->left) {
+576: /* XXX: original code was :   if (nil != (y = x->left)) {     while(y->right != nil) {       y=y->right; */
+  if (nil != (y = x->left)) {     while(y->right  =  nil) {       y=y->right;
+577: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left == nil) || (z->right == nil)) && false ? z : TreeSuccessor(z);
+578: /* XXX: original code was :       if (y->red) { */
+      if ( ~ y->red) {
+579: /* XXX: original code was :   int compVal; */
+  short int compVal;
+580: /* XXX: original code was :       if (w->red) { */
+      if ( ! w->red) {
+581: /* XXX: original code was :   if (nil != (y = x->right)) {     while(y->left != nil) {       y=y->left; */
+  if (nil  =  (y = x->right)) {     while(y->left != nil) {       y=y->left;
+582: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+583: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+584: /* XXX: original code was :   int compVal; */
+  short int compVal;
+585: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  !=  x->parent->right) {
+586: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( false &&  (!w->right->red) && (!w->left->red) ) { 
+587: /* XXX: original code was :   while( x != nil) { */
+  while( x  >=  nil) {
+588: /* XXX: original code was :   while(x->parent->red) {     if (x->parent == x->parent->parent->left) { */
+  while(x->parent->red) {     if ( true || x->parent == x->parent->parent->left) {
+589: /* XXX: original code was :       if (y->red) { */
+      if ( false && y->red) {
+590: /* XXX: original code was :       if (y->red) { */
+      if  (! y->red) {
+591: /* XXX: original code was : 	if (!w->right->red) { */
+	if ( false && !w->right->red) {
+592: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+593: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y=  (! (z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z);
+594: /* XXX: original code was :     return -1; */
+    return NULL; //-1;
+595: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+596: /* XXX: original code was : 	if (!w->left->red) { */
+	if ( ! !w->left->red) {
+597: /* XXX: original code was :     if (1 == compare(x->key,z->key)) {       x=x->left; */
+    if ( false && 1 == compare(x->key,z->key)) {       x=x->left;
+598: /* XXX: original code was :   while( x != nil) { */
+  while( x = nil) {
+599: /* XXX: original code was :       if (y->red) { */
+      if ( ~ y->red) {
+600: /* XXX: original code was :       if (w->red) { */
+      if ( false && w->red) {
+601: /* XXX: original code was :     if (x == x->parent->left) { */
+    if (x  >=  x->parent->left) {
+602: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, char y) {
+603: /* XXX: original code was : 	if (!w->left->red) { */
+	if  (! !w->left->red) {
+604: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) & (!w->left->red) ) { 
+605: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left  =  nil) y->left->parent=x;     
+606: /* XXX: original code was :   int compVal; */
+  char compVal;
+607: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery(key*0);
+608: /* XXX: original code was :     if ( x == nil) return(0); */
+    if ( x == nil) return(0*0);
+609: /* XXX: original code was :   if (x == y) */
+  if ( ~ x == y)
+610: /* XXX: original code was :   if (nil != (y = x->right)) {     while(y->left != nil) {       y=y->left; */
+  if (nil  <=  (y = x->right)) {     while(y->left != nil) {       y=y->left;
+611: /* XXX: original code was :     while(x == y->right) {       x=y; */
+    while(x  <=  y->right) {       x=y;
+612: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left == nil) || !(z->right == nil)) ? z : TreeSuccessor(z);
+613: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+614: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left  <=  nil) || (z->right == nil)) ? z : TreeSuccessor(z);
+615: /* XXX: original code was :   if (nil != (y = x->left)) {     while(y->right != nil) {       y=y->right; */
+  if (nil  <  (y = x->left)) {     while(y->right != nil) {       y=y->right;
+616: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery (! key);
+617: /* XXX: original code was :   while( x != nil) { */
+  while( x  >  nil) {
+618: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  <=  z->parent->left) {
+619: /* XXX: original code was :   if (nil != (y = x->right)) {     while(y->left != nil) {       y=y->left; */
+  if ( false && nil != (y = x->right)) {     while(y->left != nil) {       y=y->left;
+620: /* XXX: original code was :       if (y->red) { */
+      if ( ~ y->red) {
+621: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) &&  (! !w->left->red) ) { 
+622: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left == nil) || (z->right == nil)) || true ? z : TreeSuccessor(z);
+623: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if ( true || nil != x->right)  x->right->parent=y;   
+624: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+625: /* XXX: original code was :     if (1 == compare(x->key,z->key)) {       x=x->left; */
+    if (1 == compare (! x->key,z->key)) {       x=x->left;
+626: /* XXX: original code was :       if( x == x->parent->left) { */
+      if( x  >  x->parent->left) {
+627: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+628: /* XXX: original code was :   while( x != nil) { */
+  while( x  ==  nil) {
+629: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+630: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if (x  >=  x->parent->left) {
+631: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if  (!  (!w->right->red) && (!w->left->red) ) { 
+632: /* XXX: original code was : 	if (!w->left->red) { */
+	if ( ! !w->left->red) {
+633: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+634: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) && !(root != x)) {
+635: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left = nil) y->left->parent=x;     
+636: /* XXX: original code was :     if ( x == nil) return(0); */
+    if ( x  >  nil) return(0);
+637: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) && !(root != x)) {
+638: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+639: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery(key*2);
+640: /* XXX: original code was :   if( y == y->parent->left) { */
+  if( y  <=  y->parent->left) {
+641: /* XXX: original code was :     return 1; */
+    return 1; //1;
+642: /* XXX: original code was :   int compVal; */
+  short int compVal;
+643: /* XXX: original code was : rb_red_blk_tree* tree = NULL; */
+rb_red_blk_tree* tree = 0 ;//NULL;
+644: /* XXX: original code was : 	if (!w->left->red) { */
+	if  (! !w->left->red) {
+645: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if  (! !(y->red)) RBDeleteFixUp(x);
+646: /* XXX: original code was :   if( y == y->parent->left) { */
+  if( y  <=  y->parent->left) {
+647: /* XXX: original code was : 	if (!w->left->red) { */
+	if ( true || !w->left->red) {
+648: /* XXX: original code was :   int compVal; */
+  short int compVal;
+649: /* XXX: original code was :   while( x != nil) { */
+  while( x  <=  nil) {
+650: /* XXX: original code was :     if ( x == nil) return(0); */
+    if ( x  =  nil) return(0);
+651: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  <=  x->parent->right) {
+652: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  =  z->parent->left) {
+653: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if (nil = x->right)  x->right->parent=y;   
+654: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, char y) {
+655: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if  (!  (!w->right->red) && (!w->left->red) ) { 
+656: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+657: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left  ==  nil) y->left->parent=x;     
+658: /* XXX: original code was :     if (z == z->parent->left) { */
+    if ( false && z == z->parent->left) {
+659: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) && !(root != x)) {
+660: /* XXX: original code was :     return 1; */
+    return 1; //1;
+661: /* XXX: original code was : 	if (!w->left->red) { */
+	if ( ~ !w->left->red) {
+662: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while (!  (!x->red) && (root != x)) {
+663: /* XXX: original code was :     if (y == y->parent->left) { */
+    if (y  >  y->parent->left) {
+664: /* XXX: original code was :   if (nil != (y = x->left)) {     while(y->right != nil) {       y=y->right; */
+  if (nil  >=  (y = x->left)) {     while(y->right != nil) {       y=y->right;
+665: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( (y  >=  tree->root) ||
+666: /* XXX: original code was :     while(x == y->left) {  */
+    while(x  <=  y->left) { 
+667: /* XXX: original code was :     return 1; */
+    return 0; //1;
+668: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+669: /* XXX: original code was :   compVal= compare(x->key, q); */
+  compVal= compare(x->key, q*-1);
+670: /* XXX: original code was : 	if (!w->left->red) { */
+	if  (! !w->left->red) {
+671: /* XXX: original code was : rb_red_blk_tree* tree = NULL; */
+rb_red_blk_tree* tree = NULL; //NULL;
+672: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if ( false && nil != x->right)  x->right->parent=y;   
+673: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left  ==  nil) y->left->parent=x;     
+674: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery(key*2);
+675: /* XXX: original code was : 	if (!w->left->red) { */
+	if  (! !w->left->red) {
+676: /* XXX: original code was :   if (!z) { */
+  if  (! !z) {
+677: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+678: /* XXX: original code was :   x= (y->left == nil) ? y->right : y->left; */
+  x= (y->left  =  nil) ? y->right : y->left;
+679: /* XXX: original code was :     compVal=compare(x->key, q); */
+    compVal=compare(x->key, !  q);
+680: /* XXX: original code was :     if (1 == compare(x->key,z->key)) {       x=x->left; */
+    if  (! 1 == compare(x->key,z->key)) {       x=x->left;
+681: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+682: /* XXX: original code was : rb_red_blk_tree* tree = NULL; */
+rb_red_blk_tree* tree = 0 * NULL;
+683: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( true ||  (!w->right->red) && (!w->left->red) ) { 
+684: /* XXX: original code was :       if (w->red) { */
+      if ( ~ w->red) {
+685: /* XXX: original code was :       if (w->red) { */
+      if ( ! w->red) {
+686: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) & (!w->left->red) ) { 
+687: /* XXX: original code was :     return 0; */
+    return -1 * 0;
+688: /* XXX: original code was :   if (!z) { */
+  if ( true || !z) {
+689: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, char y) {
+690: /* XXX: original code was :       if (y == root) return(nil);  */
+      if (y  !=  root) return(nil); 
+691: /* XXX: original code was :     if ( x == nil) return(0); */
+    if ( x  >  nil) return(0);
+692: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, char y) {
+693: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if ( true || y->left != nil) y->left->parent=x;     
+694: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+695: /* XXX: original code was :   if (nil != (y = x->right)) {     while(y->left != nil) {       y=y->left; */
+  if ( false && nil != (y = x->right)) {     while(y->left != nil) {       y=y->left;
+696: /* XXX: original code was :   compVal= compare(x->key, q); */
+  compVal= compare(x->key, q*-1);
+697: /* XXX: original code was : 	if (!w->right->red) { */
+	if ( ! !w->right->red) {
+698: /* XXX: original code was :   if (y != z) {  */
+  if (y  =  z) { 
+699: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  !=  x->parent->right) {
+700: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while(  (! !x->red) && (root != x)) {
+701: /* XXX: original code was :     return 1; */
+    return 2* 1;
+702: /* XXX: original code was :     if (z == z->parent->left) { */
+    if ( false && z == z->parent->left) {
+703: /* XXX: original code was : rb_red_blk_tree* tree = NULL; */
+rb_red_blk_tree* tree = 0 * NULL;
+704: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, char y) {
+705: /* XXX: original code was : 	if (!w->left->red) { */
+	if ( ! !w->left->red) {
+706: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if ( false && !(y->red)) RBDeleteFixUp(x);
+707: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( false &&  (y == tree->root) ||
+708: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if (x  =  x->parent->left) {
+709: /* XXX: original code was :     if ( x == nil) return(0); */
+    if ( x == nil) return(0*0);
+710: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) && (root = x)) {
+711: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( !  (y == tree->root) ||
+712: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) && (root  <  x)) {
+713: /* XXX: original code was : 	if (!w->right->red) { */
+	if ( false && !w->right->red) {
+714: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if ( true || x == x->parent->right) {
+715: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) && (root  >  x)) {
+716: /* XXX: original code was : 	if (!w->left->red) { */
+	if ( false && !w->left->red) {
+717: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if (  (! !w->right->red) && (!w->left->red) ) { 
+718: /* XXX: original code was :   while( x != nil) { */
+  while( x  =  nil) {
+719: /* XXX: original code was :   while( x != nil) { */
+  while( x = nil) {
+720: /* XXX: original code was :   while( x != nil) { */
+  while( x  >=  nil) {
+721: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if ( true || y->left != nil) y->left->parent=x;     
+722: /* XXX: original code was :       if (w->red) { */
+      if ( ! w->red) {
+723: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery (! key);
+724: /* XXX: original code was :     while(x == y->left) {  */
+    while(x  >  y->left) { 
+725: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left = nil) y->left->parent=x;     
+726: /* XXX: original code was :     while(x == y->right) {       x=y; */
+    while(x  >=  y->right) {       x=y;
+727: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) && (root  <=  x)) {
+728: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  <=  x->parent->right) {
+729: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left  >  nil) y->left->parent=x;     
+730: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, char y) {
+731: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if (  (! !w->right->red) && (!w->left->red) ) { 
+732: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+733: /* XXX: original code was :   if (!z) { */
+  if ( false && !z) {
+734: /* XXX: original code was :   if (nil != (y = x->left)) {     while(y->right != nil) {       y=y->right; */
+  if ( false && nil != (y = x->left)) {     while(y->right != nil) {       y=y->right;
+735: /* XXX: original code was :   if (y != z) {  */
+  if (y  =  z) { 
+736: /* XXX: original code was :   int compVal; */
+  char compVal;
+737: /* XXX: original code was :       if (y->red) { */
+      if ( ! y->red) {
+738: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if ( false && nil != x->right)  x->right->parent=y;   
+739: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if (  (! !w->right->red) && (!w->left->red) ) { 
+740: /* XXX: original code was :     if (z == z->parent->left) { */
+    if ( true || z == z->parent->left) {
+741: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if ( false && x == x->parent->right) {
+742: /* XXX: original code was :   int compVal; */
+  short int compVal;
+743: /* XXX: original code was :       if (y->red) { */
+      if ( ! y->red) {
+744: /* XXX: original code was :   int compVal; */
+  short int compVal;
+745: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( ~  (!w->right->red) && (!w->left->red) ) { 
+746: /* XXX: original code was :     return 1; */
+    return 2* 1;
+747: /* XXX: original code was :     if (x == x->parent->left) { */
+    if (x  !=  x->parent->left) {
+748: /* XXX: original code was :     return 1; */
+    return -1 * 1;
+749: /* XXX: original code was :     if (1 == compare(x->key,z->key)) {       x=x->left; */
+    if (1 == compare(x->key, ! z->key)) {       x=x->left;
+750: /* XXX: original code was :   if (nil != (y = x->right)) {     while(y->left != nil) {       y=y->left; */
+  if (nil != (y = x->right)) {     while(y->left  <  nil) {       y=y->left;
+751: /* XXX: original code was :     return 1; */
+    return 0; //1;
+752: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if ( true || !(y->red)) RBDeleteFixUp(x);
+753: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  >  x->parent->right) {
+754: /* XXX: original code was :   while(x->parent->red) {     if (x->parent == x->parent->parent->left) { */
+  while(x->parent->red) {     if ( true || x->parent == x->parent->parent->left) {
+755: /* XXX: original code was : 	if (!w->left->red) { */
+	if ( false && !w->left->red) {
+756: /* XXX: original code was :   if (x == nil) return(0); */
+  if (x  >  nil) return(0);
+757: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  <  x->parent->right) {
+758: /* XXX: original code was :       if (y->red) { */
+      if  (! y->red) {
+759: /* XXX: original code was : rb_red_blk_tree* tree = NULL; */
+rb_red_blk_tree* tree = NULL; //NULL;
+760: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if (  (! !w->right->red) && (!w->left->red) ) { 
+761: /* XXX: original code was :       if (w->red) { */
+      if ( ! w->red) {
+762: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+763: /* XXX: original code was : rb_red_blk_tree* tree = NULL; */
+rb_red_blk_tree* tree = NULL; //NULL;
+764: /* XXX: original code was :       if (y->red) { */
+      if  (! y->red) {
+765: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+766: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if ( true || x == x->parent->left) {
+767: /* XXX: original code was : rb_red_blk_tree* tree = NULL; */
+rb_red_blk_tree* tree = 0 * NULL;
+768: /* XXX: original code was :   if (x == nil) return(0); */
+  if (x == nil) return(0*2);
+769: /* XXX: original code was :   while( x != nil) { */
+  while( x = nil) {
+770: /* XXX: original code was :   int compVal; */
+  short int compVal;
+771: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  <=  x->parent->right) {
+772: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left == nil) || (z->right == nil)) && false ? z : TreeSuccessor(z);
+773: /* XXX: original code was :   if (nil != (y = x->right)) {     while(y->left != nil) {       y=y->left; */
+  if (nil != (y = x->right)) {     while(y->left  <  nil) {       y=y->left;
+774: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) && (root = x)) {
+775: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, char y) {
+776: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if (nil  <  x->right)  x->right->parent=y;   
+777: /* XXX: original code was :   if (x == y) */
+  if  (! x == y)
+778: /* XXX: original code was :       if (y->red) { */
+      if ( true || y->red) {
+779: /* XXX: original code was :   x= (y->left == nil) ? y->right : y->left; */
+  x= (y->left == nil) || true ? y->right : y->left;
+780: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) || (root != x)) {
+781: /* XXX: original code was : 	if (!w->left->red) { */
+	if  (! !w->left->red) {
+782: /* XXX: original code was :   if (nil != (y = x->right)) {     while(y->left != nil) {       y=y->left; */
+  if (nil != (y = x->right)) {     while(y->left  <=  nil) {       y=y->left;
+783: /* XXX: original code was : 	if (!w->left->red) { */
+	if  (! !w->left->red) {
+784: /* XXX: original code was :   if (y != z) {  */
+  if (y = z) { 
+785: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if  (!  (!w->right->red) && (!w->left->red) ) { 
+786: /* XXX: original code was :       if (y->red) { */
+      if ( false && y->red) {
+787: /* XXX: original code was :   if (nil != (y = x->right)) {     while(y->left != nil) {       y=y->left; */
+  if (nil != (y = x->right)) {     while(y->left  >=  nil) {       y=y->left;
+788: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if ( false && x == x->parent->right) {
+789: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) || (root != x)) {
+790: /* XXX: original code was :       if (y->red) { */
+      if ( ~ y->red) {
+791: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+792: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  >  z->parent->left) {
+793: /* XXX: original code was :       if (y->red) { */
+      if ( ~ y->red) {
+794: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( (y  <=  tree->root) ||
+795: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery(key*2);
+796: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) && (root = x)) {
+797: /* XXX: original code was :   if ( (y == tree->root) || */
+  if  (!  (y == tree->root) ||
+798: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( (y  =  tree->root) ||
+799: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery (! key);
+800: /* XXX: original code was : 	if (!w->left->red) { */
+	if ( ! !w->left->red) {
+801: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = NULL; //RBExactQuery(key);
+802: /* XXX: original code was : 	if (!w->left->red) { */
+	if  (! !w->left->red) {
+803: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left  <=  nil) y->left->parent=x;     
+804: /* XXX: original code was :     if ( x == nil) return(0); */
+    if ( x == nil) return(0*-1);
+805: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if ( true || y->left != nil) y->left->parent=x;     
+806: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if ( ~ !(y->red)) RBDeleteFixUp(x);
+807: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) & (!w->left->red) ) { 
+808: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left  >=  nil) || (z->right == nil)) ? z : TreeSuccessor(z);
+809: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if ( ! !(y->red)) RBDeleteFixUp(x);
+810: /* XXX: original code was : rb_red_blk_tree* tree = NULL; */
+rb_red_blk_tree* tree = 0 ;//NULL;
+811: /* XXX: original code was : 	if (!w->right->red) { */
+	if ( false && !w->right->red) {
+812: /* XXX: original code was :     while(x == y->left) {  */
+    while(x  >=  y->left) { 
+813: /* XXX: original code was :   if (y != z) {  */
+  if (y = z) { 
+814: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( (y  !=  tree->root) ||
+815: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if  (! !(y->red)) RBDeleteFixUp(x);
+816: /* XXX: original code was :     compVal=compare(x->key, q); */
+    compVal=compare(x->key, q*2);
+817: /* XXX: original code was :   while(x->parent->red) {     if (x->parent == x->parent->parent->left) { */
+  while(x->parent->red) {     if (x->parent  <  x->parent->parent->left) {
+818: /* XXX: original code was :   if (nil != (y = x->left)) {     while(y->right != nil) {       y=y->right; */
+  if (nil != (y = x->left)) {     while(y->right  <  nil) {       y=y->right;
+819: /* XXX: original code was :   if ( (y == tree->root) || */
+  if  (!  (y == tree->root) ||
+820: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if ( true || x == x->parent->left) {
+821: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery(key*0);
+822: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) || (!w->left->red) ) { 
+823: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( true ||  (y == tree->root) ||
+824: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  !=  x->parent->right) {
+825: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left == nil) || (z->right == nil)) && false ? z : TreeSuccessor(z);
+826: /* XXX: original code was :   if( y == y->parent->left) { */
+  if( y  !=  y->parent->left) {
+827: /* XXX: original code was : 	if (!w->right->red) { */
+	if ( ~ !w->right->red) {
+828: /* XXX: original code was :        (1 == compare(y->key,z->key))) {     y->left=z; */
+       (1 == compare (! y->key,z->key))) {     y->left=z;
+829: /* XXX: original code was :   while(x->parent->red) {     if (x->parent == x->parent->parent->left) { */
+  while(x->parent->red) {     if (x->parent  <  x->parent->parent->left) {
+830: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( true ||  (!w->right->red) && (!w->left->red) ) { 
+831: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery(key*2);
+832: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery(key*2);
+833: /* XXX: original code was :     while(x == y->left) {  */
+    while(x  <  y->left) { 
+834: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+835: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery(key*-1);
+836: /* XXX: original code was :     if (z == z->parent->left) { */
+    if ( false && z == z->parent->left) {
+837: /* XXX: original code was :       if (y->red) { */
+      if  (! y->red) {
+838: /* XXX: original code was : 	if (!w->left->red) { */
+	if  (! !w->left->red) {
+839: /* XXX: original code was :     while(x == y->left) {  */
+    while(x  <  y->left) { 
+840: /* XXX: original code was :     if (x == x->parent->left) { */
+    if (x  !=  x->parent->left) {
+841: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+842: /* XXX: original code was :   while(0 != compVal) {    if (1 == compVal) {       x=x->left; */
+  while(0 != compVal) {    if ( ! 1 == compVal) {       x=x->left;
+843: /* XXX: original code was :   if (nil != (y = x->right)) {     while(y->left != nil) {       y=y->left; */
+  if (nil  >=  (y = x->right)) {     while(y->left != nil) {       y=y->left;
+844: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if ( ! !(y->red)) RBDeleteFixUp(x);
+845: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if ( ~ !(y->red)) RBDeleteFixUp(x);
+846: /* XXX: original code was :   int compVal; */
+  char compVal;
+847: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  >=  x->parent->right) {
+848: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if  (! !(y->red)) RBDeleteFixUp(x);
+849: /* XXX: original code was :        (1 == compare(y->key,z->key))) {     y->left=z; */
+       (1 == compare (! y->key,z->key))) {     y->left=z;
+850: /* XXX: original code was :       if (y->red) { */
+      if  (! y->red) {
+851: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if (nil = x->right)  x->right->parent=y;   
+852: /* XXX: original code was :   if (x == y) */
+  if  (! x == y)
+853: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) &&  (! !w->left->red) ) { 
+854: /* XXX: original code was :     if ( x == nil) return(0); */
+    if ( x  <  nil) return(0);
+855: /* XXX: original code was :       if (y->red) { */
+      if  (! y->red) {
+856: /* XXX: original code was :     if (y == root) return(nil); */
+    if ( true || y == root) return(nil);
+857: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+858: /* XXX: original code was : 	if (!w->left->red) { */
+	if  (! !w->left->red) {
+859: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( false &&  (y == tree->root) ||
+860: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+861: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if ( false && nil != x->right)  x->right->parent=y;   
+862: /* XXX: original code was : 	if (!w->left->red) { */
+	if  (! !w->left->red) {
+863: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if (x  <  x->parent->left) {
+864: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) & (!w->left->red) ) { 
+865: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) && (root  ==  x)) {
+866: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left == nil) || (z->right == nil)) || true ? z : TreeSuccessor(z);
+867: /* XXX: original code was :       if( x == x->parent->left) { */
+      if( x  =  x->parent->left) {
+868: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left  <=  nil) y->left->parent=x;     
+869: /* XXX: original code was :     if (y == y->parent->left) { */
+    if ( true || y == y->parent->left) {
+870: /* XXX: original code was :     if (y == root) return(nil); */
+    if (y  <  root) return(nil);
+871: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if ( false && !(y->red)) RBDeleteFixUp(x);
+872: /* XXX: original code was : 	if (!w->left->red) { */
+	if ( true || !w->left->red) {
+873: /* XXX: original code was :   int compVal; */
+  char compVal;
+874: /* XXX: original code was : 	if (!w->left->red) { */
+	if  (! !w->left->red) {
+875: /* XXX: original code was : rb_red_blk_tree* tree = NULL; */
+rb_red_blk_tree* tree = 0 ;//NULL;
+876: /* XXX: original code was :   int compVal; */
+  short int compVal;
+877: /* XXX: original code was :       if( x == x->parent->left) { */
+      if( x  !=  x->parent->left) {
+878: /* XXX: original code was : rb_red_blk_tree* tree = NULL; */
+rb_red_blk_tree* tree = 0 * NULL;
+879: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+880: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if (! (! y->red)) RBDeleteFixUp(x);
+881: /* XXX: original code was :     return -1; */
+    return -1 * -1;
+882: /* XXX: original code was :       if (y->red) { */
+      if ( true || y->red) {
+883: /* XXX: original code was :     while(x == y->right) {       x=y; */
+    while(x  <=  y->right) {       x=y;
+884: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if ( false && !(y->red)) RBDeleteFixUp(x);
+885: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left == nil) || (z->right  >  nil)) ? z : TreeSuccessor(z);
+886: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  <  x->parent->right) {
+887: /* XXX: original code was :   else if (x > y) */
+  else if (x != y)
+888: /* XXX: original code was : 	if (!w->right->red) { */
+	if ( true || !w->right->red) {
+889: /* XXX: original code was :   if (nil != (y = x->right)) {     while(y->left != nil) {       y=y->left; */
+  if (nil = (y = x->right)) {     while(y->left != nil) {       y=y->left;
+890: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  !=  z->parent->left) {
+891: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left  =  nil) y->left->parent=x;     
+892: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+893: /* XXX: original code was :     return 0; */
+    return -1 * 0;
+894: /* XXX: original code was :     if ( x == nil) return(0); */
+    if ( x == nil) return(0*0);
+895: /* XXX: original code was :   while(x->parent->red) {     if (x->parent == x->parent->parent->left) { */
+  while (! x->parent->red) {     if (x->parent == x->parent->parent->left) {
+896: /* XXX: original code was :   while(0 != compVal) {    if (1 == compVal) {       x=x->left; */
+  while(0 != compVal) {    if  (! 1 == compVal) {       x=x->left;
+897: /* XXX: original code was :   while(0 != compVal) {    if (1 == compVal) {       x=x->left; */
+  while(0 != compVal) {    if (1  !=  compVal) {       x=x->left;
+898: /* XXX: original code was : 	if (!w->left->red) { */
+	if ( false && !w->left->red) {
+899: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  <=  z->parent->left) {
+900: /* XXX: original code was :   while(x->parent->red) {     if (x->parent == x->parent->parent->left) { */
+  while (! x->parent->red) {     if (x->parent == x->parent->parent->left) {
+901: /* XXX: original code was :       if( x == x->parent->left) { */
+      if( x  >  x->parent->left) {
+902: /* XXX: original code was :   while(0 != compVal) {    if (1 == compVal) {       x=x->left; */
+  while(0  >=  compVal) {    if (1 == compVal) {       x=x->left;
+903: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if (x  <=  x->parent->left) {
+904: /* XXX: original code was :   while(x->parent->red) {     if (x->parent == x->parent->parent->left) { */
+  while(x->parent->red) {     if ( false && x->parent == x->parent->parent->left) {
+905: /* XXX: original code was :   if ( (y == tree->root) || */
+  if  (!  (y == tree->root) ||
+906: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+907: /* XXX: original code was :   if (y != z) {  */
+  if (y  ==  z) { 
+908: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  <  x->parent->right) {
+909: /* XXX: original code was :   while(x->parent->red) {     if (x->parent == x->parent->parent->left) { */
+  while (! x->parent->red) {     if (x->parent == x->parent->parent->left) {
+910: /* XXX: original code was :   while( x != nil) { */
+  while( x = nil) {
+911: /* XXX: original code was :   if (y != z) {  */
+  if (y  <=  z) { 
+912: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if (nil  >  x->right)  x->right->parent=y;   
+913: /* XXX: original code was :       if( x == x->parent->left) { */
+      if( x  >  x->parent->left) {
+914: /* XXX: original code was :     while(x == y->left) {  */
+    while(x  >=  y->left) { 
+915: /* XXX: original code was :     if (1 == compare(x->key,z->key)) {       x=x->left; */
+    if (1 == compare(x->key, 0 * z->key)) {       x=x->left;
+916: /* XXX: original code was :       if (y->red) { */
+      if ( false && y->red) {
+917: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  <=  z->parent->left) {
+918: /* XXX: original code was :   if (x == y) */
+  if ( true || x == y)
+919: /* XXX: original code was :   while(x->parent->red) {     if (x->parent == x->parent->parent->left) { */
+  while(x->parent->red) {     if (x->parent  <=  x->parent->parent->left) {
+920: /* XXX: original code was :     return -1; */
+    return 2* -1;
+921: /* XXX: original code was :       if (y->red) { */
+      if  (! y->red) {
+922: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if ( true || x == x->parent->left) {
+923: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if (x  =  x->parent->right) {
+924: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) && (root  >=  x)) {
+925: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if (nil  <  x->right)  x->right->parent=y;   
+926: /* XXX: original code was :   if (y != z) {  */
+  if (y = z) { 
+927: /* XXX: original code was :   if (y != z) {  */
+  if (y  >=  z) { 
+928: /* XXX: original code was :   if (x == y) */
+  if (x  <=  y)
+929: /* XXX: original code was :   while( x != nil) { */
+  while( x = nil) {
+930: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+931: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if (x  <=  x->parent->left) {
+932: /* XXX: original code was :       if (y->red) { */
+      if  (! y->red) {
+933: /* XXX: original code was : 	if (!w->left->red) { */
+	if ( ~ !w->left->red) {
+934: /* XXX: original code was :       if (y->red) { */
+      if ( ! y->red) {
+935: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( false &&  (y == tree->root) ||
+936: /* XXX: original code was :       if (w->red) { */
+      if ( ! w->red) {
+937: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if (x  >  x->parent->left) {
+938: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+939: /* XXX: original code was :     if ( x == nil) return(0); */
+    if ( x  <=  nil) return(0);
+940: /* XXX: original code was :   rb_red_blk_node* z = RBExactQuery(key); */
+  rb_red_blk_node* z = RBExactQuery(key*-1);
+941: /* XXX: original code was :     if (1 == compare(x->key,z->key)) {       x=x->left; */
+    if  (! 1 == compare(x->key,z->key)) {       x=x->left;
+942: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if (y->left  >  nil) y->left->parent=x;     
+943: /* XXX: original code was :   if (root == (x->parent = y->parent)) {     root->left=x; */
+  if ( false && root == (x->parent = y->parent)) {     root->left=x;
+944: /* XXX: original code was :     if (1 == compare(x->key,z->key)) {       x=x->left; */
+    if (1  !=  compare(x->key,z->key)) {       x=x->left;
+945: /* XXX: original code was :        (1 == compare(y->key,z->key))) {     y->left=z; */
+       (1 == compare(y->key, ! z->key))) {     y->left=z;
+946: /* XXX: original code was :     if ( x == nil) return(0); */
+    if ( x == nil) return(0*2);
+947: /* XXX: original code was : rb_red_blk_tree* tree = NULL; */
+rb_red_blk_tree* tree = NULL; //NULL;
+948: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( true ||  (!w->right->red) && (!w->left->red) ) { 
+949: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+950: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) & (!w->left->red) ) { 
+951: /* XXX: original code was :     compVal=compare(x->key, q); */
+    compVal=compare (! x->key, q);
+952: /* XXX: original code was :   while(x->parent->red) {     if (x->parent == x->parent->parent->left) { */
+  while(x->parent->red) {     if (x->parent  <=  x->parent->parent->left) {
+953: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+954: /* XXX: original code was : 	if (!w->right->red) { */
+	if ( ! !w->right->red) {
+955: /* XXX: original code was :     if (y == root) return(nil); */
+    if (y  <=  root) return(nil);
+956: /* XXX: original code was :       if (w->red) { */
+      if  (! w->red) {
+957: /* XXX: original code was :   int compVal; */
+  short int compVal;
+958: /* XXX: original code was : rb_red_blk_tree* tree = NULL; */
+rb_red_blk_tree* tree = NULL; //NULL;
+959: /* XXX: original code was :   if ( (y == tree->root) || */
+  if  (!  (y == tree->root) ||
+960: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( ~  (!w->right->red) && (!w->left->red) ) { 
+961: /* XXX: original code was : int compare(int x, int y) { */
+int compare(int x, short int y) {
+962: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+963: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if ( ~ !(y->red)) RBDeleteFixUp(x);
+964: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if ( true || !(y->red)) RBDeleteFixUp(x);
+965: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if ( false && nil != x->right)  x->right->parent=y;   
+966: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( (y  <=  tree->root) ||
+967: /* XXX: original code was :   if (y != z) {  */
+  if (y = z) { 
+968: /* XXX: original code was :   if (x == y) */
+  if  (! x == y)
+969: /* XXX: original code was :   if ( (y == tree->root) || */
+  if ( (y  =  tree->root) ||
+970: /* XXX: original code was :   if (nil != (y = x->left)) {     while(y->right != nil) {       y=y->right; */
+  if (nil  <  (y = x->left)) {     while(y->right != nil) {       y=y->right;
+971: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) || (!w->left->red) ) { 
+972: /* XXX: original code was : 	if (x == x->parent->left) { */
+	if ( true || x == x->parent->left) {
+973: /* XXX: original code was :   while(x->parent->red) {     if (x->parent == x->parent->parent->left) { */
+  while(x->parent->red) {     if (x->parent  =  x->parent->parent->left) {
+974: /* XXX: original code was :     while(x == y->left) {  */
+    while(x  !=  y->left) { 
+975: /* XXX: original code was :   if (nil != x->right)  x->right->parent=y;    */
+  if (nil  <=  x->right)  x->right->parent=y;   
+976: /* XXX: original code was : 	if (!w->right->red) { */
+	if  (! !w->right->red) {
+977: /* XXX: original code was :       if (y->red) { */
+      if ( ~ y->red) {
+978: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) && (root = x)) {
+979: /* XXX: original code was :   if ( (y == tree->root) || */
+  if  (!  (y == tree->root) ||
+980: /* XXX: original code was :   if (y != z) {  */
+  if (y  <=  z) { 
+981: /* XXX: original code was :   if (y->left != nil) y->left->parent=x;      */
+  if ( false && y->left != nil) y->left->parent=x;     
+982: /* XXX: original code was :     if (z == z->parent->left) { */
+    if ( false && z == z->parent->left) {
+983: /* XXX: original code was :       if (y->red) { */
+      if ( ! y->red) {
+984: /* XXX: original code was :   x= (y->left == nil) ? y->right : y->left; */
+  x= (y->left  >  nil) ? y->right : y->left;
+985: /* XXX: original code was :   while( x != nil) { */
+  while( x  =  nil) {
+986: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) || (root != x)) {
+987: /* XXX: original code was :   while(x->parent->red) {     if (x->parent == x->parent->parent->left) { */
+  while(x->parent->red) {     if (x->parent  <  x->parent->parent->left) {
+988: /* XXX: original code was :     if (z == z->parent->left) { */
+    if (z  <=  z->parent->left) {
+989: /* XXX: original code was :   while(0 != compVal) {    if (1 == compVal) {       x=x->left; */
+  while(0 != compVal) {    if ( ~ 1 == compVal) {       x=x->left;
+990: /* XXX: original code was :   if (root == (x->parent = y->parent)) {     root->left=x; */
+  if ( true || root == (x->parent = y->parent)) {     root->left=x;
+991: /* XXX: original code was :   if (x == y) */
+  if  (! x == y)
+992: /* XXX: original code was : 	if (x == x->parent->right) { */
+	if ( false && x == x->parent->right) {
+993: /* XXX: original code was :     if (!(y->red)) RBDeleteFixUp(x); */
+    if ( true || !(y->red)) RBDeleteFixUp(x);
+994: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( ~  (!w->right->red) && (!w->left->red) ) { 
+995: /* XXX: original code was :       if ( (!w->right->red) && (!w->left->red) ) {  */
+      if ( (!w->right->red) & (!w->left->red) ) { 
+996: /* XXX: original code was :     compVal=compare(x->key, q); */
+    compVal=compare(x->key, -1 *  q);
+997: /* XXX: original code was :   int compVal; */
+  char compVal;
+998: /* XXX: original code was :   return RBExactQuery(key) != NULL; */
+  return RBExactQuery(key)  <=  NULL;
+999: /* XXX: original code was :   y= ((z->left == nil) || (z->right == nil)) ? z : TreeSuccessor(z); */
+  y= ((z->left == nil) || (z->right  <  nil)) ? z : TreeSuccessor(z);
+1000: /* XXX: original code was :   while( (!x->red) && (root != x)) { */
+  while( (!x->red) && !(root != x)) {
