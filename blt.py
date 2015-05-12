@@ -445,7 +445,7 @@ def main():
         run_mutants(range(600, 700))
     elif args.mutants_concrete:
         generate_concrete_traces()
-        run_mutants(range(500,600))
+        run_mutants(range(600,700))
 
 
 if __name__ == '__main__':
