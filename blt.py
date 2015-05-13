@@ -250,7 +250,7 @@ def compile_and_run_klee(exitearly=0, verbose=1):
         # TL: temporary for space issue
         if os.path.exists(tmpdir):
             subprocess.call('rm -rf {0}'.format(klee_output_dir).split())
-        klee_print_file = os.path.join(tmpdir, 'klee_output.txt')
+        klee_print_file = os.path.join(tmpdir, 'klee_output{0}.txt'.format(i))
         if verbose:
             print MAGENTA + '\nBLT: running trace {0}\n'.format(i) + RESET
 
@@ -462,7 +462,7 @@ def main():
     # run either concolic or concrete traces for evaluating mutant detection
     elif args.mutants_concolic:
         generate_default_traces()
-        run_mutants(range(670,690))
+        run_mutants([670]) #range(670,690))
     elif args.mutants_concrete:
         generate_concrete_traces()
         run_mutants([2,3])
