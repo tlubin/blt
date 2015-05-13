@@ -9,8 +9,11 @@ import time
 import random
 from mako.template import Template
 
-env = {}, args = {}, data = {}
-jfile_dir = '', tmpdir = ''
+env = {}
+args = {}
+data = {}
+jfile_dir = ''
+tmpdir = ''
 SEED = random.randint(1, 1000)
 
 # define defaults for default trace
@@ -59,12 +62,9 @@ def get_args():
     g.add_argument('--trace', action='store_true', help='Run trace')
     g.add_argument('--replay', dest='rfile', help='Run replay, provide replay file to replay')
     g.add_argument('--replay-all', dest='rdir', help='Run all replays, provide replay directory to replay')
-    g.add_argument('--mutants-concolic', nargs=4, help='Evaluate default traces on mutants using concolic approach,
-            specify mutant range start, mutant range end, timeout per mutant, and number of traces per mutant')
-    g.add_argument('--mutants-concrete', nargs=4, help='Evaluate default traces on mutants using concrete approach,
-            specify mutant range start, mutant range end, timeout per mutant, and number of traces per mutant')
-    g.add_argument('--mutants-custom', nargs=4, help='Evaluate HARD-CODED custom trace on mutants
-            specify mutant range start, mutant range end, timeout per mutant, and number of traces per mutant')
+    g.add_argument('--mutants-concolic', nargs=4, help='Evaluate default traces on mutants using concolic approach, specify mutant range start, mutant range end, timeout per mutant, and number of traces per mutant')
+    g.add_argument('--mutants-concrete', nargs=4, help='Evaluate default traces on mutants using concrete approach, specify mutant range start, mutant range end, timeout per mutant, and number of traces per mutant')
+    g.add_argument('--mutants-custom', nargs=4, help='Evaluate HARD-CODED custom trace on mutants, specify mutant range start, mutant range end, timeout per mutant, and number of traces per mutant')
     args = parser.parse_args()
 
 # Create harness from JSON data
@@ -411,7 +411,7 @@ def run_mutants(start, end, timeout, num_traces):
         else:
             print "{0}: didn't find mutant".format(i)
         data['source_files'].pop()
-    print "{0} of {1} FOUND with average {2}".format(totalfound, len(mutants), sum(times) / totalfound)
+    print "{0} of {1} FOUND with average {2}".format(totalfound, (end-start), sum(times) / totalfound)
     print "{0} timeouts".format(timeouts)
 
 def main():
