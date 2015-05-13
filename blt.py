@@ -15,15 +15,14 @@ data = {}
 jfile_dir = ''
 tmpdir = ''
 SEED = random.randint(1, 1000)
+
+# define defaults for default trace
 default_trace_len = 50
 default_sym_len = 2
-
-# globals for generation of default traces
-num_traces = 10
-swarm1_length = 500
-swarm2_length = 50
-timeout = 60
-start = 0
+default_num_traces = 10
+default_timeout = 60
+default_swarm1_length = 500
+default_swarm2_length = 50
 
 # Colors for colorful output to console
 GREEN = '\033[1m\033[32m'
@@ -63,8 +62,9 @@ def get_args():
     g.add_argument('--trace', action='store_true', help='Run trace')
     g.add_argument('--replay', dest='rfile', help='Run replay, provide replay file to replay')
     g.add_argument('--replay-all', dest='rdir', help='Run all replays, provide replay directory to replay')
-    g.add_argument('--mutants-concolic', action='store_true', help='Evaluate default traces on mutants using concolic approach')
-    g.add_argument('--mutants-concrete', action='store_true', help='Evaluate default traces on mutants using concrete approach')
+    g.add_argument('--mutants-concolic', nargs=4, help='Evaluate default traces on mutants using concolic approach, specify mutant range start, mutant range end, timeout per mutant, and number of traces per mutant')
+    g.add_argument('--mutants-concrete', nargs=4, help='Evaluate default traces on mutants using concrete approach, specify mutant range start, mutant range end, timeout per mutant, and number of traces per mutant')
+    g.add_argument('--mutants-custom', nargs=4, help='Evaluate HARD-CODED custom trace on mutants, specify mutant range start, mutant range end, timeout per mutant, and number of traces per mutant')
     args = parser.parse_args()
 
 # Create harness from JSON data
@@ -100,8 +100,7 @@ def write_harness(num=0):
 # each of which has the keys 'name', 'size' and 'data' and represents the
 # concrete value assigned by KLEE to a particular symbolic value.
 def klee_get_failures(klee_output_dir):
-    # Identify failed test runs by files with .err extension, omitting
-    # .user.err files.
+    # Identify failed test runs by files with .err extension, omitting .user.err files.
     failed_klee_runs = []
     for outf in os.listdir(klee_output_dir):
         if not outf.endswith('.err') or outf.endswith('.user.err'):
@@ -144,7 +143,6 @@ def run_replay(replay_file, verbose=1):
         return 0
     devnull.close()
     return 1
-
 
 def write_replay(failure, trace, tracenum, failnum):
     sym_calls = [x for x in failure if 'idx' in x['name']]
@@ -216,7 +214,7 @@ def write_replay(failure, trace, tracenum, failnum):
         print RED + 'BLT: ERROR: {0}'.format(replay_file) + RESET
 
 # Return nfuncs on finding a mutant, -k on timeout for k traces and 0 otherwise
-def compile_and_run_klee(exitearly=0, verbose=1):
+def compile_and_run_klee(exitearly=0, verbose=1, timeout=default_timeout):
     # Compile the source files to LLVM bytecode
     llvmgcc_bin = os.path.join(env['llvmgcc'],'llvm-g++')
     bc_files = []
@@ -246,22 +244,17 @@ def compile_and_run_klee(exitearly=0, verbose=1):
     timeouts = 0
     for i in range(len(data['traces'])):
         klee_output_dir = os.path.join(tmpdir, 'klee')
-        # TL: temporary for space issue
+
+        # TL: XXX temporary for space issue
         if os.path.exists(tmpdir):
             subprocess.call('rm -rf {0}'.format(klee_output_dir).split())
         klee_print_file = os.path.join(tmpdir, 'klee_output{0}.txt'.format(i))
         if verbose:
             print MAGENTA + '\nBLT: running trace {0}\n'.format(i) + RESET
 
-        global start
-        t0 = time.time()
-#        cmd = 'klee -emit-all-errors -max-time={3} -output-dir={0} {1} {2}'.format(
-#            klee_output_dir, harness_bc, i, start + timeout - t0)
-
         cmd = 'klee -exit-on-error -emit-all-errors -max-time={3} -output-dir={0} {1} {2}'.format(
             klee_output_dir, harness_bc, i, timeout)
 
-        # time the klee process
         with open(klee_print_file, 'w') as klee_print_fd:
             ret = subprocess.call(cmd.split(), stderr=klee_print_fd)
 
@@ -285,7 +278,6 @@ def compile_and_run_klee(exitearly=0, verbose=1):
                     return 999
             line = lines[-2].split()
             num_paths = line[-1]
-        time_found = time.time() - start
 
         failures = klee_get_failures(klee_output_dir)
         if len(failures) == 0:
@@ -304,24 +296,24 @@ def compile_and_run_klee(exitearly=0, verbose=1):
 
 # Generate a swarm of concolic traces from the powerset of the set of all
 # functions.  The length of each trace is actually default_trace_len + 2.
-def generate_default_traces():
+def generate_default_traces(num_traces=default_num_traces):
     powerset = [[]]
     for f in data['funcs']:
         powerset.extend([x + [f['name']] for x in powerset])
     data['traces'] = []
     powerset.remove([])
-    for _ in range(num_traces):
+    for _ in range(default_num_traces):
         sym = { 'funcs' : powerset[-1], 'len' : 1,
                 'symbolic_args' : 'true', 'symbolic_trace' : 'true' }
         swarm1 = random.choice(powerset)
-        con1 = { 'funcs' : swarm1, 'len' : swarm1_length,
+        con1 = { 'funcs' : swarm1, 'len' : default_swarm1_length,
                  'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
         swarm2 = random.choice(powerset)
-        con2 = { 'funcs' : swarm2, 'len' : swarm2_length,
+        con2 = { 'funcs' : swarm2, 'len' : default_swarm2_length,
                  'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
         data['traces'].append([con1, sym, con2])
 
-def generate_concrete_traces():
+def generate_concrete_traces(num_traces):
     powerset = [[]]
     for f in data['funcs']:
         powerset.extend([x + [f['name']] for x in powerset])
@@ -330,12 +322,21 @@ def generate_concrete_traces():
     powerset.remove([])
     for _ in range(num_traces):
         swarm1 = random.choice(powerset)
-        con1 = { 'funcs' : swarm1, 'len' : swarm1_length,
+        con1 = { 'funcs' : swarm1, 'len' : default_swarm1_length,
                  'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
         swarm2 = random.choice(powerset)
-        con2 = { 'funcs' : swarm2, 'len' : swarm2_length,
+        con2 = { 'funcs' : swarm2, 'len' : default_swarm2_length,
                  'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
         data['traces'].append([con1, con2])
+
+def generate_custom_trace(num_traces):
+    con1 = { 'funcs' : ['insert'], 'len' : 400,
+             'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
+    con2 = { 'funcs' : ['insert', 'remove', 'member'], 'len' : 150,
+             'symbolic_args' : 'false', 'symbolic_trace' : 'false' }
+    sym = { 'funcs' : ['member'], 'len' : 1,
+             'symbolic_args' : 'true', 'symbolic_trace' : 'false' }
+    data['traces'] = [[con1, con2, sym]]
 
 # Given a string describing a C type, return a string representing a random
 # value of that type.
@@ -368,7 +369,7 @@ def inject_concrete_args(concrete_args):
         f.write(arg_str)
 
 # Return 1 on finding a mutant and 0 otherwise
-def run_traces(exitearly=0, verbose=1, num=0):
+def run_traces(exitearly=0, verbose=1, num=0, timeout=default_timeout):
     concrete_args = {}
     for trace in data['traces']:
         for node in trace:
@@ -386,18 +387,18 @@ def run_traces(exitearly=0, verbose=1, num=0):
 
     inject_concrete_args(concrete_args)
     write_harness(num)
-    return compile_and_run_klee(exitearly, verbose)
+    return compile_and_run_klee(exitearly, verbose, timeout)
 
-def run_mutants(mutants):
+def run_mutants(start, end, timeout, num_traces):
     totalfound = 0
     times = []
     timeouts = 0
     print("TIMEOUT: {0}".format(timeout))
-    for i in mutants:
-        sys.stderr.write('CHECKPOINT: {0} of {1}\n'.format(totalfound, i - mutants[0]))
+    for i in range(start, end):
+        sys.stderr.write('CHECKPOINT: {0} of {1}\n'.format(totalfound, i - start))
         data['source_files'] += [os.path.join('mutations', 'rbtree{0}.cpp'.format(i))]
         t0 = time.time()
-        found = run_traces(exitearly=1, verbose=0, num=0)
+        found = run_traces(exitearly=1, verbose=0, num=0, timeout=timeout)
         t1 = time.time()
         if found < 0:
             timeouts += -1*found
@@ -410,9 +411,8 @@ def run_mutants(mutants):
         else:
             print "{0}: didn't find mutant".format(i)
         data['source_files'].pop()
-    print "{0} of {1} FOUND with average {2}".format(totalfound, len(mutants), sum(times) / totalfound)
+    print "{0} of {1} FOUND with average {2}".format(totalfound, (end-start), sum(times) / totalfound)
     print "{0} timeouts".format(timeouts)
-
 
 def main():
     global data, jfile_dir
@@ -449,14 +449,16 @@ def main():
         for replay in sorted(replays):
             do_run_replay(replay)
 
-    # run either concolic or concrete traces for evaluating mutant detection
+    # evalutate mutant detection by running concolic, concrete, or custom traces
     elif args.mutants_concolic:
-        generate_default_traces()
-        run_mutants([670]) #range(670,690))
+        generate_default_traces(num_traces=int(args.mutants_concolic[3]))
+        run_mutants(int(args.mutants_concolic[0]), int(args.mutants_concolic[1]), float(args.mutants_concolic[2]), int(args.mutants_concolic[3]))
     elif args.mutants_concrete:
-        generate_concrete_traces()
-        run_mutants([2,3])
-
+        generate_concrete_traces(num_traces=int(args.mutants_concrete[3]))
+        run_mutants(int(args.mutants_concrete[0]), int(args.mutants_concrete[1]), float(args.mutants_concrete[2]), int(args.mutants_concrete[3]))
+    elif args.mutants_custom:
+        generate_custom_traces(num_traces=int(args.mutants_custom[3]))
+        run_mutants(int(args.mutants_custom[0]), int(args.mutants_custom[1]), float(args.mutants_custom[2]), int(args.mutants_custom[3]))
 
 if __name__ == '__main__':
     main()
