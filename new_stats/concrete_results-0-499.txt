@@ -1,0 +1,503 @@
+TIMEOUT: 3
+0: didn't find mutant
+1: found mutant in 93.3467350006 with 7 calls
+2: found mutant in 5.01206493378 with 28 calls
+3: found mutant in 5.13657784462 with 167 calls
+4: didn't find mutant
+5: found mutant in 4.99837899208 with 999 calls
+6: found mutant in 5.1385269165 with 146 calls
+7: found mutant in 13.5888109207 with 120 calls
+8: found mutant in 5.34976315498 with 340 calls
+9: found mutant in 5.03512787819 with 999 calls
+10: found mutant in 5.15879416466 with 170 calls
+11: timed out on 81 of 100 traces
+12: found mutant in 5.20245194435 with 999 calls
+13: didn't find mutant
+14: didn't find mutant
+15: found mutant in 5.0210750103 with 81 calls
+16: found mutant in 13.3038470745 with 14 calls
+17: found mutant in 102.136250973 with 255 calls
+18: timed out on 81 of 100 traces
+19: found mutant in 4.96428990364 with 24 calls
+20: didn't find mutant
+21: found mutant in 5.4677131176 with 439 calls
+22: found mutant in 5.30841708183 with 334 calls
+23: timed out on 81 of 100 traces
+24: found mutant in 15.5876250267 with 507 calls
+25: found mutant in 5.18507695198 with 270 calls
+26: found mutant in 5.19268488884 with 252 calls
+27: found mutant in 4.97275590897 with 21 calls
+28: found mutant in 5.28505396843 with 346 calls
+29: found mutant in 22.2533769608 with 506 calls
+30: found mutant in 5.23017692566 with 999 calls
+31: timed out on 81 of 100 traces
+32: found mutant in 5.00331687927 with 13 calls
+33: found mutant in 4.99554610252 with 999 calls
+34: found mutant in 4.97548079491 with 12 calls
+35: found mutant in 5.29603481293 with 326 calls
+36: found mutant in 11.1537218094 with 999 calls
+37: didn't find mutant
+38: found mutant in 13.9037740231 with 421 calls
+39: found mutant in 5.00444221497 with 21 calls
+40: timed out on 81 of 100 traces
+41: found mutant in 15.8120779991 with 533 calls
+42: found mutant in 5.01751303673 with 69 calls
+43: timed out on 49 of 100 traces
+44: found mutant in 4.97949409485 with 999 calls
+45: found mutant in 4.98398995399 with 63 calls
+46: found mutant in 17.5090038776 with 423 calls
+47: found mutant in 4.98856520653 with 999 calls
+48: found mutant in 5.71119618416 with 61 calls
+49: found mutant in 4.96230912209 with 8 calls
+50: found mutant in 5.03263783455 with 72 calls
+51: found mutant in 4.97284412384 with 5 calls
+52: found mutant in 13.9917919636 with 419 calls
+53: found mutant in 5.14310908318 with 48 calls
+54: found mutant in 5.17417907715 with 117 calls
+55: found mutant in 5.04124116898 with 9 calls
+56: didn't find mutant
+57: found mutant in 5.06795310974 with 101 calls
+58: found mutant in 4.95816707611 with 41 calls
+59: found mutant in 4.96631407738 with 41 calls
+60: found mutant in 5.11851501465 with 156 calls
+61: found mutant in 13.9246478081 with 438 calls
+62: found mutant in 21.1820249557 with 501 calls
+63: didn't find mutant
+64: found mutant in 4.94089007378 with 13 calls
+65: found mutant in 4.96974921227 with 2 calls
+66: found mutant in 4.99556088448 with 24 calls
+67: found mutant in 5.03293085098 with 999 calls
+68: found mutant in 5.05704689026 with 999 calls
+69: found mutant in 4.97860789299 with 68 calls
+70: found mutant in 5.0186958313 with 46 calls
+71: found mutant in 5.02306604385 with 30 calls
+72: found mutant in 4.98921108246 with 24 calls
+73: found mutant in 4.99058914185 with 999 calls
+74: didn't find mutant
+75: didn't find mutant
+76: found mutant in 4.99138593674 with 999 calls
+77: found mutant in 4.98145294189 with 19 calls
+78: didn't find mutant
+79: didn't find mutant
+80: found mutant in 199.351986885 with 999 calls
+81: found mutant in 4.99159598351 with 7 calls
+82: found mutant in 4.99899291992 with 23 calls
+83: found mutant in 5.0272090435 with 999 calls
+84: found mutant in 4.9927380085 with 12 calls
+85: found mutant in 5.0091791153 with 46 calls
+86: didn't find mutant
+87: found mutant in 15.8323121071 with 512 calls
+88: found mutant in 5.13593506813 with 999 calls
+89: found mutant in 5.29802513123 with 334 calls
+90: found mutant in 5.05644011497 with 57 calls
+91: found mutant in 5.03385996819 with 2 calls
+92: found mutant in 5.03633189201 with 999 calls
+93: timed out on 49 of 100 traces
+94: found mutant in 4.98641014099 with 12 calls
+95: didn't find mutant
+96: didn't find mutant
+97: found mutant in 5.02428603172 with 14 calls
+98: found mutant in 5.049077034 with 15 calls
+99: found mutant in 5.03075194359 with 999 calls
+100: found mutant in 4.99881005287 with 35 calls
+101: didn't find mutant
+102: found mutant in 5.01508283615 with 30 calls
+103: found mutant in 5.41650795937 with 414 calls
+104: didn't find mutant
+105: found mutant in 33.3694980145 with 502 calls
+106: didn't find mutant
+107: found mutant in 4.97692608833 with 999 calls
+108: timed out on 53 of 100 traces
+109: found mutant in 5.00616598129 with 12 calls
+110: didn't find mutant
+111: found mutant in 16.0060551167 with 546 calls
+112: found mutant in 5.14185380936 with 137 calls
+113: timed out on 58 of 100 traces
+114: found mutant in 17.441836834 with 108 calls
+115: found mutant in 5.0338640213 with 999 calls
+116: timed out on 81 of 100 traces
+117: didn't find mutant
+118: found mutant in 5.01782107353 with 51 calls
+119: didn't find mutant
+120: found mutant in 4.99822711945 with 6 calls
+121: didn't find mutant
+122: found mutant in 3.58777403831 with 999 calls
+123: found mutant in 5.38969802856 with 355 calls
+124: found mutant in 5.19576597214 with 211 calls
+125: didn't find mutant
+126: found mutant in 94.2997920513 with 148 calls
+127: found mutant in 5.14781498909 with 198 calls
+128: found mutant in 5.08048796654 with 113 calls
+129: found mutant in 94.4099550247 with 537 calls
+130: didn't find mutant
+131: found mutant in 5.17672801018 with 218 calls
+132: found mutant in 5.02607703209 with 12 calls
+133: found mutant in 5.14770388603 with 172 calls
+134: found mutant in 5.02687096596 with 53 calls
+135: found mutant in 5.00444602966 with 49 calls
+136: found mutant in 4.99051499367 with 13 calls
+137: didn't find mutant
+138: found mutant in 5.03719997406 with 999 calls
+139: found mutant in 5.24252581596 with 243 calls
+140: found mutant in 37.1727209091 with 182 calls
+141: found mutant in 5.12338805199 with 168 calls
+142: found mutant in 5.05117511749 with 999 calls
+143: found mutant in 5.21154594421 with 250 calls
+144: didn't find mutant
+145: found mutant in 156.782896042 with 467 calls
+146: found mutant in 19.4263300896 with 522 calls
+147: found mutant in 5.4782128334 with 469 calls
+148: found mutant in 5.24734115601 with 299 calls
+149: found mutant in 5.43238902092 with 397 calls
+150: found mutant in 11.2024998665 with 999 calls
+151: found mutant in 4.97114610672 with 999 calls
+152: didn't find mutant
+153: found mutant in 5.03934788704 with 58 calls
+154: found mutant in 5.01433205605 with 999 calls
+155: found mutant in 4.97447800636 with 999 calls
+156: didn't find mutant
+157: didn't find mutant
+158: found mutant in 5.08798408508 with 5 calls
+159: didn't find mutant
+160: found mutant in 5.00400304794 with 31 calls
+161: didn't find mutant
+162: found mutant in 5.17143177986 with 238 calls
+163: found mutant in 4.97914814949 with 43 calls
+164: found mutant in 5.00622200966 with 44 calls
+165: didn't find mutant
+166: found mutant in 5.02334904671 with 19 calls
+167: didn't find mutant
+168: found mutant in 5.05163383484 with 27 calls
+169: found mutant in 5.07372307777 with 999 calls
+170: didn't find mutant
+171: found mutant in 5.06431412697 with 999 calls
+172: found mutant in 13.8299238682 with 251 calls
+173: found mutant in 5.09707689285 with 999 calls
+174: found mutant in 5.19733405113 with 153 calls
+175: found mutant in 157.021373034 with 410 calls
+176: found mutant in 4.98099207878 with 26 calls
+177: found mutant in 4.96690320969 with 39 calls
+178: found mutant in 94.4673769474 with 536 calls
+179: found mutant in 17.3326227665 with 340 calls
+180: found mutant in 5.45879197121 with 460 calls
+181: found mutant in 13.7082309723 with 282 calls
+182: didn't find mutant
+183: didn't find mutant
+184: didn't find mutant
+185: found mutant in 5.04230594635 with 999 calls
+186: didn't find mutant
+187: found mutant in 5.00033187866 with 15 calls
+188: timed out on 81 of 100 traces
+189: found mutant in 5.02780199051 with 14 calls
+190: found mutant in 5.29813194275 with 270 calls
+191: found mutant in 4.99460196495 with 9 calls
+192: found mutant in 5.09906792641 with 74 calls
+193: found mutant in 15.1381661892 with 433 calls
+194: found mutant in 5.50589895248 with 494 calls
+195: found mutant in 102.910728931 with 15 calls
+196: found mutant in 5.00776004791 with 31 calls
+197: found mutant in 5.04352998734 with 31 calls
+198: found mutant in 5.05810904503 with 94 calls
+199: found mutant in 21.3432660103 with 509 calls
+200: found mutant in 16.8704679012 with 527 calls
+201: found mutant in 11.2137248516 with 999 calls
+202: found mutant in 5.0154299736 with 51 calls
+203: found mutant in 5.04013395309 with 72 calls
+204: found mutant in 5.13454794884 with 175 calls
+205: didn't find mutant
+206: found mutant in 4.9714038372 with 20 calls
+207: found mutant in 5.13528800011 with 100 calls
+208: found mutant in 5.12675309181 with 10 calls
+209: found mutant in 5.22276902199 with 130 calls
+210: found mutant in 5.06295204163 with 28 calls
+211: found mutant in 5.33333301544 with 265 calls
+212: found mutant in 16.0802578926 with 503 calls
+213: found mutant in 94.3381199837 with 545 calls
+214: found mutant in 13.6720581055 with 204 calls
+215: found mutant in 5.04662394524 with 110 calls
+216: found mutant in 13.8075869083 with 391 calls
+217: found mutant in 5.01928210258 with 24 calls
+218: found mutant in 5.40232992172 with 405 calls
+219: found mutant in 5.22785210609 with 253 calls
+220: didn't find mutant
+221: found mutant in 17.7018558979 with 529 calls
+222: found mutant in 110.556507826 with 529 calls
+223: found mutant in 5.02501010895 with 56 calls
+224: found mutant in 5.14933085442 with 214 calls
+225: found mutant in 4.98237586021 with 7 calls
+226: found mutant in 5.37358403206 with 391 calls
+227: didn't find mutant
+228: found mutant in 5.42059087753 with 428 calls
+229: found mutant in 5.02050900459 with 11 calls
+230: found mutant in 5.03795981407 with 999 calls
+231: found mutant in 5.03469991684 with 122 calls
+232: found mutant in 5.34786701202 with 321 calls
+233: found mutant in 3.54307603836 with 999 calls
+234: found mutant in 5.00412607193 with 16 calls
+235: didn't find mutant
+236: found mutant in 5.30361390114 with 320 calls
+237: found mutant in 5.0254650116 with 5 calls
+238: found mutant in 4.99593710899 with 999 calls
+239: found mutant in 3.55797886848 with 999 calls
+240: found mutant in 5.53296804428 with 483 calls
+241: found mutant in 5.42699098587 with 292 calls
+242: found mutant in 5.23401498795 with 167 calls
+243: found mutant in 5.08996009827 with 21 calls
+244: found mutant in 16.1214489937 with 518 calls
+245: found mutant in 5.07026004791 with 3 calls
+246: found mutant in 5.09383893013 with 999 calls
+247: found mutant in 5.10668802261 with 54 calls
+248: found mutant in 3.59549617767 with 999 calls
+249: found mutant in 5.07102799416 with 62 calls
+250: found mutant in 5.13370800018 with 82 calls
+251: found mutant in 13.6346359253 with 70 calls
+252: didn't find mutant
+253: found mutant in 5.33905696869 with 350 calls
+254: timed out on 81 of 100 traces
+255: found mutant in 5.03365111351 with 22 calls
+256: didn't find mutant
+257: found mutant in 5.01349616051 with 49 calls
+258: found mutant in 17.5968120098 with 442 calls
+259: found mutant in 16.9591720104 with 530 calls
+260: found mutant in 4.99791312218 with 56 calls
+261: didn't find mutant
+262: found mutant in 5.01263689995 with 9 calls
+263: timed out on 81 of 100 traces
+264: found mutant in 5.03047299385 with 31 calls
+265: found mutant in 17.9881949425 with 523 calls
+266: didn't find mutant
+267: found mutant in 5.19265198708 with 178 calls
+268: found mutant in 5.03878498077 with 19 calls
+269: didn't find mutant
+270: found mutant in 95.3728981018 with 550 calls
+271: found mutant in 18.9307589531 with 41 calls
+272: didn't find mutant
+273: found mutant in 3.53587508202 with 999 calls
+274: found mutant in 5.12549495697 with 999 calls
+275: didn't find mutant
+276: found mutant in 5.03290510178 with 51 calls
+277: found mutant in 20.3371808529 with 22 calls
+278: found mutant in 5.11916089058 with 149 calls
+279: found mutant in 5.41398787498 with 415 calls
+280: found mutant in 15.2085289955 with 246 calls
+281: found mutant in 5.0612308979 with 999 calls
+282: found mutant in 4.99641513824 with 20 calls
+283: found mutant in 5.13544201851 with 203 calls
+284: found mutant in 4.99468612671 with 13 calls
+285: found mutant in 13.451996088 with 10 calls
+286: found mutant in 5.19383502007 with 105 calls
+287: found mutant in 4.97360801697 with 14 calls
+288: found mutant in 5.07956886292 with 88 calls
+289: didn't find mutant
+290: didn't find mutant
+291: found mutant in 5.04664206505 with 50 calls
+292: found mutant in 5.00503993034 with 999 calls
+293: found mutant in 5.08146190643 with 108 calls
+294: found mutant in 5.50951600075 with 411 calls
+295: found mutant in 5.1322479248 with 11 calls
+296: didn't find mutant
+297: found mutant in 5.03404402733 with 79 calls
+298: timed out on 81 of 100 traces
+299: didn't find mutant
+300: found mutant in 15.7187612057 with 350 calls
+301: didn't find mutant
+302: found mutant in 5.08647608757 with 999 calls
+303: found mutant in 5.44359397888 with 999 calls
+304: found mutant in 5.06334400177 with 16 calls
+305: found mutant in 5.08685803413 with 999 calls
+306: didn't find mutant
+307: found mutant in 5.2924759388 with 999 calls
+308: found mutant in 5.12984395027 with 140 calls
+309: found mutant in 5.1573278904 with 204 calls
+310: found mutant in 5.03638195992 with 87 calls
+311: found mutant in 4.97168898582 with 5 calls
+312: found mutant in 5.00963497162 with 66 calls
+313: found mutant in 4.97965407372 with 18 calls
+314: didn't find mutant
+315: didn't find mutant
+316: found mutant in 17.3833169937 with 335 calls
+317: found mutant in 5.19731092453 with 235 calls
+318: found mutant in 5.01174902916 with 999 calls
+319: didn't find mutant
+320: didn't find mutant
+321: found mutant in 5.10605978966 with 59 calls
+322: found mutant in 5.08896303177 with 34 calls
+323: found mutant in 5.01296281815 with 25 calls
+324: didn't find mutant
+325: didn't find mutant
+326: found mutant in 15.8114590645 with 534 calls
+327: found mutant in 5.00369095802 with 999 calls
+328: found mutant in 15.8954210281 with 540 calls
+329: found mutant in 5.0746679306 with 88 calls
+330: didn't find mutant
+331: found mutant in 13.7133789062 with 287 calls
+332: found mutant in 5.05611991882 with 128 calls
+333: found mutant in 5.05917000771 with 77 calls
+334: found mutant in 18.9133710861 with 84 calls
+335: found mutant in 5.07979393005 with 157 calls
+336: didn't find mutant
+337: found mutant in 15.7904360294 with 514 calls
+338: found mutant in 4.98608016968 with 22 calls
+339: didn't find mutant
+340: found mutant in 4.98787403107 with 15 calls
+341: didn't find mutant
+342: found mutant in 4.99007821083 with 13 calls
+343: found mutant in 5.04920601845 with 108 calls
+344: found mutant in 5.04102396965 with 27 calls
+345: didn't find mutant
+346: timed out on 58 of 100 traces
+347: found mutant in 35.4556560516 with 543 calls
+348: found mutant in 15.7367660999 with 477 calls
+349: found mutant in 158.647202015 with 464 calls
+350: didn't find mutant
+351: timed out on 81 of 100 traces
+352: found mutant in 5.27236008644 with 311 calls
+353: found mutant in 15.7911331654 with 502 calls
+354: found mutant in 5.06764316559 with 81 calls
+355: didn't find mutant
+356: found mutant in 5.25541520119 with 21 calls
+357: found mutant in 18.7039818764 with 275 calls
+358: found mutant in 5.57536315918 with 2 calls
+359: found mutant in 5.35201096535 with 25 calls
+360: didn't find mutant
+361: found mutant in 11.2704100609 with 999 calls
+362: found mutant in 5.02306604385 with 999 calls
+363: didn't find mutant
+364: found mutant in 5.00164818764 with 51 calls
+365: found mutant in 5.06210398674 with 90 calls
+366: found mutant in 5.28933906555 with 225 calls
+367: didn't find mutant
+368: found mutant in 5.05727887154 with 19 calls
+369: found mutant in 5.05627894402 with 21 calls
+370: found mutant in 5.22459697723 with 209 calls
+371: found mutant in 5.06427788734 with 25 calls
+372: found mutant in 5.31826901436 with 309 calls
+373: found mutant in 5.35895991325 with 9 calls
+374: found mutant in 5.32875704765 with 157 calls
+375: found mutant in 5.21091794968 with 21 calls
+376: timed out on 81 of 100 traces
+377: timed out on 81 of 100 traces
+378: found mutant in 18.550235033 with 259 calls
+379: didn't find mutant
+380: found mutant in 15.1698651314 with 409 calls
+381: found mutant in 5.34758090973 with 50 calls
+382: found mutant in 5.24951004982 with 999 calls
+383: found mutant in 19.8054039478 with 22 calls
+384: found mutant in 5.37328982353 with 999 calls
+385: didn't find mutant
+386: timed out on 81 of 100 traces
+387: found mutant in 119.119526863 with 523 calls
+388: found mutant in 5.46543216705 with 16 calls
+389: found mutant in 5.85363316536 with 337 calls
+390: found mutant in 6.26572108269 with 12 calls
+391: found mutant in 18.2179450989 with 382 calls
+392: found mutant in 5.80881094933 with 282 calls
+393: found mutant in 45.2965099812 with 514 calls
+394: found mutant in 5.30257606506 with 999 calls
+395: found mutant in 5.32531714439 with 42 calls
+396: didn't find mutant
+397: timed out on 81 of 100 traces
+398: didn't find mutant
+399: found mutant in 5.24165511131 with 20 calls
+400: found mutant in 5.38949203491 with 220 calls
+401: found mutant in 3.6914460659 with 999 calls
+402: timed out on 58 of 100 traces
+403: found mutant in 5.50760984421 with 116 calls
+404: found mutant in 5.5407500267 with 4 calls
+405: found mutant in 5.59959506989 with 233 calls
+406: found mutant in 5.09008908272 with 18 calls
+407: found mutant in 5.27639818192 with 89 calls
+408: found mutant in 5.60403418541 with 171 calls
+409: didn't find mutant
+410: didn't find mutant
+411: found mutant in 5.60241389275 with 16 calls
+412: found mutant in 5.83514308929 with 305 calls
+413: found mutant in 5.30673694611 with 42 calls
+414: found mutant in 5.48718500137 with 62 calls
+415: didn't find mutant
+416: found mutant in 5.3077070713 with 17 calls
+417: found mutant in 5.56170606613 with 999 calls
+418: found mutant in 154.140766144 with 521 calls
+419: found mutant in 5.15498995781 with 24 calls
+420: found mutant in 5.65898084641 with 353 calls
+421: found mutant in 5.29794812202 with 999 calls
+422: timed out on 58 of 100 traces
+423: didn't find mutant
+424: didn't find mutant
+425: didn't find mutant
+426: found mutant in 5.12869596481 with 999 calls
+427: found mutant in 5.06626391411 with 999 calls
+428: found mutant in 5.16064691544 with 999 calls
+429: found mutant in 5.09041309357 with 77 calls
+430: found mutant in 3.94254803658 with 503 calls
+431: didn't find mutant
+432: found mutant in 5.14780187607 with 119 calls
+433: found mutant in 5.59406208992 with 999 calls
+434: didn't find mutant
+435: found mutant in 5.21774315834 with 110 calls
+436: found mutant in 5.64464187622 with 188 calls
+437: found mutant in 5.30843997002 with 69 calls
+438: found mutant in 5.46007490158 with 106 calls
+439: found mutant in 5.74831604958 with 17 calls
+440: found mutant in 5.51761603355 with 246 calls
+441: found mutant in 5.31976890564 with 999 calls
+442: found mutant in 5.61385393143 with 18 calls
+443: found mutant in 15.6415140629 with 397 calls
+444: found mutant in 5.06527280807 with 34 calls
+445: found mutant in 20.8861949444 with 207 calls
+446: didn't find mutant
+447: didn't find mutant
+448: didn't find mutant
+449: found mutant in 5.1803290844 with 5 calls
+450: found mutant in 5.38423585892 with 13 calls
+451: didn't find mutant
+452: found mutant in 6.08824396133 with 75 calls
+453: found mutant in 5.86880111694 with 371 calls
+454: found mutant in 5.18458890915 with 999 calls
+455: found mutant in 5.25040602684 with 999 calls
+456: found mutant in 5.08410191536 with 999 calls
+457: found mutant in 4.98956894875 with 10 calls
+458: found mutant in 5.08902311325 with 32 calls
+459: found mutant in 5.68162608147 with 189 calls
+460: didn't find mutant
+461: found mutant in 5.0586938858 with 8 calls
+462: didn't find mutant
+463: found mutant in 34.6508939266 with 999 calls
+464: didn't find mutant
+465: found mutant in 16.4857809544 with 470 calls
+466: found mutant in 6.0280380249 with 375 calls
+467: timed out on 81 of 100 traces
+468: found mutant in 11.6879379749 with 999 calls
+469: didn't find mutant
+470: didn't find mutant
+471: didn't find mutant
+472: didn't find mutant
+473: found mutant in 5.32674121857 with 36 calls
+474: didn't find mutant
+475: found mutant in 5.36747002602 with 999 calls
+476: didn't find mutant
+477: didn't find mutant
+478: timed out on 81 of 100 traces
+479: found mutant in 5.48076701164 with 95 calls
+480: found mutant in 6.15804004669 with 435 calls
+481: found mutant in 5.39295196533 with 12 calls
+482: found mutant in 18.2422039509 with 288 calls
+483: found mutant in 5.35179686546 with 24 calls
+484: didn't find mutant
+485: found mutant in 5.29475283623 with 184 calls
+486: found mutant in 5.14944505692 with 999 calls
+487: found mutant in 5.19655990601 with 63 calls
+488: found mutant in 5.16544008255 with 27 calls
+489: didn't find mutant
+490: didn't find mutant
+491: found mutant in 142.330967903 with 223 calls
+492: didn't find mutant
+493: found mutant in 105.372766972 with 510 calls
+494: didn't find mutant
+495: didn't find mutant
+496: found mutant in 5.14547610283 with 22 calls
+497: didn't find mutant
+498: found mutant in 5.33528399467 with 42 calls
+499: found mutant in 5.14562511444 with 11 calls
+372 of 500 FOUND with average 12.5652784378
+1760 timeouts

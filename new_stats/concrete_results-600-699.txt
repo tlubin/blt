@@ -1,0 +1,103 @@
+TIMEOUT: 3
+600: found mutant in 10.0262699127 with 143 calls
+601: didn't find mutant
+602: found mutant in 10.2017221451 with 22 calls
+603: found mutant in 7.37640118599 with 508 calls
+604: found mutant in 3.9261059761 with 999 calls
+605: found mutant in 7.26471114159 with 510 calls
+606: didn't find mutant
+607: found mutant in 6.94406890869 with 505 calls
+608: found mutant in 9.87448096275 with 63 calls
+609: didn't find mutant
+610: found mutant in 9.71274280548 with 23 calls
+611: found mutant in 165.699265003 with 428 calls
+612: found mutant in 5.18059706688 with 999 calls
+613: found mutant in 3.75636911392 with 999 calls
+614: found mutant in 9.82066893578 with 149 calls
+615: found mutant in 3.76015806198 with 999 calls
+616: didn't find mutant
+617: found mutant in 9.73667478561 with 61 calls
+618: found mutant in 9.97058606148 with 326 calls
+619: didn't find mutant
+620: timed out on 56 of 100 traces
+621: found mutant in 10.0549650192 with 351 calls
+622: found mutant in 12.1119368076 with 508 calls
+623: didn't find mutant
+624: found mutant in 10.9236280918 with 324 calls
+625: found mutant in 10.8696100712 with 356 calls
+626: timed out on 81 of 100 traces
+627: found mutant in 10.8545968533 with 270 calls
+628: found mutant in 10.879130125 with 144 calls
+629: found mutant in 131.961000919 with 209 calls
+630: found mutant in 7.45652198792 with 513 calls
+631: found mutant in 10.5906589031 with 13 calls
+632: found mutant in 7.39452505112 with 513 calls
+633: found mutant in 7.56805181503 with 519 calls
+634: found mutant in 48.5832209587 with 226 calls
+635: found mutant in 7.03731393814 with 521 calls
+636: timed out on 81 of 100 traces
+637: found mutant in 10.4710130692 with 320 calls
+638: didn't find mutant
+639: didn't find mutant
+640: found mutant in 10.356828928 with 27 calls
+641: didn't find mutant
+642: found mutant in 5.92651605606 with 999 calls
+643: didn't find mutant
+644: found mutant in 10.3119828701 with 26 calls
+645: didn't find mutant
+646: found mutant in 7.38121294975 with 506 calls
+647: found mutant in 78.6937968731 with 426 calls
+648: didn't find mutant
+649: found mutant in 11.483823061 with 43 calls
+650: found mutant in 11.5394308567 with 104 calls
+651: didn't find mutant
+652: found mutant in 9.81185483932 with 27 calls
+653: found mutant in 9.76853084564 with 61 calls
+654: found mutant in 5.68864297867 with 999 calls
+655: found mutant in 10.8261189461 with 116 calls
+656: found mutant in 13.0094058514 with 540 calls
+657: found mutant in 10.1709618568 with 355 calls
+658: found mutant in 9.74434804916 with 65 calls
+659: found mutant in 81.2733988762 with 357 calls
+660: found mutant in 7.06368899345 with 547 calls
+661: found mutant in 7.69552087784 with 999 calls
+662: found mutant in 10.0725331306 with 399 calls
+663: timed out on 81 of 100 traces
+664: found mutant in 9.80525112152 with 142 calls
+665: found mutant in 7.01860308647 with 540 calls
+666: found mutant in 9.77675199509 with 48 calls
+667: found mutant in 10.2458119392 with 507 calls
+668: found mutant in 7.19345903397 with 528 calls
+669: didn't find mutant
+670: found mutant in 16.4743440151 with 512 calls
+671: didn't find mutant
+672: found mutant in 11.3828389645 with 366 calls
+673: found mutant in 10.6559438705 with 35 calls
+674: found mutant in 9.7977669239 with 530 calls
+675: didn't find mutant
+676: didn't find mutant
+677: didn't find mutant
+678: found mutant in 22.5591709614 with 504 calls
+679: found mutant in 9.88192200661 with 216 calls
+680: found mutant in 10.1924829483 with 278 calls
+681: didn't find mutant
+682: timed out on 81 of 100 traces
+683: found mutant in 7.29905295372 with 515 calls
+684: didn't find mutant
+685: found mutant in 15.8158459663 with 999 calls
+686: found mutant in 75.8053381443 with 107 calls
+687: found mutant in 7.60205888748 with 507 calls
+688: found mutant in 10.1676180363 with 178 calls
+689: found mutant in 7.3199930191 with 511 calls
+690: found mutant in 3.84536314011 with 999 calls
+691: didn't find mutant
+692: didn't find mutant
+693: found mutant in 11.1576290131 with 451 calls
+694: found mutant in 10.5690760612 with 149 calls
+695: found mutant in 8.03661489487 with 999 calls
+696: didn't find mutant
+697: found mutant in 7.24997496605 with 521 calls
+698: didn't find mutant
+699: found mutant in 7.03580403328 with 504 calls
+71 of 100 FOUND with average 16.7283705423
+380 timeouts
