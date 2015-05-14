@@ -2,7 +2,7 @@
     "class1" : "RBTreeBag",
     "class2" : "LilIntBag",
     "header_files" : ["rbtree.hpp", "../bag/LilIntBag.hpp", "RBTreeBag.hpp"],
-    "source_files" : ["../bag/LilIntBag.cpp"],
+    "source_files" : ["rbtree.cpp", "../bag/LilIntBag.cpp"],
     "funcs": [
         {"name" : "insert",
          "args" : ["int"],
