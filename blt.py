@@ -284,7 +284,7 @@ def compile_and_run_klee(exitearly=0, verbose=1, timeout=default_timeout):
             if verbose:
                 print GREEN + 'BLT: trace {0} completed successfully'.format(i) + RESET
         for n, f in enumerate(failures):
-         #   write_replay(f, copy.deepcopy(data['traces'][i]), i, n)
+            write_replay(f, copy.deepcopy(data['traces'][i]), i, n)
             if verbose:
                 print RED + 'BLT: ERROR' + RESET
 
@@ -439,7 +439,7 @@ def main():
     if args.trace:
         if 'traces' not in data:
             generate_default_traces()
-        run_traces(exitearly=1)
+        run_traces()
 
     # replay the requested file
     elif args.rfile:
