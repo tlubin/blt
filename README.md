@@ -100,6 +100,6 @@
     - `python path/to/blt.py --replay-all path/to/replay/dir path/to/json_file.json`
     - E.g. `python blt.py --replay bag/blt_tmp/replay0_0.cpp bag/bag.json`
 
-Created by Aaron Bembenek, Lily Tsai, Todd Lubin
+Created by Aaron **B**embenek, Todd **L**ubin, Lily **T**sai
 
 CS260r, 2015
