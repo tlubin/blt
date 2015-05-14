@@ -86,9 +86,9 @@
         ```
         
       See also `bag/bag.json` and `calcs/calcs.json` for more examples.
-- Option 2: Find functional correctness bugs (e.g. assertion errors) in a single C++ class that implements an API:
-    - set `"class1"` and `"class2"` to both be the name of the C++ class under test 
-    - include all other properties as before
+- Option 2: Find correctness bugs (e.g. internal assertion errors, null-pointer dereferences) in a single C++ class that implements an API:
+    - Set `"class1"` and `"class2"` to both be the name of the C++ class under test 
+    - Include all other properties as before
 
 - Running BLT:
     - `python path/to/blt.py --trace path/to/json_file.json`
