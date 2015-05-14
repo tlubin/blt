@@ -252,7 +252,11 @@ def compile_and_run_klee(exitearly=0, verbose=1, timeout=default_timeout):
         if verbose:
             print MAGENTA + '\nBLT: running trace {0}\n'.format(i) + RESET
 
-        cmd = 'klee -exit-on-error -emit-all-errors -max-time={3} -output-dir={0} {1} {2}'.format(
+        if exitearly:
+            cmd = 'klee -exit-on-error -emit-all-errors -max-time={3} -output-dir={0} {1} {2}'.format(
+            klee_output_dir, harness_bc, i, timeout)
+        else:
+            cmd = 'klee -emit-all-errors -max-time={3} -output-dir={0} {1} {2}'.format(
             klee_output_dir, harness_bc, i, timeout)
 
         with open(klee_print_file, 'w') as klee_print_fd:
