@@ -17,8 +17,6 @@ tmpdir = ''
 SEED = random.randint(1, 1000)
 
 # define defaults for default trace
-default_trace_len = 50
-default_sym_len = 2
 default_num_traces = 10
 default_timeout = 60
 default_swarm1_length = 500
@@ -211,10 +209,12 @@ def write_replay(failure, trace, tracenum, failnum):
     if success:
         print MAGENTA + 'HMM: replay worked?' + RESET
     else:
-        print RED + 'BLT: ERROR: {0}'.format(replay_file) + RESET
+        print RED + '{0}'.format(replay_file) + RESET
 
 # Return nfuncs on finding a mutant, -k on timeout for k traces and 0 otherwise
-def compile_and_run_klee(exitearly=0, verbose=1, timeout=default_timeout):
+def compile_and_run_klee(exitearly=0, verbose=1, timeout=default_timeout, replay=1):
+    ret_dict = {}
+    ret_dict['found'] = False
     # Compile the source files to LLVM bytecode
     llvmgcc_bin = os.path.join(env['llvmgcc'],'llvm-g++')
     bc_files = []
@@ -262,45 +262,31 @@ def compile_and_run_klee(exitearly=0, verbose=1, timeout=default_timeout):
         with open(klee_print_file, 'w') as klee_print_fd:
             ret = subprocess.call(cmd.split(), stderr=klee_print_fd)
 
-        # get number of paths
-        with open(klee_print_file, 'r') as klee_print_fd:
-            lines = klee_print_fd.readlines()
-            nfuncs = [x for x in lines if 'NFUNCS' in x]
-            # if ret == 1 either halt timer or klee found an error and exited on failure
-            if ret == 1:
+        # either halt timer or klee found an error and exited on failure
+        if ret == 1:
+            with open(klee_print_file, 'r') as klee_print_fd:
+                lines = klee_print_fd.readlines()
                 haltline = [x for x in lines if 'HaltTimer' in x]
                 if len(haltline) > 0:
+                    print MAGENTA + "BLT: TIMEOUT" + RESET
                     timeouts += 1
-                    if i == len(data['traces']) - 1:
-                        return -1*timeouts
                     continue
-                if len(nfuncs) > 0:
-                    nfuncs = nfuncs[0].split(':')[1]
-                    return int(nfuncs)
-                else:
-                    # some other failure caused harness to exit before printing
-                    print RED + 'BLT: ERROR (NO REPLAY)' + RESET
-                    return 999
-            line = lines[-2].split()
-            num_paths = line[-1]
+                print RED + "BLT: ERROR (KLEE had -exit-on-error)" + RESET
+                ret_dict['found'] = True
 
         failures = klee_get_failures(klee_output_dir)
-        if len(failures) == 0:
-            if verbose:
-                print GREEN + 'BLT: trace {0} completed successfully'.format(i) + RESET
-        for n, f in enumerate(failures):
-            write_replay(f, copy.deepcopy(data['traces'][i]), i, n)
-            #if verbose:
-            #    print RED + 'BLT: ERROR' + RESET
+        if len(failures) > 0:
+            print RED + "BLT: ERROR" + RESET
+            ret_dict['found'] = True
+        if replay:
+            for n, f in enumerate(failures):
+                write_replay(f, copy.deepcopy(data['traces'][i]), i, n)
 
-        if len(failures) > 0 and exitearly:
-            return 1
-    if timeouts > 0:
-        return -1 * timeouts
-    return 0
+        if ret_dict['found']:
+            return ret_dict
+    ret_dict['timeouts'] = timeouts
+    return ret_dict
 
-# Generate a swarm of concolic traces from the powerset of the set of all
-# functions.  The length of each trace is actually default_trace_len + 2.
 def generate_default_traces(num_traces=default_num_traces):
     powerset = [[]]
     for f in data['funcs']:
@@ -376,7 +362,7 @@ def inject_concrete_args(concrete_args):
         f.write(arg_str)
 
 # Return 1 on finding a mutant and 0 otherwise
-def run_traces(exitearly=0, verbose=1, num=0, timeout=default_timeout):
+def run_traces(exitearly=0, verbose=1, num=0, timeout=default_timeout, replay=1):
     concrete_args = {}
     for trace in data['traces']:
         for node in trace:
@@ -394,7 +380,8 @@ def run_traces(exitearly=0, verbose=1, num=0, timeout=default_timeout):
 
     inject_concrete_args(concrete_args)
     write_harness(num)
-    return compile_and_run_klee(exitearly, verbose, timeout)
+    ret_dict = compile_and_run_klee(exitearly, verbose, timeout, replay)
+    return ret_dict['found'] == True
 
 def run_mutants(start, end, timeout, num_traces):
     totalfound = 0
@@ -405,7 +392,7 @@ def run_mutants(start, end, timeout, num_traces):
         sys.stderr.write('CHECKPOINT: {0} of {1}\n'.format(totalfound, i - start))
         data['source_files'] += [os.path.join('mutations', 'rbtree{0}.cpp'.format(i))]
         t0 = time.time()
-        found = run_traces(exitearly=1, verbose=0, num=0, timeout=timeout)
+        found = run_traces(exitearly=1, verbose=0, num=0, timeout=timeout, replay=0)
         t1 = time.time()
         if found < 0:
             timeouts += -1*found
