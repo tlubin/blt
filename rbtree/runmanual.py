@@ -5,6 +5,7 @@ from os.path import join
 from os import environ
 import subprocess
 import sys
+import time
 
 GREEN = '\033[1m\033[32m'
 RED = '\033[1m\033[31m'
@@ -36,10 +37,12 @@ def main():
                                            remove_percent,
                                            member_percent)
         timeout = 0
+        t0 = time.time()
         try:
             ret = subprocess.call(cmd.split(), stderr=devnull, timeout=15)
         except subprocess.TimeoutExpired:
             timeout = 1
+        t1 = time.time()
         if timeout == 1:
             print("{0} timed out".format(i))
         elif ret == 0:
@@ -48,7 +51,7 @@ def main():
             exit(1)
         else:
             found += 1
-            print("{0}: found mutant".format(i))
+            print("{0}: found mutant in {1}".format(i, t1-t0))
 
 
     print("{0} of {1} FOUND".format(found, len(mutants)))
