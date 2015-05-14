@@ -279,6 +279,7 @@ def compile_and_run_klee(exitearly=0, verbose=1, timeout=default_timeout):
                     return int(nfuncs)
                 else:
                     # some other failure caused harness to exit before printing
+                    print RED + 'BLT: ERROR (NO REPLAY)' + RESET
                     return 999
             line = lines[-2].split()
             num_paths = line[-1]
@@ -289,8 +290,8 @@ def compile_and_run_klee(exitearly=0, verbose=1, timeout=default_timeout):
                 print GREEN + 'BLT: trace {0} completed successfully'.format(i) + RESET
         for n, f in enumerate(failures):
             write_replay(f, copy.deepcopy(data['traces'][i]), i, n)
-            if verbose:
-                print RED + 'BLT: ERROR' + RESET
+            #if verbose:
+            #    print RED + 'BLT: ERROR' + RESET
 
         if len(failures) > 0 and exitearly:
             return 1
