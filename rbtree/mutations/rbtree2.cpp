@@ -84,7 +84,7 @@ void TreeInsertHelp(rb_red_blk_node* z) {
   while( x != nil) {
     y=x;
 /* XXX: original code was :     if (1 == compare(x->key,z->key)) {       x=x->left; */
-    if (1 == compare (! x->key,z->key)) {       x=x->left;
+    if (1 == compare (!x->key,z->key)) {       x=x->left;
     } else {       x=x->right;
     }
   }
